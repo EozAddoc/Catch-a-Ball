@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import RegisterPage from './RegisterPage';
+import RegisterPage from './pages/RegisterPage';
 
 
 function App() {

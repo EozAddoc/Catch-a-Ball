@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Landing from './pages/Landing';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
@@ -11,7 +11,7 @@ import LoginPage from './pages/LoginPage';
 const router = createBrowserRouter([
   {
     path: "",
-    element: <App />,
+    element: <Landing />,
     errorElement: <ErrorPage />,
   },
   {

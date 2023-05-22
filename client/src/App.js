@@ -6,7 +6,6 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
-    <Router>
       <div className="bg-indigo-950 text-center App">
         <header className="bg-blue min-h-screen flex flex-col items-center justify-center ">
         <img src="logo_welcome.png" className="w-1/2 sm:w-2/3 md:w-3/4 lg:w-2/3 mx-auto mt-auto  top-0 left-0 right-0" alt="Catch a Ball" />          
@@ -22,7 +21,6 @@ function App() {
         </header>
       </div>
 
-    </Router>
   );
 }
 

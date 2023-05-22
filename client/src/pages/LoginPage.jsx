@@ -1,7 +1,6 @@
-import React from 'react';
 import Form from '../components/Form';
 
-function RegisterPage() {
+function LoginPage() {
   return (
     <div class="flex min-h-screen bg-black">
       <Form />
@@ -9,4 +8,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default LoginPage;

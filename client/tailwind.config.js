@@ -1,18 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
       colors: {
         custom: {
-          blue: '#070741',
+          pokeB: "#070741",
         },
       },
     },
   },
-  plugins: [
-    require('tailwindcss'),
-    require('autoprefixer')
-  ]
-}
-
+  plugins: [require("tailwindcss"), require("autoprefixer")],
+};

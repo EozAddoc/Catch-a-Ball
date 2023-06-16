@@ -9,6 +9,7 @@
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "pokemontcgsdk": "^2.0.0",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",

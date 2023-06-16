@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import TestApi from './pages/TestApi';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "test-api",
+    element: <TestApi />,
     errorElement: <ErrorPage />
   }
 ])

@@ -2,7 +2,7 @@ import pokemon from 'pokemontcgsdk'
 import { useState, useEffect } from 'react';
 
 function TestApi() {
-    pokemon.configure({ apiKey: 'fd4c85a9-6be2-4277-a624-884003a17516' });
+    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
     const [card, setCard] = useState({});
 
     useEffect(() => {   // setCard(card) must be in a useEffect so it doesn't call the

@@ -2,40 +2,40 @@ import React from "react";
 import Button from "./Button";
 const Form = function () {
   return (
-    <form class=" bg-white m-5">
-      <div class="flex flex-col items-center p-3">
-        <div class="mb-4">
-          <input
-            class="p-2  rounded w-full py-2 px-3 text-gray-700 leading-tight border border-black"
-            id="email"
-            type="Email"
-            placeholder="Email address"
-          />
+      <form class="  bg-white ">
+        <div class="flex flex-col items-center p-3">
+          <div class="mb-4">
+            <input
+              class="p-2  rounded w-full py-2 px-3 text-gray-700 leading-tight border border-black"
+              id="email"
+              type="Email"
+              placeholder="Email address"
+            />
+          </div>
+          <div class="mb-6 flex flex-col">
+            <input
+              class="p-2  border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight border border-black"
+              id="password"
+              type="password"
+              placeholder="Password"
+            />
+          </div>
         </div>
-        <div class="mb-6 flex flex-col">
-          <input
-            class="p-2  border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight border border-black"
-            id="password"
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="flex m-2 items-center">
-          <input
-            className="flex text-black"
-            type="checkbox"
-            value=""
-            id="box"
-          />
-          <label
-            className="inline-block font-900 text-black m-1"
-            htmlFor="exampleCheck3"
-          >
-            Remember me
-          </label>
-        </div>
+        <div className="flex items-center justify-between">
+          <div className="flex m-2 items-center">
+            <input
+              className="flex text-black"
+              type="checkbox"
+              value=""
+              id="box"
+            />
+            <label
+              className="inline-block font-900 text-black m-1"
+              htmlFor="exampleCheck3"
+            >
+              Remember me
+            </label>
+          </div>
 
         <a
           className=" m-2 inline-block align-baseline text-sm text-blue-500 hover:text-blue-800"

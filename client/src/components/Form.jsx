@@ -2,7 +2,7 @@ import React from "react";
 import Button from "./Button";
 const Form = function () {
   return (
-      <form class=" bg-white m-5">
+      <form class="  bg-white ">
         <div class="flex flex-col items-center p-3">
           <div class="mb-4">
             <input

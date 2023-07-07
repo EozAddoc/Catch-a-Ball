@@ -37,23 +37,22 @@ const Form = function () {
             </label>
           </div>
 
-          <a
-            className=" m-2 inline-block align-baseline text-sm text-blue-500 hover:text-blue-800"
-            href=""
-            style={{ textDecoration: "none" }}
-          >
-            Forgot Password?
-          </a>
-        </div>
-        <Button name="Sign In" />
-        <div className="flex items-center justify-center mt-4">
-  <div className="w-1/3 border border-gray-300 mr-2"></div>
-  <span className="text-gray-500">OR</span>
-  <div className="w-1/3 border border-gray-300 ml-2"></div>
-</div>
-        <Button name="Sign In" />
-        <Button class="bg-red-500" name="Sign In" />
-      </form>
+        <a
+          className=" m-2 inline-block align-baseline text-sm text-blue-500 hover:text-blue-800"
+          href=""
+          style={{ textDecoration: "none" }}
+        >
+          Forgot Password?
+        </a>
+      </div>
+      <Button name="Sign In" />
+      <div className="flex items-center justify-center mt-4">
+        <div className="w-1/3 border border-gray-300 mr-2"></div>
+        <span className="text-gray-500">OR</span>
+        <div className="w-1/3 border border-gray-300 ml-2"></div>
+      </div>
+      <Button class="bg-red-500" name="Sign In" />
+    </form>
   );
 };
 

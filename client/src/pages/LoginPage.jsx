@@ -1,5 +1,4 @@
 import Form from "../components/Form";
-import React, { useState } from "react";
 
 function LoginPage() {
   return (

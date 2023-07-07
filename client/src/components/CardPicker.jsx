@@ -1,8 +1,6 @@
-import pokemon from 'pokemontcgsdk'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function CardPicker({ cardImg, nameAlt }) {
-    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
     const [card, setCard] = useState("/pkmn-cardback.png");
     const [name, setName] = useState("Back of Pokémon card.")
 

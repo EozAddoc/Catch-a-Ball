@@ -1,19 +1,16 @@
 import pokemon from 'pokemontcgsdk'
 import { useState, useEffect } from 'react';
 
-function CardPicker({ cardImg }) {
+function CardPicker({ cardImg, nameAlt }) {
     pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-    const [card, setCard] = useState("pkmn-cardback.png");
-    // const [cardPicked, setCardPicked] = useState(false);
-
-    // useEffect(() => {
-    //     setCard(cardImg)
-    // }, [cardPicked])
+    const [card, setCard] = useState("/pkmn-cardback.png");
+    const [name, setName] = useState("Back of Pokémon card.")
 
     return (
         <div>
-            <img src={card} onClick={() => {
+            <img alt={name} class="max-w-xs" src={card} onClick={() => {
                 setCard(cardImg);
+                setName(nameAlt)
             }} />
         </div>
     )

@@ -7,7 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import TestApi from './pages/TestApi';
+import SignupPokemon from './pages/SignupPokemon';
+import SignupAvatar from './pages/SignupAvatar';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "test-api",
-    element: <TestApi />,
+    path: "signup/pokemon",
+    element: <SignupPokemon />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "signup/avatar",
+    element: <SignupAvatar />,
     errorElement: <ErrorPage />
   }
 ])

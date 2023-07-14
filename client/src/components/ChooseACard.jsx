@@ -1,42 +1,62 @@
-import pokemon from 'pokemontcgsdk'
 import { useState, useEffect } from 'react';
+import pokemon from 'pokemontcgsdk';
 import CardPicker from './CardPicker';
+import { useQuery, useQueryClient } from 'react-query';
 
 function ChooseACard({ apiIds, text }) {
-    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-    const [cards, setCards] = useState([]);
+  const queryClient = useQueryClient();
 
-    useEffect(() => {   // setCard(card) must be in a useEffect so it doesn't call the API over and over
+  const fetchCard = async (id) => {
+    const card = await pokemon.card.find(id);
+    return card;
+  };
 
-        apiIds.map(id =>
-            pokemon.card.find(id)
-                .then(card => {
-                    if (!cards.includes(card)) {
-                        setCards(cards => [...cards, card])
-                    }
-                })
-        )
-
-    }, []); // empty array for useEffect so it only renders once
-
-    let cardImgs = [];
-
-    for (let i in cards) {
-        cardImgs.push(<CardPicker cardImg={cards[i].images?.large ?? "/pkmn-cardback.png"} nameAlt={cards[i].name ?? "Back of pokemon card."} key={i} />)
+  const { data: cards, isError, isLoading } = useQuery(
+    'cards',
+    () => Promise.all(apiIds.map(fetchCard)),
+    {
+      initialData: () => queryClient.getQueryData('cards') ?? [],
     }
+  );
 
-    return (
-        <div class="bg-custom-pokeB min-h-screen">
-            <div class="flex justify-center">
-                <h1 class="w-[1164px] h-[129px] text-yellow-400 text-[64px] font-bold">
-                    {text}
-                </h1>
-            </div>
-            <div class="grid grid-cols-4 gap-4 justify-items-center">
-                {cardImgs}
-            </div>
-        </div>
-    )
+  useEffect(() => {
+    apiIds.forEach((id) => {
+      queryClient.prefetchQuery(['cards', id], () => fetchCard(id));
+    });
+  }, [apiIds, queryClient]);
+
+  if (isError) {
+    console.error('Failed to fetch cards');
+  }
+
+  let cardImgs = [];
+
+  for (let i in cards) {
+    cardImgs.push(
+      <CardPicker
+        cardImg={cards[i].images?.large ?? "/pkmn-cardback.png"}
+        nameAlt={cards[i].name ?? "Back of Pokémon card."}
+        key={i}
+      />
+    );
+  }
+
+  return (
+    <div className="bg-blue-900 min-h-screen">
+      <div className="flex justify-center">
+        <h1 className="w-[1164px] h-[129px] text-yellow-400 text-[64px] font-bold">
+          {text}
+        </h1>
+      </div>
+      <div className="grid grid-cols-4 gap-4 justify-items-center">
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          cardImgs
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default ChooseACard;

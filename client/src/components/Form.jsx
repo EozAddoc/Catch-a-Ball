@@ -1,6 +1,20 @@
 import React from "react";
-import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 const Form = function ({ text, imgSrc, imgAlt}){
+  const navigate = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Perform different actions based on the text of the button
+    if (text === "Login") {
+      console.log("login");
+    } else if (text === "Sign Up") {
+      console.log("sign up ");
+      navigate("/signup/pokemon");
+    } else {
+      console.log("Error");
+    }
+  };
   return (
     <div>
       <div className="flex flex-col md:flex-row h-screen">
@@ -20,7 +34,7 @@ const Form = function ({ text, imgSrc, imgAlt}){
         <div className="md:h-3/4 bg-custom-pokeB">
           <div class="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg shadow overflow-hidden m-30 flex-grow">
             <div class="w-full m-20  p-3">
-              <form method="post" action="#" onSubmit="return false">
+              <form method="post" action="#" onSubmit={handleSubmit}>
                 <div
                   class="relative mb-6  border-white border"
                   data-te-input-wrapper-init

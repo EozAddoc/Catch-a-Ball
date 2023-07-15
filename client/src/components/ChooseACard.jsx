@@ -42,9 +42,9 @@ function ChooseACard({ apiIds, text }) {
   }
 
   return (
-    <div className="bg-blue-900 min-h-screen">
-      <div className="flex justify-center">
-        <h1 className="w-[1164px] h-[129px] text-yellow-400 text-[64px] font-bold">
+    <>
+      <div className="flex justify-center bg-color-transparent p-6">
+        <h1 className=" text-yellow-400 text-l font-bold">
           {text}
         </h1>
       </div>
@@ -55,7 +55,7 @@ function ChooseACard({ apiIds, text }) {
           cardImgs
         )}
       </div>
-    </div>
+      </>
   );
 }
 

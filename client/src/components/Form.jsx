@@ -1,6 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+
 const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
+
+  const[email,setEmail] = useState("");
+  const[username, setUsername]= useState("");
+  const[password, setPassword]= useState("");
+  const[loginStatus, setLoginStatus]= useState("");
+  const[regStatus, setRegStatus]= useState("");
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -8,16 +16,47 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
     // Perform different actions based on the text of the button
     if (text === "Login") {
       console.log("login");
+      loginF(event)
     } else if (text === "Sign Up") {
       console.log("sign up ");
-      navigate("/signup/pokemon");
+      registerF(event)
     } else {
       console.log("Error");
     }
   };
+
+
+  const registerF = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:8080/signup", {
+      email :email,
+      Username : username,
+      password : password,
+    }).then((resp) =>{
+      if(resp.data.message){
+        setRegStatus(resp.data.message)
+      }else{
+        console.log("ACCOUNT CREATED SUCCESSFULLY")
+      }
+    })
+  }
+
+  const loginF = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:8080/login", {
+      username : username,
+      password : password,
+    }).then((resp) =>{
+      if(resp.data.message){
+        setLoginStatus(resp.data.message)
+      }else{
+        setLoginStatus(resp.data[0].email)
+      }
+    })
+  }
   return (
     <div>
-      <div className="flex flex-col md:flex-row h-screen">
+      <div className="h-screen md:flex">
       <div className="md:w-1/2 relative bg-custom-pokeB hidden md:block">
         <img
           src={imgSrc}
@@ -35,6 +74,25 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
           <div class="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg shadow overflow-hidden m-30 flex-grow">
             <div class="w-full m-20  p-3">
               <form method="post" action="#" onSubmit={handleSubmit}>
+              <div
+                  class="relative mb-6  border-white border"
+                  data-te-input-wrapper-init
+                >
+                  <input
+                    type="text"
+                    class="  uppercase font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                    id="exampleFormControlInput3"
+                    placeholder="Username"
+                    onChange={(e)=>{setUsername(e.target.value)}}
+                  />
+                  <label
+                    for="exampleFormControlInput3"
+                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                  >
+                   Username
+                  </label>
+                </div>
+                {text === "Sign Up" && (
                 <div
                   class="relative mb-6  border-white border"
                   data-te-input-wrapper-init
@@ -44,6 +102,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                     class="  uppercase font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                     id="exampleFormControlInput3"
                     placeholder="Email address"
+                    onChange={(e)=>{setEmail(e.target.value)}}
                   />
                   <label
                     for="exampleFormControlInput3"
@@ -51,7 +110,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                   >
                     Email address
                   </label>
-                </div>
+                </div>)}
 
                 <div
                   class="relative mb-6 border-white border "
@@ -62,6 +121,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                     id="exampleFormControlInput33"
                     placeholder="Password"
+                    onChange={(e)=>{setPassword(e.target.value)}}
                   />
                   <label
                     for="exampleFormControlInput33"
@@ -70,7 +130,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                     Password
                   </label>
                 </div>
-                {text === "Sign Up" && (
+                {/* {text === "Sign Up" && (
                   <div className="relative mb-6 border-white border " data-te-input-wrapper-init>
                     <input
                       type="password"
@@ -85,7 +145,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                       Verify Password
                     </label>
                   </div>
-                )}
+                )} */}
 
                 <div class="mb-6 flex items-center justify-between">
                   <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -108,7 +168,14 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                     href="#!"
                     class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
                   >
-                    Forgot password?
+                       {text === "Sign Up" && (
+                        <>Already have an account ?</>
+                        
+                      )}
+                      {text === "Login" && (
+                            <>Forgot password?</>
+                      )}
+                    
                   </a>
                 </div>
 
@@ -117,6 +184,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc}){
                   class="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
+                  onClick = {handleSubmit}
                 >
                   {text}
                 </button>

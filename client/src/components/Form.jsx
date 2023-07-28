@@ -6,6 +6,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -29,15 +30,20 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
       email: email,
       Username: username,
       password: password,
-    }).then((resp) => {
-      if (resp.data.message) {
-        console.log("error");
-      } else {
+    })
+      .then((resp) => {
         console.log("ACCOUNT CREATED SUCCESSFULLY");
         navigate("/signup/pokemon");
-      }
-    });
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          setErrorMessage(error.response.data.error);
+        } else {
+          console.error("Error during registration:", error);
+        }
+      });
   };
+  
 
   const loginF = (e) => {
     e.preventDefault();
@@ -49,6 +55,12 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         console.log(resp.data.message);
       } else {
         console.log(resp.data[0].email);
+      }
+    }).catch((error) => {
+      if (error.response && error.response.status === 409) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        console.error("Error during registration:", error);
       }
     });
   };
@@ -72,6 +84,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
             <div class="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg shadow overflow-hidden m-30 flex-grow">
               <div class="w-full m-20  p-3">
                 <form method="post" action="#" onSubmit={handleSubmit}>
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                   <div
                     class="relative mb-6  border-white border bg-transparent"
                     data-te-input-wrapper-init
@@ -101,7 +114,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                     >
                       <input
                         type="text"
-                        class="  uppercase font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                        class="   font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                         id="exampleFormControlInput3"
                         placeholder="Email address"
                         onChange={(e) => {
@@ -125,7 +138,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                   >
                     <input
                       type="text"
-                      class="  uppercase font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                      class="  font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                       id="exampleFormControlInput3"
                       placeholder="Email address"
                       onChange={(e) => {
@@ -175,13 +188,26 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       </label>
                     </div>
 
-                    <a
-                      href="#!"
-                      class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
-                    >
-                      {text === "Sign Up" && <>Already have an account ?</>}
-                      {text === "Login" && <>Forgot password?</>}
-                    </a>
+                 
+                      {text === "Sign Up" && (
+        <a
+          href="#!"
+          onClick={() => navigate("/login")} // Navigate to "/login" when clicked
+          className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+        >
+          Already have an account?
+        </a>
+      )}
+                     {text === "Login" && (
+        <a
+          href="#!"
+          onClick={() => navigate("/login")} // Navigate to "/login" when clicked
+          className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+        >
+         Forgot password
+        </a>
+      )}
+                 
                   </div>
 
                   <button

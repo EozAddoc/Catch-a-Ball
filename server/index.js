@@ -23,13 +23,10 @@ db.connect((err) => {
     console.error('Error connecting to the database:', err.message);
     return;
   }else{
-    console.log("connected !!!")
+    console.log("connected to db !!!")
   }
 })
 
-app.get('/hello', (req, res) => {
-  res.send('hello.');
-});
 
 app.post("/signup",(req,res)=>{
   const email = req.body.email;
@@ -61,6 +58,7 @@ app.post("/login",(req,res)=>{
       //means user exists
       if(result.length > 0){
         res.send(result);
+        console.log("successful login")
       }else{
         res.send({message: "Wrong username or pw"})
       }

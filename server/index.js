@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const cors = require('cors');
 const { body, validationResult } = require('express-validator');
 const app = express();
+const bcrypt = require("bcrypt");
 
 app.use(express.json())
 app.use(cors()); 
@@ -28,21 +29,44 @@ db.connect((err) => {
 })
 
 
-app.post("/signup",(req,res)=>{
+app.post("/signup", (req, res) => {
   const email = req.body.email;
   const username = req.body.Username;
-  const password =req.body.password;
+  const password = req.body.password;
 
-  db.query("INSERT INTO users (email, Username, password) VALUES (?,?,?)",[email, username,password]),
-  (err,result)=>{
-    if(result){
-      res.send(result);
-    }else{
-      res.send({message: "Enter correct info"})
+  // Check if the username or email already exists in the database
+  db.query(
+    "SELECT COUNT(*) AS count FROM users WHERE Username = ? OR email = ?",
+    [username, email],
+    (err, result) => {
+      if (err) {
+        console.error("Error while checking username or email:", err);
+        res.status(500).json({ message: "Internal server error" });
+      } else {
+        const userCount = result[0].count;
+        if (userCount > 0) {
+          // Username or email already exists, send error response
+          res.status(409).json({ error: "Username or email already exists" });
+        } else {
+          // Username and email are unique, proceed with user registration
+          db.query(
+            "INSERT INTO users (email, Username, password) VALUES (?,?,?)",
+            [email, username, password],
+            (err, result) => {
+              if (err) {
+                console.error("Error while inserting user:", err);
+                res.status(500).json({ message: "Internal server error" });
+              } else {
+                res.status(200).json({ message: "Account created successfully" });
+              }
+            }
+          );
+        }
+      }
     }
-  }
+  );
+});
 
-})
 
 
 app.post("/login",(req,res)=>{
@@ -60,7 +84,7 @@ app.post("/login",(req,res)=>{
         res.send(result);
         console.log("successful login")
       }else{
-        res.send({message: "Wrong username or pw"})
+        res.status(409).json({ error: "Wrong username or password" });
       }
     }
   })

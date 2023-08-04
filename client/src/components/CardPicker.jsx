@@ -5,12 +5,12 @@ function CardPicker({ cardImg, nameAlt }) {
     const [name, setName] = useState("Back of Pokémon card.")
 
     return (
-        <div>
-            <img alt={name} class="max-w-xs" src={card} onClick={() => {
-                setCard(cardImg);
-                setName(nameAlt)
-            }} />
-        </div>
+
+        <img alt={name} class="max-w-3 p-2 xl:max-w-xs" src={card} onClick={() => {
+            setCard(cardImg);
+            setName(nameAlt)
+        }} />
+
     )
 }
 

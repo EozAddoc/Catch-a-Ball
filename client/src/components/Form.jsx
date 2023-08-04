@@ -66,7 +66,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   };
   return (
     <div>
-      <div className="h-screen md:flex">
+      <div className="min-h-screen md:flex">
         <div className="md:w-1/2 relative bg-custom-pokeB hidden md:block">
           <img
             src={imgSrc}
@@ -74,15 +74,15 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
             className="opacity-50 w-full h-full object-cover"
           />
         </div>
-        <div className="md:w-1/2 bg-custom-pokeB flex flex-col">
+        <div className="min-h-screen md:w-1/2 bg-custom-pokeB flex flex-col">
           <div className="md:h-1/4">
             <div className="m-5 flex items-center justify-center">
               <img src={logoSrc} alt={logoAlt} />
             </div>
           </div>
           <div className="md:h-3/4 bg-custom-pokeB">
-            <div class="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg shadow overflow-hidden m-30 flex-grow">
-              <div class="w-full m-20  p-3">
+            <div class="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg overflow-hidden m-30 flex-grow">
+              <div class="w-full md:m-20  p-3">
                 <form method="post" action="#" onSubmit={handleSubmit}>
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                   <div

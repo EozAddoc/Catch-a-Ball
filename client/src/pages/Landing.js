@@ -19,7 +19,7 @@ function Landing() {
           />
           <div className="mt-0">
             <Link to="/login">
-              <button className="bg-pokeB hover:bg-indigo-950 text-white font-bold py-2 px-4 rounded ">
+              <button className="bg-pokeB text-white font-bold py-2 px-4 rounded ">
                 <img
                   src="l.png"
                   className="w-auto h-20 mx-auto mt-0"
@@ -28,7 +28,7 @@ function Landing() {
               </button>
             </Link>
             <Link to="/signup">
-              <button className="bg-pokeB hover:bg-ind-950 text-white font-bold py-2 px-4 rounded mt-4">
+              <button className="bg-pokeB text-white font-bold py-2 px-4 rounded mt-4">
                 <img
                   src="r.png"
                   className="w-auto h-20 mx-auto mt-0"

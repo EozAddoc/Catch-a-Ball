@@ -16,7 +16,7 @@ function SignupPokemon() {
   ];
 
   return (
-    <div className="bg-blue-900 h-screen">
+    <div className="bg-blue-900 min-h-screen">
     <QueryClientProvider client={queryClient}>
       <ChooseACard apiIds={apiIds} text="Choose three to start your journey..." />
     </QueryClientProvider>

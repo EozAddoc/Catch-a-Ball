@@ -1,4 +1,3 @@
-import pokemon from 'pokemontcgsdk'
 import ChooseACard from '../components/ChooseACard';
 
 function SignupAvatar() {

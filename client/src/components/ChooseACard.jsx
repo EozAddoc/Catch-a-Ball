@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import pokemon from 'pokemontcgsdk';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
@@ -27,7 +27,7 @@ function ChooseACard({ apiIds, text }) {
 
   if (isError) {
     console.error('Failed to fetch cards');
-  }
+  };
 
   let cardImgs = [];
 
@@ -39,16 +39,17 @@ function ChooseACard({ apiIds, text }) {
         key={i}
       />
     );
-  }
+  };
 
   return (
     <>
-      <div className="flex justify-center bg-color-transparent p-6">
+      <div className="text-center flex justify-center p-6">
         <h1 className=" text-yellow-400 text-l font-bold">
           {text}
         </h1>
       </div>
-      <div className="grid grid-cols-4 gap-4 justify-items-center">
+      <div className="grid grid-cols-2 justify-items-center
+      lg:grid-cols-4 lg:gap-4">
         {isLoading ? (
           <div>Loading...</div>
         ) : (
@@ -57,6 +58,6 @@ function ChooseACard({ apiIds, text }) {
       </div>
       </>
   );
-}
+};
 
 export default ChooseACard;

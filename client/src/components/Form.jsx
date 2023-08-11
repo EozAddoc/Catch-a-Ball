@@ -29,7 +29,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     Axios.post("http://localhost:8080/signup", {
       email: email,
       Username: username,
-      password: password,
+      password: password
     })
       .then((resp) => {
         console.log("ACCOUNT CREATED SUCCESSFULLY");

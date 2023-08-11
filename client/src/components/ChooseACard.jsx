@@ -31,15 +31,21 @@ function ChooseACard({ apiIds, text }) {
 
   let cardImgs = [];
 
+
   for (let i in cards) {
     cardImgs.push(
       <CardPicker
         cardImg={cards[i].images?.large ?? "/pkmn-cardback.png"}
         nameAlt={cards[i].name ?? "Back of Pokémon card."}
+        api_Id={cards[i].id ?? "no api :("} 
         key={i}
+        onClick={(api_Id) => {
+          console.log('Clicked card with api_Id:', api_Id);
+        }}
       />
     );
   };
+  
 
   return (
     <>

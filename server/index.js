@@ -50,7 +50,7 @@ app.post("/signup", (req, res) => {
         } else {
           // Username and email are unique, proceed with user registration
           db.query(
-            "INSERT INTO users (email, Username, password) VALUES (?,?,?)",
+            "INSERT INTO users (email, Username, password, api_Ids) VALUES (?,?,?,'[]')",
             [email, username, password],
             (err, result) => {
               if (err) {

@@ -2,6 +2,8 @@ const express = require('express');
 const { body } = require('express-validator');
 const User = require('../models/user');
 const router = express.Router();
+const jwt = require('jsonwebtoken')
+
 
 router.post("/signup", [
   body('email').isEmail(),
@@ -31,14 +33,6 @@ router.post("/signup", [
   });
 });
 
-router.get("/hello", async (req, res) => { // <-- Note the correct parameter order
-    console.log("hello");
-    res.send("Hello, world!"); // Sending a response back to the client
-});
-router.get("/login",async (req, res) => {
-    res.send("working")
-}
- )
 router.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -48,6 +42,11 @@ router.post("/login", async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     } else {
       if (result.length > 0) {
+        const username = result[0].username;
+        //generated token
+        const token = jwt.sign({username}, process.env.JWT_SECRET_KEY,{expiresIn:'1d'})
+        //put in cookie
+        res.cookie('token',token)
         res.status(200).json({ message: 'Successful login' });
       } else {
         res.status(401).json({ error: 'Wrong username or password' });

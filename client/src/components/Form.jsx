@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
+  Axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +54,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     }).then((resp) => {
       if (resp.data.message) {
         console.log(resp.data.message);
+        navigate("/home");
       } else {
         console.log(resp.data[0].email);
       }

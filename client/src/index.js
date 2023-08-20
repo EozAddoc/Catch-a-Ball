@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
+import Home from './pages/Home'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "home",
+    element: <Home/>,
     errorElement: <ErrorPage />
   },
   {

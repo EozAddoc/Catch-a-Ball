@@ -62,7 +62,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
       if (error.response && error.response.status === 409) {
         setErrorMessage(error.response.data.error);
       } else {
-        console.error("Error during registration:", error);
+        console.error("Error during login:", error);
       }
     });
   };

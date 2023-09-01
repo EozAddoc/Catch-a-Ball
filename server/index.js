@@ -22,6 +22,11 @@ app.get('/home', authenticateToken, (req,res)=>{
 
 })
 
+app.get('/logout', (req,res)=>{
+  res.clearCookie('token');
+  return res.json({Status:"Sucess"})
+})
+
 const port = 8080;
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);

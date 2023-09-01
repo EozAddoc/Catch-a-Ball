@@ -16,21 +16,20 @@ function Home(){
             if(res.data.Status==="Sucess"){
                 setAuth(true)
                 setuserName(res.data.username)
-                NavigationPreloadManager('/login')
             }else{
                 setAuth(false)
                 setMess(res.data.err)
             }
         })
         .catch(err => console.log("error", err))
-    },[])
+    })
 
     const handleLogout = () => {
         axios.get('http://localhost:8080/logout')
         .then(res=>{
             if(res.data.Status === "Sucess"){
                 window.location.reload();
-                navigate("/");
+                navigate('/');
             }else{
                 alert("error logging out")
             }
@@ -51,7 +50,7 @@ function Home(){
                 :
                 <div>
                     <h3>Not authorized</h3>
-                    <button className='btn btn-primary'> Login</button>
+                    <button className='btn btn-primary' onClick={navigate("/login")}> Login</button>
                 </div>
             }
     

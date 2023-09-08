@@ -39,6 +39,7 @@ function SignupPokemon() {
         <ChooseACard
           apiIds={apiIds}
           text={`Hello, ${username}! Choose three cards to start your journey...`}
+          maxCardsChosen={3} //choose three pokemon
         />    </QueryClientProvider>
     </div>
   );

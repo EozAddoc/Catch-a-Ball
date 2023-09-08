@@ -4,7 +4,7 @@ import pokemon from 'pokemontcgsdk';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
-function ChooseACard({ apiIds, text }) {
+function ChooseACard({ apiIds, text, maxCardsChosen }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ function ChooseACard({ apiIds, text }) {
   const [selectedCardApis, setSelectedCardApis] = useState([]);
 
   useEffect(() => {
-    if (selectedCardApis.length === 3) {
+    if (selectedCardApis.length === maxCardsChosen) {
       console.log(selectedCardApis)
       navigate('/home');
     }

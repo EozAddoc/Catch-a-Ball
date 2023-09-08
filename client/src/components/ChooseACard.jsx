@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import pokemon from 'pokemontcgsdk';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
@@ -7,7 +7,6 @@ import { useQuery, useQueryClient } from 'react-query';
 function ChooseACard({ apiIds, text }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
 
   const fetchCard = async (id) => {
     const card = await pokemon.card.find(id);
@@ -28,53 +27,54 @@ function ChooseACard({ apiIds, text }) {
     });
   }, [apiIds, queryClient]);
 
-  if (isError) {
-    console.error('Failed to fetch cards');
+  const [selectedCardApis, setSelectedCardApis] = useState([]);
+
+  useEffect(() => {
+    if (selectedCardApis.length === 3) {
+      console.log(selectedCardApis)
+      navigate('/home');
+    }
+  }, [selectedCardApis, navigate]);
+
+  const handleCardClick = (api_Id) => {
+    setSelectedCardApis((prevSelectedCardApis) => {
+      if (prevSelectedCardApis.length < 3) {
+        return [...prevSelectedCardApis, api_Id];
+      }
+      console.log('Clicked card with api_Id:', prevSelectedCardApis);
+
+      return prevSelectedCardApis;
+    });
   };
 
-  let cardImgs = [];
-  let cardApis =[]
+  if (isError) {
+    console.error('Failed to fetch cards');
+  }
 
+  let cardImgs = [];
 
   for (let i in cards) {
     cardImgs.push(
       <CardPicker
-        cardImg={cards[i].images?.large ?? "/pkmn-cardback.png"}
-        nameAlt={cards[i].name ?? "Back of Pokémon card."}
-        api_Id={cards[i].id ?? "no api :("} 
+        cardImg={cards[i].images?.large ?? '/pkmn-cardback.png'}
+        nameAlt={cards[i].name ?? 'Back of Pokémon card.'}
+        api_Id={cards[i].id ?? 'no api :('}
         key={i}
-        onClick={(api_Id) => {
-          console.log('Clicked card with api_Id:', api_Id);
-          if(cardApis.length === 2){
-            navigate('/home');
-          }else{
-            cardApis.push(api_Id);
-            console.log(cardApis);
-          }
-          
-        }}
+        onClick={handleCardClick}
       />
     );
-  };
-  
+  }
 
   return (
     <>
       <div className="text-center flex justify-center p-6">
-        <h1 className=" text-yellow-400 text-l font-bold">
-          {text}
-        </h1>
+        <h1 className=" text-yellow-400 text-l font-bold">{text}</h1>
       </div>
-      <div className="grid grid-cols-2 justify-items-center
-      lg:grid-cols-4 lg:gap-4">
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          cardImgs
-        )}
+      <div className="grid grid-cols-2 justify-items-center lg:grid-cols-4 lg:gap-4">
+        {isLoading ? <div>Loading...</div> : cardImgs}
       </div>
-      </>
+    </>
   );
-};
+}
 
 export default ChooseACard;

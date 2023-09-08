@@ -16,7 +16,6 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
     return card;
   };
 
-  axios.defaults.withCredentials = true;
   
 
   const { data: cards, isError, isLoading } = useQuery(
@@ -36,7 +35,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
   const [api_Ids, setSelectedCardApis] = useState([]);
 
   useEffect(() => {
-    if (api_Ids.length === 3) {
+    if (api_Ids.length === maxCardsChosen) {
       console.log(api_Ids)
       sendCards(api_Ids)
       navigate('/signup/avatar');
@@ -45,7 +44,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
 
   const handleCardClick = (api_Id) => {
     setSelectedCardApis((prevSelectedCardApis) => {
-      if (prevSelectedCardApis.length < 3) {
+      if (prevSelectedCardApis.length < maxCardsChosen) {
         return [...prevSelectedCardApis, api_Id];
       }
       console.log('Clicked card with api_Id:', prevSelectedCardApis);
@@ -56,7 +55,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
 
   const sendCards = (api_Ids) => {
     // Check if exactly 3 cards have been selected
-    if (api_Ids.length !== 3) {
+    if (api_Ids.length !== maxCardsChosen) {
       console.error('You must select exactly 3 cards.');
       return;
     }
@@ -82,17 +81,18 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
 
   let cardImgs = [];
 
-  for (let i in cards) {
+for (let i in cards) {
     cardImgs.push(
       <CardPicker
-        cardImg={cards[i].images?.large ?? '/pkmn-cardback.png'}
-        nameAlt={cards[i].name ?? 'Back of Pokémon card.'}
-        api_Id={cards[i].id ?? 'no api :('}
+        cardImg={cards[i].images?.large ?? "/pkmn-cardback.png"}
+        nameAlt={cards[i].name ?? "Back of Pokémon card."}
+        api_Id={cards[i].id ?? "no api :("} 
         key={i}
+        hidden={hidden}
         onClick={handleCardClick}
       />
     );
-  }
+  };
   
 
 

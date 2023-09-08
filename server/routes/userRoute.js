@@ -13,6 +13,7 @@ router.post("/signup", [
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
+  User.createUserTableIfNotExists();
 
   User.checkExistingUser(email, username, (err, userCount) => {
     if (err) {
@@ -46,6 +47,7 @@ login(username,password)
 });
 
 async function login(username,password){
+  User.createUserTableIfNotExists();
   User.getUserByUsernameAndPassword(username, password, (err, result) => {
     if (err) {
       res.status(500).json({ message: 'Internal server error' });

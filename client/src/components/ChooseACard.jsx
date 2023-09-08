@@ -6,7 +6,7 @@ import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-function ChooseACard({ apiIds, text, username }) {
+function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   

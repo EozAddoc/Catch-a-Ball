@@ -40,6 +40,8 @@ function SignupPokemon() {
           apiIds={apiIds}
           text={`Hello, ${username}! Choose three cards to start your journey...`}
           username={username} 
+          maxCardsChosen={3} //choose three pokemon
+          hidden={true}
         />    </QueryClientProvider>
     </div>
   );

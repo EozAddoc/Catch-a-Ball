@@ -1,7 +1,8 @@
 import ChooseACard from '../components/ChooseACard';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const queryClient = new QueryClient();
 
@@ -16,17 +17,17 @@ function SignupPokemon() {
     "hgss4-67", // Machop
     "pl4-65" // Geodude
   ];
-  const [mess,setMess]= useState('')
-  const [username,setuserName]= useState('')
+  const [mess, setMess] = useState('')
+  const [username, setuserName] = useState('')
   axios.defaults.withCredentials = true;
-  useEffect(()=>{
-      axios.get('http://localhost:8080/signup/pokemon')
-      .then(res=>{
-          if(res.data.Status==="Sucess"){
-              setuserName(res.data.username)
-          }else{
-              setMess(res.data.err)
-          }
+  useEffect(() => {
+    axios.get('http://localhost:8080/signup/pokemon')
+      .then(res => {
+        if (res.data.Status === "Sucess") {
+          setuserName(res.data.username)
+        } else {
+          setMess(res.data.err)
+        }
       })
       .catch(err => console.log("error", err))
   })
@@ -34,8 +35,8 @@ function SignupPokemon() {
 
   return (
     <div className="bg-blue-900 min-h-screen">
-    <QueryClientProvider client={queryClient}>
-    <ChooseACard
+      <QueryClientProvider client={queryClient}>
+        <ChooseACard
           apiIds={apiIds}
           text={`Hello, ${username}! Choose three cards to start your journey...`}
         />    </QueryClientProvider>

@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import pokemon from 'pokemontcgsdk';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
 function ChooseACard({ apiIds, text }) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
 
   const fetchCard = async (id) => {
     const card = await pokemon.card.find(id);
@@ -30,6 +33,7 @@ function ChooseACard({ apiIds, text }) {
   };
 
   let cardImgs = [];
+  let cardApis =[]
 
 
   for (let i in cards) {
@@ -41,6 +45,13 @@ function ChooseACard({ apiIds, text }) {
         key={i}
         onClick={(api_Id) => {
           console.log('Clicked card with api_Id:', api_Id);
+          if(cardApis.length === 2){
+            navigate('/home');
+          }else{
+            cardApis.push(api_Id);
+            console.log(cardApis);
+          }
+          
         }}
       />
     );

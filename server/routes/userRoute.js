@@ -25,6 +25,11 @@ router.post("/signup", [
           if (err) {
             res.status(500).json({ message: 'Internal server error' });
           } else {
+            
+            const token = jwt.sign({username}, process.env.JWT_SECRET_KEY,{expiresIn:'1d'})
+            //put in cookie
+            res.cookie('token',token)
+
             res.status(201).json({ message: 'Account created successfully' });
           }
         });
@@ -37,6 +42,10 @@ router.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+login(username,password)
+});
+
+async function login(username,password){
   User.getUserByUsernameAndPassword(username, password, (err, result) => {
     if (err) {
       res.status(500).json({ message: 'Internal server error' });
@@ -54,6 +63,7 @@ router.post("/login", async (req, res) => {
       }
     }
   });
-});
+
+}
 
 module.exports = router;

@@ -18,10 +18,13 @@ function SignupAvatar() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ChooseACard apiIds={apiIds}
-                text={"Choose your trainer!"}
-                maxCardsChosen={1} //choose one trainer
-            />
+            <div className="bg-blue-900 min-h-screen">
+                <ChooseACard apiIds={apiIds}
+                    text={"Choose your trainer!"}
+                    maxCardsChosen={1} //choose one trainer
+                    hidden={false}
+                />
+            </div>
         </QueryClientProvider>
     )
 

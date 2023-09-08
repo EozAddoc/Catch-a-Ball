@@ -27,9 +27,7 @@ router.post("/signup", [
             res.status(500).json({ message: 'Internal server error' });
           } else {
             
-            const token = jwt.sign({username}, process.env.JWT_SECRET_KEY,{expiresIn:'1d'})
-            //put in cookie
-            res.cookie('token',token)
+          login(username,password);
 
             res.status(201).json({ message: 'Account created successfully' });
           }

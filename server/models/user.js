@@ -49,6 +49,20 @@ class User {
       }
     });
   }
+  static async addCards(username, api_Ids, callback) {
+    const query = 'UPDATE users SET api_Ids = ? WHERE username = ?';
+    const values = [JSON.stringify(api_Ids), username];
+  
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Error while adding cards:', err);
+        callback(err);
+      } else {
+        callback(null, result);
+      }
+    });
+  }
+  
   static async checkExistingUser(username, email, callback) {
     const query = 'SELECT COUNT(*) AS count FROM users WHERE username = ? OR email = ?';
     const values = [username, email];

@@ -1,17 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import pokemon from 'pokemontcgsdk';
+import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
+import axios from 'axios';
 
-function ChooseACard({ apiIds, text }) {
+function ChooseACard({ apiIds, text, username }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  
 
   const fetchCard = async (id) => {
     const card = await pokemon.card.find(id);
     return card;
   };
+
+  axios.defaults.withCredentials = true;
+  
 
   const { data: cards, isError, isLoading } = useQuery(
     'cards',
@@ -27,14 +33,15 @@ function ChooseACard({ apiIds, text }) {
     });
   }, [apiIds, queryClient]);
 
-  const [selectedCardApis, setSelectedCardApis] = useState([]);
+  const [api_Ids, setSelectedCardApis] = useState([]);
 
   useEffect(() => {
-    if (selectedCardApis.length === 3) {
-      console.log(selectedCardApis)
-      navigate('/home');
+    if (api_Ids.length === 3) {
+      console.log(api_Ids)
+      sendCards(api_Ids)
+      navigate('/signup/avatar');
     }
-  }, [selectedCardApis, navigate]);
+  }, [api_Ids, navigate]);
 
   const handleCardClick = (api_Id) => {
     setSelectedCardApis((prevSelectedCardApis) => {
@@ -46,6 +53,28 @@ function ChooseACard({ apiIds, text }) {
       return prevSelectedCardApis;
     });
   };
+
+  const sendCards = (api_Ids) => {
+    // Check if exactly 3 cards have been selected
+    if (api_Ids.length !== 3) {
+      console.error('You must select exactly 3 cards.');
+      return;
+    }
+
+    // Assuming you have Axios imported and set up correctly
+    Axios.post('http://localhost:8080/signup/pokemon', {
+      username: username,
+      api_Ids: api_Ids
+    })
+      .then((resp) => {
+        console.log('Cards sent successfully');
+        navigate('/signup/avatar');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   if (isError) {
     console.error('Failed to fetch cards');
@@ -64,6 +93,8 @@ function ChooseACard({ apiIds, text }) {
       />
     );
   }
+  
+
 
   return (
     <>

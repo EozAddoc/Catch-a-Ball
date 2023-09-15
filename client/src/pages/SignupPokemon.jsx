@@ -42,6 +42,7 @@ function SignupPokemon() {
           username={username} 
           maxCardsChosen={3} //choose three pokemon
           hidden={true}
+          page={0}
         />    </QueryClientProvider>
     </div>
   );

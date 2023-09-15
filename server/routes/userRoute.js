@@ -13,8 +13,9 @@ router.post("/signup", [
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
+  User.createUserTableIfNotExists();
 
-  User.checkExistingUser(email, username, (err, userCount) => {
+  User.checkExistingUser(username, (err, userCount) => {
     if (err) {
       res.status(500).json({ message: 'Internal server error' });
     } else {
@@ -38,18 +39,20 @@ router.post("/signup", [
   });
 });
 
-router.post("/signup/pokemon",async (req, res) => {
-  const api_Ids = req.body.api_Ids;
+// In your server routes
+router.post("/signup/avatar", async (req, res) => {
   const username = req.body.username;
-
-  User.addCards(username,api_Ids,(err,result)=>{
+  const avatar_api = req.body.avatar_api;
+  User.addAvatar(username, avatar_api, (err, result) => {
     if (err) {
       res.status(500).json({ message: 'Internal server error' });
     } else {
-      res.status(201).json({ message: 'Cards added successfully' });
+      res.status(201).json({ message: 'Avatar added successfully' });
     }
   })
-})
+});
+
+
 
 router.post("/login", async (req, res) => {
   const username = req.body.username;

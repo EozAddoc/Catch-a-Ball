@@ -3,12 +3,15 @@ const db = require('../db');
 class User {
   static async createUserTableIfNotExists() {
     const query = `
-      CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        email VARCHAR(255) NOT NULL,
-        username VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        api_Ids JSON NOT NULL
+    CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      email VARCHAR(255) NOT NULL,
+      username VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      avatar_api VARCHAR(255) NOT NULL,
+      battleLvl INT,
+      lvl INT,
+      coins INT
       )
     `;
 
@@ -21,9 +24,10 @@ class User {
     });
   }
 
+
   // ... other methods for user operations
   static async createUser(email, username, password, callback) {
-    const query = 'INSERT INTO users (email, username, password, api_Ids) VALUES (?, ?, ?, \'[]\')';
+    const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins) VALUES (?, ?,?,"before", 0,0,0)';
     const values = [email, username, password];
 
     db.query(query, values, (err, result) => {
@@ -49,27 +53,29 @@ class User {
       }
     });
   }
-  static async addCards(username, api_Ids, callback) {
-    const query = 'UPDATE users SET api_Ids = ? WHERE username = ?';
-    const values = [JSON.stringify(api_Ids), username];
-  
+  static async addAvatar(username, avatar_api,callback) {
+
+    const query = 'UPDATE users SET avatar_api = ? WHERE id = ?';
+    const id = await this.getUserIdByUsername(username)
+    const values = [avatar_api, id];
+
     db.query(query, values, (err, result) => {
       if (err) {
-        console.error('Error while adding cards:', err);
-        callback(err);
+        console.error('Error while adding avatar:', err);
       } else {
-        callback(null, result);
+        console.log(callback,'Avatar added succesfully ')
+
       }
     });
   }
   
-  static async checkExistingUser(username, email, callback) {
-    const query = 'SELECT COUNT(*) AS count FROM users WHERE username = ? OR email = ?';
-    const values = [username, email];
+  static async checkExistingUser(username, callback) {
+    const query = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
+    const values = [username];
   
     db.query(query, values, (err, result) => {
       if (err) {
-        console.error("Error while checking username or email:", err);
+        console.error("Error while checking username:", err);
         callback(err); // Call the callback with the error
       } else {
         const userCount = result[0].count;
@@ -80,6 +86,26 @@ class User {
           callback(null, false); // Call the callback with userExists = false
         }
       }
+    });
+  }
+
+  static async getUserIdByUsername(username) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT id FROM users WHERE username = ?';
+      const values = [username];
+
+      db.query(query, values, (err, result) => {
+        if (err) {
+          console.error('Error while retrieving user ID by username:', err);
+          reject(err);
+        } else {
+          if (result.length > 0) {
+            resolve(result[0].id); // Resolve with the user's id
+          } else {
+            resolve(null); // User not found
+          }
+        }
+      });
     });
   }
   

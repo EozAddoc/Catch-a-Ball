@@ -35,9 +35,15 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
 
   useEffect(() => {
     if (api_Ids.length === maxCardsChosen) {
+      
       console.log(api_Ids)
       sendCards(api_Ids)
-      navigate('/signup/avatar');
+      if(page === 0){
+        navigate('/signup/avatar');
+      }else{
+        navigate('/home');
+      }
+   
     }
   }, [api_Ids, navigate]);
 
@@ -59,33 +65,30 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
       return;
     }
     if (page === 1) {
-      console.log(username)
+      console.log(username);
       let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
-      Axios.post('http://localhost:8080/signup/avatar', {
-        username: username,
-        avatar_api: avatar_api
-      })
-      .then((resp) => {
-        console.log('Avatar sent successfully');
-        navigate('/home');
-      })
-      .catch((error) => {
-        console.error('Error sending avatar:', error); // Add this line
-      });
-    }else{
-      Axios.post('http://localhost:8080/signup/pokemon', {
-        username: username,
-        api_Ids: api_Ids
-      })
-        .then((resp) => {
-          console.log('Cards sent successfully');
-          navigate('/signup/avatar');
-        })
-        .catch((error) => {
-          console.log(error);
+      try {
+         Axios.post('http://localhost:8080/signup/avatar', {
+          username: username,
+          avatar_api: avatar_api,
         });
-    };
+        console.log('Avatar sent successfully');
+      } catch (error) {
+        console.error('Error sending avatar:', error);
+      }
+    } else {
+      try {
+        Axios.post('http://localhost:8080/signup/pokemon', {
+          username: username,
+          api_Ids: api_Ids,
+        });
+        console.log('Cards sent successfully');
+      } catch (error) {
+        console.error(error);
+      }
     }
+  };
+  
 
 
   if (isError) {

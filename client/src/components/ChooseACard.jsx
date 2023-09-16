@@ -71,7 +71,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
           username: username,
           avatar_api: avatar_api,
         });
-        console.log('Avatar sent successfully');
+        console.log('Avatar sent to back-end successfully');
       } catch (error) {
         console.error('Error sending avatar:', error);
       }

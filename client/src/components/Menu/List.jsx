@@ -24,7 +24,7 @@ const List = () => {
     };
 
     return (
-        <ul className='font-bold text-3xl text-menu-blue items-center px-0 leading-10 my-0'>
+        <ul className='text-3xl text-blue-500 items-center px-0 leading-10 my-0'>
             {listOfElements}
         </ul>
     )

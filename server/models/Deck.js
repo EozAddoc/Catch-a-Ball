@@ -27,7 +27,7 @@ class Deck {
     static async addCards(username, api_Ids, callback) {
         const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
         const user_id= await User.getUserIdByUsername(username);
-        api_Ids.forEach(async (card_api) => {
+        api_Ids.forEach((card_api) => {
             const values = [user_id, card_api];
             db.query(query, values, (err, result) => {
               if (err) {

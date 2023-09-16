@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React,{useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/SideBar";
 
 import Menu from '../components/Menu/Menu';
 
@@ -45,10 +46,14 @@ function Home(){
             {
                 auth ?
                 <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
+                      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <Sidebar />
+    </div>
                     <div className='opacity-100'>
-                        <Menu></Menu>
+                        {/* <Menu></Menu> */}
                         {/* <h1>WELCOME</h1> */}
                     </div>
+                    
 
                     <div>
                         <h2></h2>

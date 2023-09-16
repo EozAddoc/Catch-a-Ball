@@ -5,10 +5,9 @@ import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
-function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
+function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  
 
   const fetchCard = async (id) => {
     const card = await pokemon.card.find(id);
@@ -35,9 +34,15 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
 
   useEffect(() => {
     if (api_Ids.length === maxCardsChosen) {
+      
       console.log(api_Ids)
       sendCards(api_Ids)
-      navigate('/signup/avatar');
+      if(page === 0){
+        navigate('/signup/avatar');
+      }else{
+        navigate('/home');
+      }
+   
     }
   }, [api_Ids, navigate]);
 
@@ -58,20 +63,31 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
       console.error('You must select exactly 3 cards.');
       return;
     }
-
-    // Assuming you have Axios imported and set up correctly
-    Axios.post('http://localhost:8080/signup/pokemon', {
-      username: username,
-      api_Ids: api_Ids
-    })
-      .then((resp) => {
+    if (page === 1) {
+      console.log(username);
+      let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
+      try {
+         Axios.post('http://localhost:8080/signup/avatar', {
+          username: username,
+          avatar_api: avatar_api,
+        });
+        console.log('Avatar sent successfully');
+      } catch (error) {
+        console.error('Error sending avatar:', error);
+      }
+    } else {
+      try {
+        Axios.post('http://localhost:8080/signup/pokemon', {
+          username: username,
+          api_Ids: api_Ids,
+        });
         console.log('Cards sent successfully');
-        navigate('/signup/avatar');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
+  
 
 
   if (isError) {

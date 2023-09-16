@@ -3,6 +3,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken')
 const userRoute = require('./routes/userRoute');
 const deckRoute =require('./routes/deckRoute');
+const homeRoute = require('./routes/homeRoute')
 const cookieParser = require('cookie-parser')
 const app = express();
 const auth = require('./middleware/authenticateToken');
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use(userRoute)
 app.use(deckRoute)
+app.use(homeRoute)
 app.get('/signup/pokemon', authenticateToken, (req,res)=>{
   return res.json({Status:"Sucess", username: req.username})
 
@@ -26,10 +28,7 @@ app.get('/signup/pokemon', authenticateToken, (req,res)=>{
 app.get('/signup/avatar', authenticateToken, (req,res)=>{
   return res.json({Status:"Sucess", username: req.username})
 })
-app.get('/home', authenticateToken, (req,res)=>{
-  return res.json({Status:"Sucess", username: req.username})
 
-})
 
 app.get('/logout', (req,res)=>{
   res.clearCookie('token');

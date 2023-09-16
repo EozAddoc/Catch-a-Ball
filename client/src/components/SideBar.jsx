@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import List from './Menu/List';
+
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -32,7 +34,7 @@ const Sidebar = () => {
           showSidebar ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <h3 className="mt-20 text-4xl font-semibold text-white">I am a sidebar</h3>
+        <h3 className="mt-20 text-4xl font-semibold text-white"><List /></h3>
       </div>
     </>
   );

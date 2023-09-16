@@ -4,7 +4,6 @@ import pokemon from 'pokemontcgsdk';
 import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
-import axios from 'axios';
 
 function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden}) {
   const queryClient = useQueryClient();

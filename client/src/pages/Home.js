@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React,{useState, useEffect} from 'react'
-import {Link} from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+
+import Menu from '../components/Menu/Menu';
 
 
 function Home(){
@@ -9,7 +10,9 @@ function Home(){
     const [auth,setAuth]= useState(false);
     const [mess,setMess]= useState('')
     const [username,setuserName]= useState('')
+
     axios.defaults.withCredentials = true;
+    
     useEffect(()=>{
         axios.get('http://localhost:8080/home')
         .then(res=>{
@@ -38,20 +41,27 @@ function Home(){
         })
     }
     return (
-        <div className='container mt-4'>
+        <div className='bg-gray-700'>
             {
                 auth ?
-                <div>
-                    <h3>
+                <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
+                    <div className='opacity-100'>
+                        <Menu></Menu>
+                        {/* <h1>WELCOME</h1> */}
+                    </div>
+
+                    <div>
+                        <h2></h2>
+                    </div>
+
+                    {/* <h3>
                         You are authorized {username}
                     </h3>
-                    <button className='btn btn-danger' onClick={handleLogout}> Logout</button>
+                    <button className='btn btn-danger' onClick={handleLogout}> Logout</button> */}
+
                 </div>
                 :
-                <div>
-                    <h3>Not authorized</h3>
-                    <button className='btn btn-primary' onClick={navigate("/login")}> Login</button>
-                </div>
+                navigate('/')
             }
     
         </div>

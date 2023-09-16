@@ -1,6 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const Deck = require('../models/deck');
+const Deck = require('../models/Deck');
 const router = express.Router();
 const jwt = require('jsonwebtoken')
 

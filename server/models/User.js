@@ -1,6 +1,10 @@
 const db = require('../db');
 
 class User {
+
+  //CREATE
+
+
   static async createUserTableIfNotExists() {
     const query = `
     CREATE TABLE IF NOT EXISTS users (
@@ -24,8 +28,9 @@ class User {
     });
   }
 
+//READ 
 
-  // ... other methods for user operations
+
   static async createUser(email, username, password, callback) {
     const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins) VALUES (?, ?,?,"before", 0,0,0)';
     const values = [email, username, password];
@@ -53,22 +58,7 @@ class User {
       }
     });
   }
-  static async addAvatar(username, avatar_api,callback) {
 
-    const query = 'UPDATE users SET avatar_api = ? WHERE id = ?';
-    const id = await this.getUserIdByUsername(username)
-    const values = [avatar_api, id];
-
-    db.query(query, values, (err, result) => {
-      if (err) {
-        console.error('Error while adding avatar:', err);
-      } else {
-        console.log(callback,'Avatar added succesfully ')
-
-      }
-    });
-  }
-  
   static async checkExistingUser(username, callback) {
     const query = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
     const values = [username];
@@ -108,6 +98,46 @@ class User {
       });
     });
   }
+
+
+  //UPDATE
+
+
+  static async addAvatar(username, avatar_api,callback) {
+
+    const query = 'UPDATE users SET avatar_api = ? WHERE id = ?';
+    const id = await this.getUserIdByUsername(username)
+    const values = [avatar_api, id];
+
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Error while adding avatar:', err);
+      } else {
+        console.log(callback,'Avatar added succesfully ')
+
+      }
+    });
+  }
+  
+
+  static async DeleteUser(username,callback) {
+
+    const query = 'DELETE users WHERE id = ?';
+    const id = await this.getUserIdByUsername(username)
+    const values = [ id];
+
+    db.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Error while adding avatar:', err);
+      } else {
+        console.log(callback,'Avatar added succesfully ')
+
+      }
+    });
+  }
+  
+
+  
   
 
     }

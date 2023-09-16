@@ -1,5 +1,5 @@
 const db = require('../db');
-const User = require('./user')
+const User = require('./User')
 
 class Deck {
     static async createUser_DeckTableIfNotExists() {
@@ -22,6 +22,8 @@ class Deck {
             }
           });
     }
+
+    
     static async addCards(username, api_Ids, callback) {
         const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
         const user_id= await User.getUserIdByUsername(username);

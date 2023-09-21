@@ -24,25 +24,33 @@ class Deck {
     }
 
     static async getDeckByUsername(username) {
-      return new Promise((resolve, reject) => {
+      try {
+        const user = await User.getUserByUsername(username);
+        
+        if (!user) {
+          // User not found, handle this case as needed
+          return null;
+        }
+    
         const query = 'SELECT * FROM deck WHERE user_id = ?';
-        const user_id = User.getUserByUsername(username).id
-        const values = [user_id];
-  
-        db.query(query, values, (err, result) => {
-          if (err) {
-            console.error('Error while retrieving deck by username:', err);
-            reject(err);
-          } else {
-            if (result.length > 0) {
-              resolve(result[0]); // Resolve with the user's id
+        const values = [user.id];
+    
+        return new Promise((resolve, reject) => {
+          db.query(query, values, (err, result) => {
+            if (err) {
+              console.error('Error while retrieving deck by username:', err);
+              reject(err);
             } else {
-              resolve(null); // User not found
+              resolve(result);
             }
-          }
+          });
         });
-      });
+      } catch (err) {
+        console.error('Error while getting user by username:', err);
+        throw err;
+      }
     }
+    
   
 
     

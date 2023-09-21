@@ -13,7 +13,6 @@ function authenticateToken(req, res, next) {
 
     }else{
 req.username = decoded.username;
-console.log("authTok", decoded, decoded.username)
 next()
     }
   })

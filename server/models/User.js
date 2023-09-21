@@ -98,6 +98,27 @@ class User {
       });
     });
   }
+
+  static async getUserByUsername(username) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM users WHERE username = ?';
+      const values = [username];
+  
+      db.query(query, values, (err, result) => {
+        if (err) {
+          console.error('Error while retrieving user by username:', err);
+          reject(err);
+        } else {
+          if (result.length > 0) {
+            resolve(result[0]); // Resolve with the user data
+          } else {
+            resolve(null); // User not found
+          }
+        }
+      });
+    });
+  }
+  
   
   
 

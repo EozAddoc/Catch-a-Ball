@@ -11,7 +11,7 @@ class deckController {
           if (err) {
             res.status(500).json({ message: 'Internal server error' });
           } else {
-            res.status(201).json({ message: 'Cards added successfully' });
+            res.status(201).json({ message: 'UserCards added successfully' });
           }
         })
       }

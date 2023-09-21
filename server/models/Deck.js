@@ -23,10 +23,33 @@ class Deck {
           });
     }
 
+    static async getDeckByUsername(username) {
+      return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM deck WHERE user_id = ?';
+        const user_id = User.getUserByUsername(username).id
+        const values = [user_id];
+  
+        db.query(query, values, (err, result) => {
+          if (err) {
+            console.error('Error while retrieving deck by username:', err);
+            reject(err);
+          } else {
+            if (result.length > 0) {
+              resolve(result[0]); // Resolve with the user's id
+            } else {
+              resolve(null); // User not found
+            }
+          }
+        });
+      });
+    }
+  
+
     
     static async addCards(username, api_Ids, callback) {
         const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
-        const user_id= await User.getUserIdByUsername(username);
+        console.log("addCards fn ",username);
+        const user_id=  await User.getUserIdByUsername(username);
         api_Ids.forEach((card_api) => {
             const values = [user_id, card_api];
             db.query(query, values, (err, result) => {

@@ -5,6 +5,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken')
 
 
-router.post("/signup/pokemon", deckController.addCards)
+router.post('/signup/pokemon', deckController.addCards)
 
 module.exports = router;

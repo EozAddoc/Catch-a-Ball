@@ -20,13 +20,17 @@ app.use(cookieParser());
 
 app.use(userRoute)
 app.use(deckRoute)
-app.use(homeRoute)
+// app.use(homeRoute)
 app.get('/signup/pokemon', authenticateToken, (req,res)=>{
   return res.json({Status:"Sucess", username: req.username})
 
 })
 app.get('/signup/avatar', authenticateToken, (req,res)=>{
   return res.json({Status:"Sucess", username: req.username})
+})
+app.get('/home', authenticateToken, (req,res)=>{
+  return res.json({Status:"Sucess", username: req.username})
+
 })
 
 

@@ -37,8 +37,9 @@ function SignupPokemon() {
   ];
   const [mess, setMess] = useState('')
   const [username, setuserName] = useState('')
-  axios.defaults.withCredentials = true;
   
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios.get('http://localhost:8080/signup/pokemon')
       .then(res => {

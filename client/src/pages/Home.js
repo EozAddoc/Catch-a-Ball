@@ -11,15 +11,19 @@ function Home(){
     const [auth,setAuth]= useState(false);
     const [mess,setMess]= useState('')
     const [username,setuserName]= useState('')
+    const [userData,setUserData]= useState('')
+    const [deckData,setDeckData]= useState('')
 
     axios.defaults.withCredentials = true;
     
     useEffect(()=>{
         axios.get('http://localhost:8080/home')
         .then(res=>{
-            if(res.data.Status==="Sucess"){
+            if(res.data.Status==="Success"){
                 setAuth(true)
                 setuserName(res.data.username)
+                setUserData(res.data.userData)
+                setDeckData(res.data.deckData);
             }else{
                 setAuth(false)
                 setMess(res.data.err)
@@ -47,6 +51,7 @@ function Home(){
                 auth ?
                 <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
                       <div className="flex flex-col items-center justify-center min-h-screen py-2">
+                        <h5>{deckData[0].card_api}</h5>
       <Sidebar />
     </div>
                     <div className='opacity-100'>

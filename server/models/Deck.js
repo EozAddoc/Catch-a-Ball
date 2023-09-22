@@ -2,7 +2,7 @@ const db = require('../db');
 const User = require('./User')
 
 class Deck {
-    static async createUser_DeckTableIfNotExists() {
+    static async createDeckTable() {
         const query = `
         CREATE TABLE IF NOT EXISTS deck (
           id INT AUTO_INCREMENT PRIMARY KEY,

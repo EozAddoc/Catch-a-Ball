@@ -5,7 +5,7 @@ import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
-function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
+function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectHome}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -35,10 +35,12 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
   useEffect(() => {
     if (api_Ids.length === maxCardsChosen) {
       
-      console.log(api_Ids)
+      // console.log(api_Ids)
       sendCards(api_Ids)
-      if(page === 0){
-        navigate('/signup/avatar');
+      if(!redirectHome){
+        setTimeout(() => {
+          navigate('/signup/avatar')
+        }, 500);
       }else{
         navigate('/home');
       }
@@ -63,7 +65,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, page}) {
       console.error('You must select exactly 3 cards.');
       return;
     }
-    if (page === 1) {
+    if (redirectHome) {
       console.log(username);
       let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
       try {

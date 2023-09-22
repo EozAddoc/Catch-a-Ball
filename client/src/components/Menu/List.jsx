@@ -1,9 +1,9 @@
-import MenuIcon from './MenuIcon';
 import MenuLink from './MenuLink';
 
-import HomeIcon from './HomeIcon';
-import ProfileIcon from './ProfileIcon';
-import DeckIcon from './DeckIcon';
+import MenuIcon from './Icons/MenuIcon'
+import HomeIcon from './Icons/HomeIcon';
+import ProfileIcon from './Icons/ProfileIcon';
+import DeckIcon from './Icons/DeckIcon';
 
 const List = () => {
     const listOfLinks = [

@@ -5,7 +5,7 @@ class deckController {
     static async addCards(req, res) {
         const api_Ids = req.body.api_Ids;
         const username = req.body.username;
-        Deck.createUser_DeckTableIfNotExists();
+        Deck.createDeckTable();
       
         Deck.addCards(username,api_Ids,(err)=>{
           if (err) {

@@ -42,7 +42,7 @@ function SignupAvatar() {
                     maxCardsChosen={1} //choose one trainer
                     hidden={false}
                     username={username}
-                    page ={1}
+                    redirectHome={true}
                 />
             </div>
         </QueryClientProvider>

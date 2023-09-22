@@ -129,7 +129,7 @@ class User {
   static async addAvatar(username, avatar_api,callback) {
 
     const query = 'UPDATE users SET avatar_api = ? WHERE id = ?';
-    const id = await this.getUserIdByUsername(username).id
+    const id = await this.getUserIdByUsername(username)
     const values = [avatar_api, id];
 
     db.query(query, values, (err, result) => {

@@ -7,13 +7,6 @@ const auth = require('../middleware/authenticateToken');
 const authenticateToken = require('../middleware/authenticateToken');
 
 
-// Define a route for the home page
-// router.get('/home', authenticateToken, (req,res)=>{
-//   return res.json({Status:"Sucess", username: req.username})
-
-// })
-
-
 router.get('/home', authenticateToken, async (req, res) => {
   try {
     const username = req.username;

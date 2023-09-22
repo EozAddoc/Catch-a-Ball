@@ -8,24 +8,28 @@ import Menu from '../components/Menu/Menu';
 
 function Home() {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState(false);
-    const [mess, setMess] = useState('')
-    const [username, setuserName] = useState('')
+    const [auth,setAuth]= useState(false);
+    const [mess,setMess]= useState('')
+    const [username,setuserName]= useState('')
+    const [userData,setUserData]= useState('')
+    const [deckData,setDeckData]= useState('')
 
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
         axios.get('http://localhost:8080/home')
-            .then(res => {
-                if (res.data.Status === "Sucess") {
-                    setAuth(true)
-                    setuserName(res.data.username)
-                } else {
-                    setAuth(false)
-                    setMess(res.data.err)
-                }
-            })
-            .catch(err => console.log("error", err))
+        .then(res=>{
+            if(res.data.Status==="Success"){
+                setAuth(true)
+                setuserName(res.data.username)
+                setUserData(res.data.userData)
+                setDeckData(res.data.deckData);
+            }else{
+                setAuth(false)
+                setMess(res.data.err)
+            }
+        })
+        .catch(err => console.log("error", err))
     })
 
     const handleLogout = () => {

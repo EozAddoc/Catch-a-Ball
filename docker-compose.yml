@@ -38,6 +38,8 @@ services:
       - ./server:/app
     environment:
       MYSQL_HOST_IP: db
+    ports:
+      - '1117:1117'
 
   client:
     stdin_open: true
@@ -49,6 +51,8 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    ports:
+      - '3000:3000'
 
   adminer:
       image: adminer:latest

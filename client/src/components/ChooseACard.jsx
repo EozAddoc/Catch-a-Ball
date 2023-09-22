@@ -69,7 +69,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectH
       console.log(username);
       let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
       try {
-         Axios.post('http://localhost:8080/signup/avatar', {
+         Axios.post('http://localhost:1117/signup/avatar', {
           username: username,
           avatar_api: avatar_api,
         });
@@ -79,7 +79,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectH
       }
     } else {
       try {
-        Axios.post('http://localhost:8080/signup/pokemon', {
+        Axios.post('http://localhost:1117/signup/pokemon', {
           username: username,
           api_Ids: api_Ids,
         });

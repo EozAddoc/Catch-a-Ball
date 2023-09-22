@@ -1,24 +1,18 @@
 version: '3.8'
-
-x-common-variables: &common-variables
-  MYSQL_DATABASE: books
-  MYSQL_USER: MYSQL_USER
-  MYSQL_PASSWORD: MYSQL_PASSWORD
-
 services:
-  mysql_db:
-    image: mysql
-    restart: always
+  db:
+    image: mysql:8.0
     cap_add:
       - SYS_NICE
-    volumes:
-      - "./setup.sql:/docker-entrypoint-initdb.d/setup.sql"
-    ports:
-      - "9906:3306"
+    restart: always
     environment:
-      <<: *common-variables
-      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
-      MYSQL_HOST: localhost
+      - MYSQL_DATABASE=CatchABall
+      - MYSQL_ROOT_PASSWORD=rootpw
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   nginx:
     depends_on:
@@ -36,13 +30,12 @@ services:
       dockerfile: Dockerfile
       context: "./server"
     depends_on:
-      - mysql_db
+      - db
     volumes:
       - /app/node_modules
       - ./server:/app
     environment:
-      <<: *common-variables
-      MYSQL_HOST_IP: mysql_db
+      MYSQL_HOST_IP: db
 
   client:
     stdin_open: true
@@ -61,6 +54,10 @@ services:
       ports:
         - 8000:8080
       depends_on:
-        - mysql_db
+        - db
       environment:
-        ADMINER_DEFAULT_SERVER: mysql_db
+        ADMINER_DEFAULT_SERVER: db
+volumes:
+  db:
+    driver: local
+    

@@ -27,7 +27,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const registerF = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:8080/signup", {
+    Axios.post("http://localhost:1117/signup", {
       email: email,
       username: username,
       password: password
@@ -49,7 +49,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const loginF = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:8080/login", {
+    Axios.post("http://localhost:1117/login", {
       username: username,
       password: password,
     }).then((resp) => {

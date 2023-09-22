@@ -17,7 +17,7 @@ function Home() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://localhost:8080/home')
+        axios.get('http://localhost:1117/home')
         .then(res=>{
             if(res.data.Status==="Success"){
                 setAuth(true)
@@ -33,9 +33,9 @@ function Home() {
     })
 
     const handleLogout = () => {
-        axios.get('http://localhost:8080/logout')
+        axios.get('http://localhost:1117/logout')
             .then(res => {
-                if (res.data.Status === "Sucess") {
+                if (res.data.Status === "Success") {
                     window.location.reload();
                     navigate('/');
                 } else {

@@ -22,7 +22,7 @@ function SignupAvatar() {
     const [username, setuserName] = useState('')
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://localhost:8080/signup/pokemon')
+    axios.get('http://localhost:1117/signup/pokemon')
       .then(res => {
         if (res.data.Status === "Sucess") {
           setuserName(res.data.username)

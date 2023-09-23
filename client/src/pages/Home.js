@@ -60,6 +60,19 @@ function Home() {
                 auth ?
                     <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
                         <div className="flex flex-col items-center justify-center min-h-screen py-2">
+                            <h5>{userData.username}</h5>
+                            {/* <h2>Your Deck:</h2>
+            <ul>
+              {deckData.map((deckItem, index) => (
+                <li key={deckItem.id}>
+                  <h3>Card ID: {deckItem.id}</h3>
+                  <p>User ID: {deckItem.user_id}</p>
+                  <p>Card API: {deckItem.card_api}</p>
+                  <p>Experience: {deckItem.Experience}</p>
+                  <p>Chosen For Battle: {deckItem.Chosen_For_Battle}</p>
+                </li>
+              ))}
+            </ul> */}
                             <Sidebar />
                         </div>
                         <div className='opacity-100'>

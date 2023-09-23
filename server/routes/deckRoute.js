@@ -8,6 +8,12 @@ const authenticateToken = require('../middleware/authenticateToken');
 
 
 router.post('/signup/pokemon', deckController.addCards)
+router.get('/home',authenticateToken,(req,res)=>{
+    return res.json({
+        Status: "Success",
+        userId: req.userId
+})
+})
 router.get('/deck', authenticateToken,async ( req,res)=>{
     try {
     const userId = req.userId;

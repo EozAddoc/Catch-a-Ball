@@ -31,7 +31,7 @@ router.get('/user', authenticateToken,async ( req,res)=>{
   if ( user) {
       return res.json({
         Status: "Success",
-        userData: user // Include deck data
+        userData: user 
       });
     } else {
       return res.status(404).json({ error: "User or deck not found" });

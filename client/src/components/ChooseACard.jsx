@@ -5,7 +5,7 @@ import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
-function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectHome}) {
+function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, redirectHome}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -49,6 +49,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectH
   }, [api_Ids, navigate]);
 
   const handleCardClick = (api_Id) => {
+    console.log(userId)
     setSelectedCardApis((prevSelectedCardApis) => {
       if (prevSelectedCardApis.length < maxCardsChosen) {
         return [...prevSelectedCardApis, api_Id];
@@ -66,11 +67,11 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectH
       return;
     }
     if (redirectHome) {
-      console.log(username);
+      console.log(userId);
       let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
       try {
          Axios.post('http://localhost:1117/signup/avatar', {
-          username: username,
+          userId: userId,
           avatar_api: avatar_api,
         });
         console.log('Avatar sent to back-end successfully');
@@ -80,7 +81,7 @@ function ChooseACard({ apiIds, text, username, maxCardsChosen, hidden, redirectH
     } else {
       try {
         Axios.post('http://localhost:1117/signup/pokemon', {
-          username: username,
+          userId: userId,
           api_Ids: api_Ids,
         });
         console.log('Cards sent successfully');

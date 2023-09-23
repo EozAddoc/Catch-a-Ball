@@ -23,9 +23,9 @@ class Deck {
           });
     }
 
-    static async getDeckByUsername(username) {
+    static async getDeckByUserId(userId) {
       try {
-        const user = await User.getUserByUsername(username);
+        const user = await User.getUserByUserId(userId);
         
         if (!user) {
           // User not found, handle this case as needed
@@ -33,7 +33,7 @@ class Deck {
         }
     
         const query = 'SELECT * FROM deck WHERE user_id = ?';
-        const values = [user.id];
+        const values = [userId];
     
         return new Promise((resolve, reject) => {
           db.query(query, values, (err, result) => {
@@ -54,10 +54,10 @@ class Deck {
   
 
     
-    static async addCards(username, api_Ids, callback) {
+    static async addCards(userId, api_Ids, callback) {
         const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
-        console.log("addCards fn ",username);
-        const user_id=  await User.getUserIdByUsername(username);
+        console.log("addCards fn ",userId);
+        const user_id= userId
         api_Ids.forEach((card_api) => {
             const values = [user_id, card_api];
             db.query(query, values, (err, result) => {

@@ -17,20 +17,29 @@ function Home() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://localhost:1117/home')
+        axios.get('http://localhost:1117/user')
         .then(res=>{
             if(res.data.Status==="Success"){
                 setAuth(true)
-                setuserName(res.data.username)
                 setUserData(res.data.userData)
-                setDeckData(res.data.deckData);
             }else{
                 setAuth(false)
                 setMess(res.data.err)
             }
         })
         .catch(err => console.log("error", err))
-    })
+    },[])
+    useEffect(() => {
+        axios.get('http://localhost:1117/deck')
+        .then(res=>{
+            if(res.data.Status==="Success"){
+                setDeckData(res.data.deckData);
+            }else{
+                setMess(res.data.err)
+            }
+        })
+        .catch(err => console.log("error", err))
+    },[])
 
     const handleLogout = () => {
         axios.get('http://localhost:1117/logout')

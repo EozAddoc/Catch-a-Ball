@@ -32,7 +32,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     })
       .then((resp) => {
         console.log("ACCOUNT CREATED SUCCESSFULLY");
-        console.log("form", username)
+        console.log("formDHGSH", username)
         navigate("/signup/pokemon");
       })
       .catch((error) => {

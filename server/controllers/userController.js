@@ -16,11 +16,12 @@ class UserController {
         if (userCount > 0) {
           res.status(409).json({ error: 'Username or email already exists' });
         } else {
-          User.createUser(email, username, password, (err) => {
+          User.createUser(email, username, password, (err,userId) => {
             if (err) {
               res.status(500).json({ message: 'Internal server error' });
             } else {
-              const token = jwt.sign({ username }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+              console.log("chajbkt", userId)
+              const token = jwt.sign({ username,userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
               res.cookie('token', token);
               res.status(201).json({ message: 'Account created successfully' });
             }
@@ -31,11 +32,11 @@ class UserController {
   }
 
   static async updateAvatar(req, res) {
-    const username = req.body.username;
+    const userId = req.body.userId;
     const avatar_api = req.body.avatar_api;
     console.log(avatar_api , "controlle page")
 
-    User.addAvatar(username, avatar_api, (err, result) => {
+    User.addAvatar(userId, avatar_api, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {

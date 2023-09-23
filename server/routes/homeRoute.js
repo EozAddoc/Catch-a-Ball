@@ -14,7 +14,6 @@ router.get('/home', authenticateToken, async (req, res) => {
     const deck = await Deck.getDeckByUsername(username);
 
     if (user && deck) {
-      console.log("backend home success")
       return res.json({
         Status: "Success",
         username: req.username,

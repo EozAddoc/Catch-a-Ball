@@ -15,10 +15,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
     // Perform different actions based on the text of the button
     if (text === "Login") {
-      console.log("login");
       loginF(event);
     } else if (text === "Sign Up") {
-      console.log("sign up");
       registerF(event);
     } else {
       console.log("Error");

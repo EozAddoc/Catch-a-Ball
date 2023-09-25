@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Landing from './pages/Landing';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
+
+import Landing from './pages/Landing';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
 import Home from './pages/Home'
+import Logout from './pages/Logout';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,11 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "logout",
+    element: <Logout />,
     errorElement: <ErrorPage />
   },
   {

@@ -23,7 +23,7 @@ app.use(deckRoute)
 
 app.get('/logout', (req,res)=>{
   res.clearCookie('token');
-  return res.json({Status:"Sucess"})
+  return res.json({Status:"Success"})
 })
 
 const port = 1117;

@@ -17,7 +17,7 @@ function Home() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://localhost:1117/home')
+        axios.get('http://localhost:8000/home')
         .then(res=>{
             if(res.data.Status==="Success"){
                 setAuth(true)
@@ -33,7 +33,7 @@ function Home() {
     })
 
     const handleLogout = () => {
-        axios.get('http://localhost:1117/logout')
+        axios.get('http://localhost:8000/logout')
             .then(res => {
                 if (res.data.Status === "Success") {
                     window.location.reload();

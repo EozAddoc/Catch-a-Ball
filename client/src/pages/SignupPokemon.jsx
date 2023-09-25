@@ -35,22 +35,24 @@ function SignupPokemon() {
     "hgss4-67", // Machop
     "pl4-65" // Geodude
   ];
-  const [mess, setMess] = useState('')
+  const [userId, setUserId] = useState(0)
   const [username, setuserName] = useState('')
   
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get('http://localhost:1117/signup/pokemon')
+    axios.get('http://localhost:1117/user')
       .then(res => {
-        if (res.data.Status === "Sucess") {
-          setuserName(res.data.username)
+        if (res.data.Status === "Success") {
+          setuserName(res.data.userData.username)
+          setUserId(res.data.userData.id)
         } else {
-          setMess(res.data.err)
+          console.log(res.data.err)
         }
       })
       .catch(err => console.log("error", err))
-  })
+  },[])
+
 
   shuffle(apiIds);
 
@@ -61,6 +63,7 @@ function SignupPokemon() {
           apiIds={apiIds}
           text={`Hello, ${username}! Choose three cards to start your journey...`}
           username={username} 
+          userId={userId}
           maxCardsChosen={3} //choose three pokemon
           hidden={true}
           redirectHome={false}

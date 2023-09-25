@@ -40,7 +40,8 @@ class User {
         console.error('Error while inserting user:', err);
         callback(err);
       } else {
-        callback(null, result);
+        const userId = result.insertId
+        callback(null,userId);
       }
     });
   }
@@ -79,30 +80,11 @@ class User {
     });
   }
 
-  static async getUserIdByUsername(username) {
-    return new Promise((resolve, reject) => {
-      const query = 'SELECT id FROM users WHERE username = ?';
-      const values = [username];
 
-      db.query(query, values, (err, result) => {
-        if (err) {
-          console.error('Error while retrieving user ID by username:', err);
-          reject(err);
-        } else {
-          if (result.length > 0) {
-            resolve(result[0].id); // Resolve with the user's id
-          } else {
-            resolve(null); // User not found
-          }
-        }
-      });
-    });
-  }
-
-  static async getUserByUsername(username) {
+  static async getUserByUserId(userId) {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT * FROM users WHERE username = ?';
-      const values = [username];
+      const query = 'SELECT * FROM users WHERE id = ?';
+      const values = [userId];
   
       db.query(query, values, (err, result) => {
         if (err) {
@@ -126,11 +108,10 @@ class User {
   //UPDATE
 
 
-  static async addAvatar(username, avatar_api,callback) {
+  static async addAvatar(userId, avatar_api,callback) {
 
     const query = 'UPDATE users SET avatar_api = ? WHERE id = ?';
-    const id = await this.getUserIdByUsername(username)
-    const values = [avatar_api, id];
+    const values = [avatar_api, userId];
 
     db.query(query, values, (err, result) => {
       if (err) {
@@ -143,11 +124,10 @@ class User {
   }
   
 
-  static async DeleteUser(username,callback) {
+  static async DeleteUser(userId,callback) {
 
     const query = 'DELETE users WHERE id = ?';
-    const id = await this.getUserIdByUsername(username)
-    const values = [ id];
+    const values = [userId];
 
     db.query(query, values, (err, result) => {
       if (err) {

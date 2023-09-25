@@ -17,21 +17,19 @@ function SignupAvatar() {
         "swsh10-189",
         "swsh10-189"
     ]
-    const [mess, setMess] = useState('')
-
-    const [username, setuserName] = useState('')
+    const [userId, setUserId] = useState(0);
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://localhost:1117/signup/pokemon')
+    axios.get('http://localhost:1117/user')
       .then(res => {
-        if (res.data.Status === "Sucess") {
-          setuserName(res.data.username)
+        if (res.data.Status === "Success") {
+          setUserId(res.data.userData.id)
         } else {
-          setMess(res.data.err)
+          console.log(res.data.err)
         }
       })
       .catch(err => console.log("error", err))
-  })
+  },[])
 
 
     return (
@@ -41,7 +39,7 @@ function SignupAvatar() {
                     text={"Choose your trainer!"}
                     maxCardsChosen={1} //choose one trainer
                     hidden={false}
-                    username={username}
+                    userId={userId}
                     redirectHome={true}
                 />
             </div>

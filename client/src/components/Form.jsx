@@ -15,10 +15,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
     // Perform different actions based on the text of the button
     if (text === "Login") {
-      console.log("login");
       loginF(event);
     } else if (text === "Sign Up") {
-      console.log("sign up");
       registerF(event);
     } else {
       console.log("Error");
@@ -34,7 +32,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     })
       .then((resp) => {
         console.log("ACCOUNT CREATED SUCCESSFULLY");
-        console.log("form", username)
+        console.log("formDHGSH", username)
         navigate("/signup/pokemon");
       })
       .catch((error) => {

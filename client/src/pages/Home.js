@@ -17,20 +17,29 @@ function Home() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://localhost:8000/home')
+        axios.get('http://localhost:1117/user')
         .then(res=>{
             if(res.data.Status==="Success"){
                 setAuth(true)
-                setuserName(res.data.username)
                 setUserData(res.data.userData)
-                setDeckData(res.data.deckData);
             }else{
                 setAuth(false)
                 setMess(res.data.err)
             }
         })
         .catch(err => console.log("error", err))
-    })
+    },[])
+    useEffect(() => {
+        axios.get('http://localhost:1117/deck')
+        .then(res=>{
+            if(res.data.Status==="Success"){
+                setDeckData(res.data.deckData);
+            }else{
+                setMess(res.data.err)
+            }
+        })
+        .catch(err => console.log("error", err))
+    },[])
 
     const handleLogout = () => {
         axios.get('http://localhost:8000/logout')
@@ -51,6 +60,19 @@ function Home() {
                 auth ?
                     <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
                         <div className="flex flex-col items-center justify-center min-h-screen py-2">
+                            <h5>{userData.username}</h5>
+                            {/* <h2>Your Deck:</h2>
+            <ul>
+              {deckData.map((deckItem, index) => (
+                <li key={deckItem.id}>
+                  <h3>Card ID: {deckItem.id}</h3>
+                  <p>User ID: {deckItem.user_id}</p>
+                  <p>Card API: {deckItem.card_api}</p>
+                  <p>Experience: {deckItem.Experience}</p>
+                  <p>Chosen For Battle: {deckItem.Chosen_For_Battle}</p>
+                </li>
+              ))}
+            </ul> */}
                             <Sidebar />
                         </div>
                         <div className='opacity-100'>

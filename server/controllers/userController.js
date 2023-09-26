@@ -21,7 +21,7 @@ class UserController {
               res.status(500).json({ message: 'Internal server error' });
             } else {
               console.log("chajbkt", userId)
-              const token = jwt.sign({ username,userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+              const token = jwt.sign({ username,userId }, 'secretKey', { expiresIn: '1d' });
               res.cookie('token', token);
               res.status(201).json({ message: 'Account created successfully' });
             }

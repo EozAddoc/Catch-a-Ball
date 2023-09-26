@@ -6,8 +6,8 @@ services:
       - SYS_NICE
     restart: always
     environment:
-      - MYSQL_DATABASE=CatchABall
-      - MYSQL_ROOT_PASSWORD=rootpw
+      - MYSQL_DATABASE=process.env.MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=process.env.MYSQL_ROOT_PASSWORD
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
     ports:
@@ -44,7 +44,7 @@ services:
   client:
     stdin_open: true
     environment:
-      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     build:
       dockerfile: Dockerfile
       context: ./client

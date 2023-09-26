@@ -12,7 +12,8 @@ require('dotenv').config();
 app.use(express.json());
 app.use(cors({
   origin:["http://188.165.238.74:3000"], 
-  methods:["POST","GET"]
+  methods:["POST","GET"],
+  credentials: true
 }));
 app.use(cookieParser());
 
@@ -27,7 +28,7 @@ app.get('/logout', (req,res)=>{
 })
 
 const port = 1117;
-app.listen(port, () => {
+app.listen(() => {
   console.log(`App is listening on port ${port}`);
 });
 

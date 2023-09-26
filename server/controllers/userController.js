@@ -56,7 +56,7 @@ class UserController {
         if (result.length > 0) {
           const username = result[0].username;
           const userId = result[0].id
-          const token = jwt.sign({ username, userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+          const token = jwt.sign({ username, userId }, 'secretKey', { expiresIn: '1d' });
           res.cookie('token', token);
           res.status(200).json({ message: 'Successful login' });
         } else {

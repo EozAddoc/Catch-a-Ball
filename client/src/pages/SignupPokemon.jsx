@@ -61,7 +61,7 @@ function SignupPokemon() {
       <QueryClientProvider client={queryClient}>
         <ChooseACard
           apiIds={apiIds}
-          text={`Hello, ${username}! Choose three cards to start your journey...`}
+          text={`Goodbye, ${username}! Choose three cards to start your journey...`}
           username={username} 
           userId={userId}
           maxCardsChosen={3} //choose three pokemon

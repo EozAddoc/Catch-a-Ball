@@ -10,7 +10,7 @@ function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, re
   const navigate = useNavigate();
 
   const fetchCard = async (id) => {
-    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+    pokemon.configure({ apiKey: 'fd4c85a9-6be2-4277-a624-884003a17516' });
     const card = await pokemon.card.find(id);
     return card;
   };

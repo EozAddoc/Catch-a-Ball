@@ -62,6 +62,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         setErrorMessage(error.response.data.error);
       } else {
         console.error("Error during login:", error);
+        console.error(error);
+        console.log(username);
       }
     });
   };

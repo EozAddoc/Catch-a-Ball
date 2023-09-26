@@ -25,7 +25,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const registerF = (e) => {
     e.preventDefault();
-    Axios.post(process.env.URL + ":1117/signup", {
+    Axios.post("http://188.165.238.74:1117/signup", {
       email: email,
       username: username,
       password: password
@@ -47,7 +47,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const loginF = (e) => {
     e.preventDefault();
-    Axios.post(process.env.URL + ":1117/login", {
+    Axios.post("http://188.165.238.74:1117/login", {
       username: username,
       password: password,
     }).then((resp) => {

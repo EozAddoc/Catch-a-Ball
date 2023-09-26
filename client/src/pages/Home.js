@@ -35,7 +35,7 @@ function Home() {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get(process.env.URL + ':1117/user')
+        axios.get('http://188.165.238.74:1117/user')
             .then(res => {
                 if (res.data.Status === "Success") {
                     setAuth(true)
@@ -49,7 +49,7 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        axios.get(process.env.URL + ':1117/deck')
+        axios.get('http://188.165.238.74:1117/deck')
             .then(res => {
                 if (res.data.Status === "Success") {
                     setDeckData(res.data.deckData);

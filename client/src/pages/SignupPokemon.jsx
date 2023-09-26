@@ -41,7 +41,7 @@ function SignupPokemon() {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get(process.env.URL + ':1117/user')
+    axios.get('http://188.165.238.74:1117/user')
       .then(res => {
         if (res.data.Status === "Success") {
           setuserName(res.data.userData.username)

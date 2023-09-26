@@ -11,7 +11,7 @@ function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, re
 
   const fetchCard = async (id) => {
     const card = await pokemon.card.find(id);
-    return card.json();
+    return card;
   };
 
   const { data: cards, isError, isLoading } = useQuery(

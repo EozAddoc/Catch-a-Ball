@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+require('dotenv').config();
+
 const Logout = () => {
     const navigate = useNavigate();
 

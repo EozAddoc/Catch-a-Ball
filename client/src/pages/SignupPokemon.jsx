@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 
+require('dotenv').config();
+
 const queryClient = new QueryClient();
 
 function shuffle(array) {

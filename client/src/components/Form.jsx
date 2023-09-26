@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
+require('dotenv').config();
+
 const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   Axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");

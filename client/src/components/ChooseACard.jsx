@@ -5,6 +5,8 @@ import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
 
+require('dotenv').config();
+
 function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, redirectHome}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

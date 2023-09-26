@@ -5,6 +5,8 @@ import pokemon from 'pokemontcgsdk'
 import { useQuery, useQueryClient } from 'react-query';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+require('dotenv').config();
+
 import Sidebar from "../components/SideBar";
 
 

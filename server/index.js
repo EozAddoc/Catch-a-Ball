@@ -28,7 +28,7 @@ app.get('/logout', (req,res)=>{
 })
 
 const port = 1117;
-app.listen(() => {
+app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
 });
 

@@ -7,12 +7,12 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const auth = require('./middleware/authenticateToken');
 const authenticateToken = require('./middleware/authenticateToken');
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors({
-  origin:[process.env.URL + ":3000"], 
-  methods:["POST","GET"],
-  credentials: true
+  origin:["http://188.165.238.74:3000"], 
+  methods:["POST","GET"]
 }));
 app.use(cookieParser());
 

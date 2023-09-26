@@ -1,18 +1,36 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import pokemon from 'pokemontcgsdk'
+import { useQuery, useQueryClient } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 import Sidebar from "../components/SideBar";
 
-import Menu from '../components/Menu/Menu';
 
+async function ApiCall(id) {
+    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+    // let cards = [];
+
+    // apiIds.map(async (id) => {
+    const card = await pokemon.card.find(id);
+    // cards.push(card);
+    // })
+
+    return card;
+
+}
 
 function Home() {
+    const queryClient = new QueryClient();
+
     const navigate = useNavigate();
     const [auth, setAuth] = useState(false);
-    const [mess, setMess] = useState('')
-    const [username, setuserName] = useState('')
-    const [userData, setUserData] = useState('')
-    const [deckData, setDeckData] = useState([])
+    const [mess, setMess] = useState('');
+    const [username, setuserName] = useState('');
+    const [userData, setUserData] = useState('');
+    const [deckData, setDeckData] = useState([]);
+    const [deckInfo, setDeckInfo] = useState([]);
 
     axios.defaults.withCredentials = true;
 
@@ -42,24 +60,35 @@ function Home() {
             .catch(err => console.log("error", err))
     }, []);
 
+    // const { data: cards, isError, isLoading } = useQuery(
+    //     'cards',
+    //     ApiCall(deckData)
+    // );
+
+    useEffect(() => {
+        deckData.map(async (deckItem) => {
+            const data = await ApiCall(deckItem.card_api);
+            setDeckInfo((value) => [...value, data]);
+        });
+    }, [deckData]);
+
+    console.log(deckInfo)
+
     return (
+        // <QueryClientProvider client={queryClient}>
         <div className='bg-gray-700'>
             {
                 auth ?
                     <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
                         <div className="flex flex-col items-center justify-center min-h-screen py-2">
                             <h2>Your Deck:</h2>
-                            <ul>
-                                {deckData.length > 0 ? deckData.map((deckItem) => (
-                                    <li key={deckItem.id}>
-                                        <h3>Card ID: {deckItem.id}</h3>
-                                        <p>User ID: {deckItem.user_id}</p>
-                                        <p>Card API: {deckItem.card_api}</p>
-                                        <p>Experience: {deckItem.Experience}</p>
-                                        <p>Chosen For Battle: {deckItem.Chosen_For_Battle}</p>
-                                    </li>
-                                )) : "no deck :c"}
-                            </ul>
+                            <div className='flex'>
+                            {deckInfo.length > 0 && deckInfo.map((card) => {
+                                return (
+                                    <img className="max-w-3 p-2 xl:max-w-xs" src={card.images.large} />
+                                )
+                            })}
+                            </div>
                             <Sidebar />
                         </div>
                         <div className='opacity-100'>
@@ -77,6 +106,8 @@ function Home() {
             }
 
         </div>
+        // </QueryClientProvider>
+
     )
 }
 export default Home;

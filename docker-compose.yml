@@ -58,7 +58,7 @@ services:
       image: adminer:latest
       restart: unless-stopped
       ports:
-        - 8090:8090
+        - 8100:8100
       depends_on:
         - db
       environment:

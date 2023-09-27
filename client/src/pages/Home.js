@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import pokemon from 'pokemontcgsdk'
 import { useQuery, useQueryClient } from 'react-query';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import LoadingPage from '../LoadingPage';
 
 import Sidebar from "../components/SideBar";
 
@@ -31,11 +32,12 @@ function Home() {
     const [userData, setUserData] = useState('');
     const [deckData, setDeckData] = useState([]);
     const [deckInfo, setDeckInfo] = useState([]);
+    const [isLoadingData, setIsLoadingData] = useState(true); 
 
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://188.165.238.74:1117/user')
+        axios.get('http://'+process.env.REACT_APP_URL+':1117/user')
             .then(res => {
                 if (res.data.Status === "Success") {
                     setAuth(true)
@@ -49,7 +51,7 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://188.165.238.74:1117/deck')
+        axios.get('http://'+process.env.REACT_APP_URL+':1117/deck')
             .then(res => {
                 if (res.data.Status === "Success") {
                     setDeckData(res.data.deckData);
@@ -80,7 +82,7 @@ function Home() {
             {
                 auth ?
                     <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
-                        <div className="flex flex-col items-center justify-center min-h-screen py-2">
+                        <div className="flex flex-cAVol items-center justify-center min-h-screen py-2">
                             <h2>Your Deck:</h2>
                             <div className='flex'>
                             {deckInfo.length > 0 && deckInfo.map((card) => {

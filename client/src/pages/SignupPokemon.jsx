@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 
+
 const queryClient = new QueryClient();
 
 function shuffle(array) {
@@ -41,7 +42,8 @@ function SignupPokemon() {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get('http://188.165.238.74:1117/user')
+    const url = 'http://'+process.env.REACT_APP_URL+':1117/user'
+    axios.get(url)
       .then(res => {
         if (res.data.Status === "Success") {
           setuserName(res.data.userData.username)

@@ -25,7 +25,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const registerF = (e) => {
     e.preventDefault();
-    Axios.post("http://188.165.238.74:1117/signup", {
+    const url ="http://"+process.env.REACT_APP_URL+":1117/signup"
+    Axios.post(url, {
       email: email,
       username: username,
       password: password
@@ -40,6 +41,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
           setErrorMessage(error.response.data.error);
         } else {
           console.error("Error during registration:", error);
+          console.log(url)
         }
       });
   };
@@ -47,7 +49,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const loginF = (e) => {
     e.preventDefault();
-    Axios.post("http://188.165.238.74:1117/login", {
+    Axios.post("http://"+process.env.REACT_APP_URL+":1117/login", {
       username: username,
       password: password,
     }).then((resp) => {

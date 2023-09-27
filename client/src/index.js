@@ -48,6 +48,11 @@ const router = createBrowserRouter([
     path: "signup/avatar",
     element: <SignupAvatar />,
     errorElement: <ErrorPage />
+  },
+  {
+    path: "signup/avatar",
+    element: <SignupAvatar />,
+    errorElement: <ErrorPage />
   }
 ])
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
 
-export default function ErrorPage() {
+export default function LoadingPage() {
   const error = useRouteError();
   console.error(error);
 
@@ -9,7 +9,7 @@ export default function ErrorPage() {
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-blue-950 text-white">
       <div className="md:w-1/2 p-4"> {/* Left side for the GIF */}
         <img
-          src="sadPikachu.gif" // Replace with the actual URL of your GIF
+          src="runPikachu.gif" // Replace with the actual URL of your GIF
           alt="Error GIF"
           className="my-2 max-w-full" // Ensure the GIF doesn't exceed its container
         />

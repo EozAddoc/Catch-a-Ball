@@ -1,17 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const jwt = require('jsonwebtoken')
 const userRoute = require('./routes/userRoute');
 const deckRoute =require('./routes/deckRoute');
 const cookieParser = require('cookie-parser')
 const app = express();
-const auth = require('./middleware/authenticateToken');
-const authenticateToken = require('./middleware/authenticateToken');
 require('dotenv').config();
 
 app.use(express.json());
+const url = "http://"+process.env.URL+":3000"
 app.use(cors({
-  origin:["http://188.165.238.74:3000"], 
+  origin:[url], 
   methods:["POST","GET"],
   credentials: true
 }));

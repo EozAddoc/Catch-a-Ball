@@ -2,9 +2,9 @@
 // require('dotenv').config();
 
 // const db = mysql.createConnection({
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_NAME
+//   user: process.env.dev..DB_USER,
+//   password: process.env.dev..DB_PASSWORD,
+//   database: process.env.dev..DB_NAME
 // });
 
 // db.connect((err) => {

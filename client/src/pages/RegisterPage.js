@@ -7,6 +7,7 @@ function RegisterPage() {
     <Form text="Sign Up" imgSrc="register_img.jpg" imgAlt ="regImg" logoAlt="regLogo" logoSrc="register.png"/>
     </>
   );
+  
 }
 
 export default RegisterPage;

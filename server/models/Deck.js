@@ -50,13 +50,26 @@ class Deck {
         throw err;
       }
     }
+
+    static async chooseForBattle(card_api, userId, callback) {
+      const query = 'UPDATE deck SET Chosen_For_Battle = true WHERE user_id = ? AND card_api = ?';
+      const values = [userId, card_api];
     
-  
+      db.query(query, values, (err, result) => {
+        if (err) {
+          console.error('Error while updating chosen for battle:', err);
+          callback(err);
+        } else {
+          console.log('Updated successfully');
+          callback(null, 'Updated successfully');
+        }
+      });
+    }
+    
 
     
     static async addCards(userId, api_Ids, callback) {
         const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
-        console.log("addCards fn ",userId);
         const user_id= userId
         api_Ids.forEach((card_api) => {
             const values = [user_id, card_api];

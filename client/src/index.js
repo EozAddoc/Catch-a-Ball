@@ -12,6 +12,7 @@ import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
 import Home from './pages/Home'
 import Logout from './pages/Logout';
+import ProfilePage from './pages/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "profile",
+    element: <ProfilePage />,
     errorElement: <ErrorPage />
   },
   {

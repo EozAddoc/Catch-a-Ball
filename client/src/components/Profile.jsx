@@ -1,25 +1,50 @@
 import React from "react";
 
-
-function Profile() {
+function ProfilePage() {
   return (
-  <div class="max-w-lg mx-auto my-10 bg-white rounded-lg shadow-md p-5">
-    <img class="w-32 h-32 rounded-full mx-auto" src="https://picsum.photos/200" alt="Profile picture"/>
-    <h2 class="text-center text-2xl font-semibold mt-3">John Doe</h2>
-    <p class="text-center text-gray-600 mt-1">Software Engineer</p>
-    <div class="flex justify-center mt-5">
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">Twitter</a>
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">LinkedIn</a>
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">GitHub</a>
+    <div className="bg-transparent rounded-lg shadow-md w-96">
+      <img
+        src="register_img.jpg" // Replace with your image URL
+        alt="Profile"
+        className="w-24 h-24 rounded-full mx-auto mb-[-30px]"
+      />
+      <div className="bg-yellow-400 flex flex-col items-center">
+        <h4 className="pt-8 pb-2">LVL 1</h4>
+      </div>
+      <div className="bg-gray-200 p-2">
+        <div className="mb-4 flex items-center">
+          <label htmlFor="username" className="p-2 block font-medium text-gray-700">
+            Username:
+          </label>
+          <input
+            type="text"
+            placeholder="Username"
+            className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded border-2 border-gray-200 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+        <div className="mb-4 flex items-center">
+          <label htmlFor="email" className="p-2 block font-medium text-gray-700">
+            Mail:
+          </label>
+          <input
+            type="text"
+            placeholder="Mail"
+            className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded border-2 border-gray-300 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+        <div className="mb-6 flex items-center">
+          <label htmlFor="password" className="p-2 block font-medium text-gray-700">
+            Password:
+          </label>
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-5 py-2 text-gray-700 bg-gray-100 rounded border-2 border-gray-200 focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+      </div>
     </div>
-    <div class="mt-5">
-      <h3 class="text-xl font-semibold">Bio</h3>
-      <p class="text-gray-600 mt-2">John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.</p>
-    </div>
-  </div>
-
-  
   );
 }
 
-export default Profile;
+export default ProfilePage;

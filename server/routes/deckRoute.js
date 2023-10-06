@@ -19,6 +19,18 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
     const userId = req.userId;
     const deck = await Deck.getDeckByUserId(userId);
     if ( deck) {
+      console.log("res :"+ deck.length,deck[0].card_api)
+      if (deck.length < 4) {
+        deck.forEach(e => {
+          Deck.chooseForBattle(e.card_api, userId, (err, result) => {
+            if (err) {
+              console.error('Error choosing for battle:', err);
+            } else {
+              console.log(result);
+            }
+          });
+        });
+      }
         return res.json({
           Status: "Success",
           deckData: deck // Include deck data

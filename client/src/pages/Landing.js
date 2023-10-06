@@ -14,7 +14,7 @@ function Landing() {
         <div className="relative flex flex-col justify-end">
           <img
             src="pok3.png"
-            className="w-128 mx-auto mt-0"
+            className="w-128  mx-auto mt-0"
             alt="three pokemons"
           />
           <div className="mt-0">

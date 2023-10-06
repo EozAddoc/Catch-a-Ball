@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'pixel': ['"Pixelify Sans"', 'cursive']
+      },
       keyframes: {
         menuOpened: {
           "0%": { transform:"rotate(0)" },

@@ -1,0 +1,5 @@
+/* styles.css */
+.custom-silver {
+  border-image: linear-gradient(90deg, rgba(96, 94, 92, 1) 0%, rgba(136, 135, 131, 1) 25%, rgba(210, 210, 207, 1) 50%, rgba(136, 135, 131, 1) 75%, rgba(96, 94, 92, 1) 100%);  border-image-slice: 1;
+  border: radius 30px;;
+}

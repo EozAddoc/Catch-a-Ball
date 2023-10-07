@@ -122,6 +122,28 @@ class User {
       }
     });
   }
+
+  static async updateUser(userId, data, callback) {
+    Object.keys(data).forEach((key) => {
+      const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
+      const values = [data[key], userId];
+  
+      db.query(query, values, (err, result) => {
+        if (err) {
+          console.error(`Error while updating user ${key}:`, err);
+        } else {
+          console.log(`User ${key} updated successfully`);
+          if (callback) {
+            callback(result);
+          }
+        }
+      });
+    });
+  }
+  
+  
+
+
   
 
   static async DeleteUser(userId,callback) {

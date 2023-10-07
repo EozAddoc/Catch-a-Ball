@@ -43,6 +43,19 @@ class UserController {
     });
   }
 
+  static async updateUser(req, res) {
+    const userId = req.body.userId;
+    const userData = req.body.userData
+
+    User.updateUser(userId, userData, (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error' });
+      } else {
+        res.status(201).json({ message: 'Avatar added successfully' });
+      }
+    });
+  }
+
   static async loginUser(req, res) {
     const username = req.body.username;
     const password = req.body.password;

@@ -23,7 +23,6 @@ async function ApiCall(id) {
 }
 
 function Home() {
-    const queryClient = new QueryClient();
 
     const navigate = useNavigate();
     const [auth, setAuth] = useState(false);

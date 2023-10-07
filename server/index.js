@@ -10,7 +10,7 @@ app.use(express.json());
 const url = "http://"+process.env.URL+":3000"
 app.use(cors({
   origin:[url], 
-  methods:["POST","GET"],
+  methods:["POST","GET","PUT"],
   credentials: true
 }));
 app.use(cookieParser());

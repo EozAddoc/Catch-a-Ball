@@ -17,13 +17,16 @@ module.exports = {
         menu: "menu 0.5s ease-in-out"
       },
       backgroundImage: {
-        'home': "url('/public/home-bg.png')"
+        'home': "url('/public/try.jpg')",
       },
       colors: {
         custom: {
           pokeB: "#070741",
           menuBlue: "#0909F9",
-        },
+               },
+      },
+      conicGradientStops: {
+        stops: 'yellow-600 0%, yellow-400 25%, yellow-300 50%, yellow-200 75%, yellow-300 100%',
       },
     },
   },

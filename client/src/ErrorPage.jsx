@@ -1,9 +1,13 @@
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ErrorPage() {
-  const error = useRouteError();
-  console.error(error);
+  const navigate = useNavigate();
+  const handleGoHome = () => {
+    navigate("/home");
+  };
+
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-blue-950 text-white">
@@ -19,10 +23,10 @@ export default function ErrorPage() {
         <h1 className="sm:text-lg md:text-9xl lg:text-[700px] mb-6 font-extrabold text-white tracking-widest">
           404
         </h1>
-        <div className="bg-yellow-400 sm:px-6  md:px-4 md:m-2 text-xl sm:text-xs rounded rotate-12 absolute">
+        <div className="bg-yellow-400 sm:px-6 text-black md:px-4 md:m-2 text-xl sm:text-xs rounded rotate-12 absolute">
   Page Not Found
 </div>
-        <button className="mt-2 md:mt-3">
+        <button className="mt-2 md:mt-3" onClick={handleGoHome}>
           <a
             className="relative inline-block text-sm font-medium text-black group "
           >
@@ -30,7 +34,8 @@ export default function ErrorPage() {
               className="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-white group-hover:translate-y-0 group-hover:translate-x-0"
             ></span>
             <span className="relative block px-8 py-3 md:px-16 md:py-3 lg:px-20 lg:py-4 bg-yellow-500 border border-current">
-              <router-link to="/">Go Home</router-link>
+             Go Home
+             
             </span>
           </a>
         </button>

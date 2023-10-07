@@ -1,13 +1,18 @@
-import Profile from "../components/Profile";
+import Profile from "../components/EditProfile";
+import Sidebar from "../components/SideBar";
+
 
 function ProfilePage() {
+
+  
   return (
 <div className='bg-gray-700'>
-    <div className="bg-home bg-cover min-h-screen flex items-center justify-center">
+    <div className="bg-home bg-cover h-screen flex items-center justify-center">
+    <Sidebar />
         <Profile></Profile>
-        
     </div>
     </div>
+
   );
 }
 

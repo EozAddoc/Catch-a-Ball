@@ -1,8 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useRouteError} from "react-router-dom";
+
 
 
 export default function ErrorPage() {
+  const error = useRouteError();
+  console.error(error);
   const navigate = useNavigate();
   const handleGoHome = () => {
     navigate("/home");
@@ -10,10 +13,11 @@ export default function ErrorPage() {
 
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-blue-950 text-white">
-      <div className="md:w-1/2 lg:w-1/3 p-8 md:p-12 lg:p-16"> 
+    <div className="bg-home">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen  text-white">
+      <div className="md:w-1/2  lg:w-1/3 p-8 md:p-12 lg:p-16"> 
         <img
-          src="clown.gif" 
+          src="glitch.gif" 
           alt="Error GIF"
           className="my-4 max-w-full" 
         />
@@ -40,6 +44,7 @@ export default function ErrorPage() {
           </a>
         </button>
       </div>
+    </div>
     </div>
   );
 }

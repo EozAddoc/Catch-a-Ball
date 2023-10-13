@@ -19,7 +19,7 @@ function ProfilePage() {
   const updateUser = () => {
     // Make an API call to update the user information
     axios
-      .put("http://" + process.env.REACT_APP_URL + ":1117/profile", updatedUser)
+      .put("http://" + process.env.REACT_APP_URL + ":1117/Profile", updatedUser)
       .then((res) => {
         if (res.data.Status === "Success") {
           // Optionally handle success, for example, show a success message

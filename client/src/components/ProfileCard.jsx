@@ -1,32 +1,68 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-
-import './styles.css'; 
+import pokemon from 'pokemontcgsdk'
+import '../index'
 import React, { useState, useEffect } from "react";
+
+async function ApiCall(id) {
+  pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+
+  const card = await pokemon.card.find(id);
+
+  return card;
+}
  // Import the styles.css file
 function ProfileCard () {
 
   const [userData, setUserData] = useState("");
   axios.defaults.withCredentials = true;
+  const navigate = useNavigate();
+    const [auth, setAuth] = useState(false);
+    const [mess, setMess] = useState('');
+    const [avatar, setAvatar] = useState('');
+    const [deckData, setDeckData] = useState([]);
+    const [deckInfo, setDeckInfo] = useState([]);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
+    axios.defaults.withCredentials = true;
 
-  useEffect(() => {
-    axios
-      .get("http://" + process.env.REACT_APP_URL + ":1117/user")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          setUserData(res.data.userData);
-        } else {
-          console.log(res.data.err);
-        }
-      })
-      .catch((err) => console.log("error", err));
-  }, []);
+    useEffect(() => {
+        axios.get('http://' + process.env.REACT_APP_URL + ':1117/user')
+            .then(res => {
+                if (res.data.Status === "Success") {
+                    setAuth(true);
+                    setUserData(res.data.userData);
+                } else {
+                    setAuth(false);
+                    setMess(res.data.err);
+                }
+            })
+            .catch(err => console.log("error", err));
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://' + process.env.REACT_APP_URL + ':1117/deck')
+            .then(res => {
+                if (res.data.Status === "Success") {
+                    setDeckData(res.data.deckData);
+                } else {
+                    setMess(res.data.err);
+                }
+            })
+            .catch(err => console.log("error", err));
+    }, []);
+
+    useEffect(() => {
+        deckData.map(async (deckItem) => {
+            const data = await ApiCall(deckItem.card_api);
+            setDeckInfo((value) => [...value, data]);
+            setAvatar(await ApiCall(userData.avatar_api));
+        });
+    }, [deckData]); 
 
     return  (
-      <div className={`shadow-md w-full h-full animate-fade animate-once animate-duration-[10000ms]`}>    
-          <div className="cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden shadow-md h-full m-auto relative" style={{backgroundImage: 'url("water.jpg")', backgroundSize: 'cover',  borderWidth: '20px' }} >
+      <div className="h-full w-full flex items-center justify-center">
+      <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative" style={{ backgroundImage: 'url("water.jpg")', backgroundSize: 'cover', borderWidth: '20px' }}>
           <h1 className="bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 text-center text-l font-bold m-2 italic rounded-full">TRAINER</h1>
 
             <div className="header mb-2">
@@ -43,9 +79,9 @@ function ProfileCard () {
                 </div>
               </div>
             </div>
-            <div className="bg-blue-500 w-7/8 h-2/6 m-4 flex items-center justify-center">
+            <div className=" w-6/7 h-1/3 m-4 flex items-center justify-center">
   <div className="border-gray-400 border-8 shadow-2xl h-full w-full rounded-2xl">
-    <img src="testing.png" alt="AvatarImg" className=" ml-10 h-full" />
+    <img src={avatar.images?.large}  alt="AvatarImg" className="personnel-img" />
   </div>
 </div>
 

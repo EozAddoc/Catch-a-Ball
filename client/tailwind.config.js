@@ -22,6 +22,7 @@ module.exports = {
       },
       backgroundImage: {
         'home': "url('/public/try.jpg')",
+        'arena': "url('/public/arena.jpg')"
       },
       colors: {
         custom: {

@@ -23,7 +23,7 @@ router.post("/signup/avatar", userController.updateAvatar);
 //LOGIN USER
 router.post("/login",userController.loginUser);
 
-router.put("/profile", userController.updateUser)
+router.put("/Profile", userController.updateUser)
 
 
 router.get('/user', authenticateToken,async ( req,res)=>{

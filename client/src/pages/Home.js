@@ -65,7 +65,7 @@ function Home() {
         <div className='bg-gray-700'>
             {
                 auth ?
-                    <div class="min-h-screen min-w-screen bg-home bg-cover opacity-100">
+                    <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
                         <div className="text-center min-h-screen px-5 py-5">
                             <div className='flex'>
                                 <div className='bg-[#070741] mx-[0px] md:mx-[150px] lg:mx-[300px] mb-2 md:mb-5 rounded-lg px-5 py-7 text-white'>

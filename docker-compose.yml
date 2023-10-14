@@ -15,6 +15,18 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  client:
+    stdin_open: true
+    environment:
+      - WATCHPACK_POLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - '3000:3000'
 
   nginx:
     depends_on:
@@ -41,18 +53,7 @@ services:
     ports:
       - '1117:1117'
 
-  client:
-    stdin_open: true
-    environment:
-      - WATCHPACK_POLLING=true
-    build:
-      dockerfile: Dockerfile
-      context: ./client
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    ports:
-      - '3000:3000'
+ 
 
   adminer:
       image: adminer:latest

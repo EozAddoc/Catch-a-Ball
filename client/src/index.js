@@ -12,8 +12,11 @@ import LoginPage from './pages/LoginPage';
 import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
 import Home from './pages/Home'
+import Search from './pages/Search';
+import Shop from './pages/Shop';
+import Arena from './pages/Arena'
+import Opponent from './pages/Opponent';
 import Battle from './pages/Battle';
-import People from './pages/People';
 import Logout from './pages/Logout';
 import ProfilePage from './pages/ProfilePage';
 
@@ -39,8 +42,23 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "People",
-    element: <People />,
+    path: "Search",
+    element: <Search />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "Shop",
+    element: <Shop />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "Arena",
+    element: <Arena />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "Opponent",
+    element: <Opponent />,
     errorElement: <ErrorPage />
   },
   {

@@ -21,9 +21,24 @@ module.exports = {
         menu: "menu 0.5s ease-in-out"
       },
       backgroundImage: {
-        'home': "url('/public/try.jpg')",
-        'arena': "url('/public/arena.jpg')"
+        'night': "url('/public/night.jpeg')",
+        'castleN': "url('/public/tot.webp')",
+        'waterN': "url('/public/wat.jpg')",
+        'shopN': "url('/public/shop.jpg')",
+        'routeN': "url('/public/route.jpg')",
+        'homeN': "url('/public/try.jpg')",
+        'townYN': "url('/public/townY.jpg')",
+        'townNN': "url('/public/townNn.jpg')",
+        'townN': "url('/public/tttt.png')",
+        'profileN':"url('/public/r2.jpg')",
+        'deckN':"url('/public/deckR.jpg')",
+        'search': "url('/public/search2.png')"
       },
+      filter: {
+        'blue': 'brightness(80%) saturate(200%) hue-rotate(200deg)',
+        'b': 'brightness(80%) saturate(200%) hue-rotate(200deg) rgba(9, 9, 249, 0.5)',   
+
+         },
       colors: {
         custom: {
           pokeB: "#070741",

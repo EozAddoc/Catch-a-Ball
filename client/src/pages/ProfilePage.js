@@ -7,7 +7,7 @@ function ProfilePage() {
   
   return (
 <div className='bg-gray-700'>
-    <div className="bg-home bg-cover h-screen flex items-center justify-center">
+    <div className="bg-profileN bg-cover h-screen flex items-center justify-center">
     <Sidebar />
         <Profile></Profile>
     </div>

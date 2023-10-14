@@ -10,6 +10,9 @@ const List = () => {
         { name: "Home", width: "50", height: "48", icon: <HomeIcon /> },
         { name: "Profile", width: "50", height: "50", icon: <ProfileIcon /> },
         { name: "Deck", width: "66", height: "57", icon: <DeckIcon /> },
+        { name: "Arena", width: "66", height: "57", icon: <DeckIcon /> },
+        { name: "Shop", width: "66", height: "57", icon: <DeckIcon /> },
+
         { name: "Logout", width: "66", height: "57", icon: <DeckIcon /> }
     ];
     let listOfElements = [];

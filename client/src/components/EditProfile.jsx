@@ -60,7 +60,7 @@ function ProfilePage() {
   return  (
     
 
-    <div  className={!isEditMode ? "shadow-md w-1/3 h-5/6" : `bg-transparent rounded-lg shadow-md flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
+    <div  className={!isEditMode ? "shadow-md w-1/3 h-5/6" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
                {!isEditMode && <ProfileCard />}
 
           {!isEditMode && (
@@ -81,7 +81,7 @@ function ProfilePage() {
       <ProfileCard />
     </div>
        
-      <div className="bg-gray-100  flex-1 flex flex-col relative">
+      <div className="bg-gray-300  flex-1 flex flex-col relative">
      
         <div className="h-1/5 p-2">
           <h2 className="mt-8 sm:mt-2 center justify-center">

@@ -68,16 +68,7 @@ function Home() {
                     <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
                         <div className="text-center min-h-screen px-5 py-5">
                             <div className='flex'>
-                                <div className='bg-[#070741] mx-[0px] md:mx-[150px] lg:mx-[300px] mb-2 md:mb-5 rounded-lg px-5 py-7 text-white'>
-                                    <h2 className='text-5xl lg:text-8xl tracking-wide font-pixel'>YOUR DECK</h2>
-                                </div>
-                                <div className='text-white font-pixel flex items-center bg-[#070741] rounded-full'>
-                                    <div className='mx-4 mt-16px'>
-                                        <h3>{userData.username}</h3>
-                                        <h4>LVL {userData.lvl}</h4>
-                                    </div>
-                                    <img className="h-24 rotate-6" src={avatar.images?.large} alt={avatar.name} />
-                                </div>
+                               
                             </div>
                             <div className='grid grid-cols-2 md:grid-cols-3 place-items-center'>
                                 {deckInfo.length > 0 && deckInfo.map((card) => {

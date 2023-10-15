@@ -4,7 +4,7 @@ import Sidebar from '../components/SideBar'
 function Shop() {
   return (
     <div className='bg-blue-700'>
-    <div className="bg-shop bg-cover h-screen flex flex-col items-center justify-center">
+    <div className="bg-shopN bg-cover h-screen flex flex-col items-center justify-center">
 
       
       <Sidebar/>

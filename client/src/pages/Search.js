@@ -1,51 +1,56 @@
 import React from 'react';
 import Sidebar from '../components/SideBar'
+import Searchbar from '../components/SearchBar'
+import { useNavigate } from "react-router-dom";
+
 
 function Search() {
+  const navigate = useNavigate();
+  const Battle = (e)=>{
+    navigate("/Opponent")
+  }
+
+    const items = ['Alex','Woirda','Julie','Julie2'];    
+    function getRandomColor() {
+        // Generating a random color in hex format
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
   return (
     <div className='bg-blue-950'>
-      <div className="bg-townNn bg-cover h-screen flex flex-col items-center justify-center">
-        <div className="w-1/2 mb-4">
-          <form>
-            <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-500 sr-only dark:text-white">
-              Search
-            </label>
-            <div className="relative bg-white opacity-50 rounded-full">
-            <input
-  type="search"
-  id="default-search"
-  className="bg-transparent w-full p-4 pl-10 text-sm rounded-lg outline-none"
-  placeholder="Search For Adversaries"
-  required
-/>
+      <div className="bg-townNN bg-cover h-screen flex flex-col items-center justify-center">
+        <div className="search w-1/2  fixed top-28  ">
+        <Searchbar/>
+        </div>
+        <div className="w-1/2  mt-12 bg-transparent">
+          <h2 className='text-white font-bold justify-center text-center mt-10 '>{items.length}&nbsp;  R E S U L T S  : </h2>
+          <div className=' w-full '>
+          {items.map((item, index) => (
+  <div key={index} className="flex w-full ">
+    <div
+      style={{ backgroundColor: getRandomColor() }}
+      className='rounded-full  relative p-1 mt-10 w-full h-14 flex '>
+        <div className='flex-1'>    
+        <div className='bg-white ml-2 rounded-full w-12 h-12'>
+  {/* Content of the circular div */}
 
-              <button
-                type="submit"
-                className="text-white absolute right-2.5 bottom-2.5 opacity-0 bg-yellow-400"
-              >
-                Search
-              </button>
-            </div>
-          </form>
+</div>
+</div>
+        <div className='flex-1 mt-3'>  <p>{item}</p></div>
+        <div className='flex-1 text-white font-bold mt-3 w-1/6'><p>L V L     2 1 3</p></div>
+    </div>
+    
+    <div className='bg-yellow-300 text-center font-bold  rounded-full ml-6 w-25 mt-10  '> <div className='mt-2'><button onClick={Battle}><p className='mt-4'>B A T T L E</p></button></div></div> 
+  </div>
+))}
+
+          </div>
+       
         </div>
-        <div className="w-1/2 h-1/2 p-4 bg-transparent">
-          <h1 className='text-white font-bold justify-center center'> 12 R E S U L T S  : </h1>
-        <div className="relative bg-yellow-500 m-4 rounded-full">
-          <h2>hbbi</h2>
-        </div>
-        <div className="relative bg-red-500 m-4 rounded-full">
-          <h2>hbbi</h2>
-        </div>
-        <div className="relative bg-green-500 m-4  rounded-full">
-          <h2>     hbbi</h2>
-        </div>
-        <div className="relative bg-blue-200 m-4 rounded-full">
-          <h2><ul></ul>hbbi</h2>
-        </div>
-        <div className="relative bg-purple-500 m-4  rounded-full">
-          <h2>hbbi</h2>
-        </div>
-        </div>+
       </div>
       <Sidebar/>
     </div>

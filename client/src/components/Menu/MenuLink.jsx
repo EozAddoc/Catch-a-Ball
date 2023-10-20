@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
 const MenuLink = ({ children, name }) => {
     return (
-        <li className='py-12'>
+        <li className='py-7'>
             <Link to={'/' + name} className="no-underline text-black flex">
             {children}
             {name}

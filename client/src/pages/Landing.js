@@ -6,9 +6,9 @@ function Landing() {
   return (
     <div className="bg-custom-pokeB text-center App">
 
-      <div className="bg-night bg-cover ">
+      <div className="min-h-screen bg-night bg-cover ">
 
-        <header className=" min-h-screen flex flex-col items-center justify-center bg-night bg-cover ">
+        <header className="flex flex-col items-center justify-center bg-night bg-cover ">
           <img
             src="cab2.png"
             className="w-full lg:w-10/11 md:w-2/3 sm:w-3/4 mt-0"

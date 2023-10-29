@@ -44,10 +44,11 @@ class UserController {
   }
 
   static async updateUser(req, res) {
-    const userId = req.body.userId;
-    const userData = req.body.userData
+    const userId = req.body.updatedUserData.id;
+    const updatedUserData = req.body.updatedUserData
+    console.log("userdata", updatedUserData)
 
-    User.updateUser(userId, userData, (err, result) => {
+    User.updateUser(userId, updatedUserData, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {

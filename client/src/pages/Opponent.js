@@ -1,13 +1,15 @@
 import React from 'react';
 import Sidebar from '../components/SideBar'
 import ProfileCard from '../components/ProfileCard';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,  useParams } from "react-router-dom";
 
 
 function Opponent() {
   const navigate = useNavigate();
-  const Battle = (e) => {
-    navigate("/Battle")
+  const { userId } = useParams();
+  console.log(userId)
+  const Battle = (userId) => {
+    navigate(`/Battle/${userId}`)
   }
   return (
       <div className="bg-townN bg-cover h-screen flex flex-col items-center justify-center">
@@ -16,7 +18,7 @@ function Opponent() {
           <div className=' flex-1   flex justify-center items-center ml-10'>
             <div className=' h-2/3 w-2/5  ml-10'>
               <ProfileCard />
-              <div className='bg-red-500 p-3 m-10 rounded-full h-1/6 text-center font-bold '><button onClick={Battle}><h2>Battle</h2></button></div>
+              <div className='bg-red-500 p-3 m-10 rounded-full h-1/6 text-center font-bold '><button onClick={() => Battle(userId)}><h2>Battle</h2></button></div>
 
             </div>
           </div>

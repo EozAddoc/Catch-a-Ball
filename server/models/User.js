@@ -122,28 +122,36 @@ class User {
       }
     });
   }
-
-  static async updateUser(userId, data, callback) {
-    Object.keys(data).forEach((key) => {
-      const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
-      const values = [data[key], userId];
+  static async updateUser(userId, updatedUserData, callback) {
+    console.log("data", updatedUserData);
+    const updatePromises = Object.keys(updatedUserData).map((key) => {
+      return new Promise((resolve, reject) => {
+        const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
+        const values = [updatedUserData[key], userId];
   
-      db.query(query, values, (err, result) => {
-        if (err) {
-          console.error(`Error while updating user ${key}:`, err);
-        } else {
-          console.log(`User ${key} updated successfully`);
-          if (callback) {
-            callback(result);
+        db.query(query, values, (err, result) => {
+          if (err) {
+            console.error(`Error while updating user ${key}:`, err);
+            reject(err);
+          } else {
+            console.log(`User ${key} updated successfully`);
+            resolve(result);
           }
-        }
+        });
       });
     });
+  
+    try {
+      const results = await Promise.all(updatePromises);
+      if (callback) {
+        callback(results);
+      }
+    } catch (error) {
+      // Handle errors here
+      console.error("Error updating user:", error);
+    }
   }
   
-  
-
-
   
 
   static async DeleteUser(userId,callback) {

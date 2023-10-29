@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import pokemon from 'pokemontcgsdk'
 import LoadingPage from '../LoadingPage';
-
+import SearchBar from '../components/SearchBar';
 import Sidebar from "../components/SideBar";
 
 
@@ -54,6 +54,7 @@ function Home() {
     }, []);
 
     useEffect(() => {
+        
         deckData.map(async (deckItem) => {
             const data = await ApiCall(deckItem.card_api);
             setDeckInfo((value) => [...value, data]);
@@ -66,6 +67,11 @@ function Home() {
             {
                 auth ?
                     <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+                         <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+                            <div className='w-3/5'>          <SearchBar />
+</div>
+          {/* Don't forget to pass searchResults as a prop to SearchBar */}
+        </div>
                         <div className="text-center min-h-screen px-5 py-5">
                             <div className='flex'>
                                

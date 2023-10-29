@@ -1,8 +1,12 @@
 import React from 'react';
 import Sidebar from '../components/SideBar'
 import ProfileCard from '../components/ProfileCard'
+import { useNavigate,  useParams } from "react-router-dom";
+
 
 function Battle() {
+  const { userId } = useParams();
+  console.log(userId)
   return (
     <div className='bg-blue-700'>
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">

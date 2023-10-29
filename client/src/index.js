@@ -58,12 +58,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "Opponent",
+    path: "Opponent/:userId",
     element: <Opponent />,
     errorElement: <ErrorPage />
   },
   {
-    path: "Battle",
+    path: "Battle/:userId",
     element: <Battle />,
     errorElement: <ErrorPage />
   },

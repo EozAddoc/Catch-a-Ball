@@ -14,9 +14,10 @@ function Search() {
     return colors[colorIndex];
   }
 
-  const Battle = (e) => {
-    navigate('/Opponent');
+  const Battle = (userId) => {
+    navigate(`/Opponent/${userId}`);
   };
+
 
   return (
     <div className="bg-blue-950">
@@ -50,8 +51,8 @@ function Search() {
                 </div>
                 <div className="bg-yellow-300 text-center font-bold text-xl rounded-full ml-10 mt-10 ">
                   <div className="m-2">
-                    <button onClick={Battle}>
-                      <p className="m-3">B A T T L E</p>
+                  <button onClick={() => Battle(result.id)}>
+                                          <p className="m-3">B A T T L E</p>
                     </button>
                   </div>
                 </div>

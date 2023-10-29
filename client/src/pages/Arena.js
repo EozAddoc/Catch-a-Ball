@@ -3,7 +3,7 @@ import Sidebar from '../components/SideBar'
 import Searchbar from '../components/SearchBar'
 
 function Arena() {
-  const items = ['Alex', 'Woirda', 'Julie', 'Julie2'];
+  const items = ['Alex', 'Woirda', 'Julie', 'Julie2', 'JUlie3'];
 
   return (
     <div className='min-h-screen bg-blue-700'>
@@ -34,12 +34,12 @@ function Arena() {
               ))}</div>
             </div>
           </div>
-          <div className='flex-1 '>
-            <div className=' flex flex-col mx-5 px-5'>
-              <h2 className='text-center font-bold text-white'>I N &nbsp; P R O G R E S S :</h2>
+          <div className='flex-1 mt-10 '>
+            <div className=' flex flex-col mx-5 px-5 m-10'>
+              <h2 className='text-center font-bold text-white mb-10 '>I N &nbsp; P R O G R E S S :</h2>
 
               <div className='bg-red-500 flex-1 rounded-full flex mt-5 p-3'>
-                <p className='text-white flex-1 w-2/3 font-bold text-xl m-3 '> You vs JulieD5432</p><p className='flex-1 ml-auto'> 2 h</p>
+                <p className='text-white flex-1 w-2/3 font-bold text-xl m-3 '> You vs JulieD5432</p>
               </div>
               <div className='bg-black flex-1 rounded-full mt-5 p-3 '>
                 <p className='text-red-500 font-bold text-xl m-3'> You vs JulieD5432</p>

@@ -4,11 +4,10 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function Landing() {
   return (
-    <div className="bg-custom-pokeB text-center App">
 
       <div className="min-h-screen bg-night bg-cover ">
 
-        <header className="flex flex-col items-center justify-center bg-night bg-cover ">
+        <header className="flex flex-col min-h-screen  items-center justify-center ">
           <img
             src="cab2.png"
             className="w-full lg:w-10/11 md:w-2/3 sm:w-3/4 mt-0"
@@ -43,7 +42,6 @@ function Landing() {
           </div>
         </header>
       </div>
-    </div>
   );
 }
 

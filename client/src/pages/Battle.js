@@ -7,25 +7,43 @@ function Battle() {
     <div className='bg-blue-700'>
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
         <div>
-          <div className=' '>
-            <div className="absolute bottom-28 left-48 " style={{ height: '600px', width: '450px' }}>
+          <div className=' bg-blue-950'>
+            <div className="absolute bottom-28 left-52 h-2/3 w-1/4 ">
               <ProfileCard />
-              <div className='heart bg-blue-200 w-full h-1/5 absolute bottom-24 left-96  '>
-                <p>heart </p>
-              </div>
+             
             </div>
+            <div className='heart w-1/3 h-1/5 absolute bottom-16 left-1/2 flex  '>
+                <img src='heartb.png' className='h-1/2 m-3'>
+                </img>
+                <img src='heartb.png' className='h-1/2 m-3 '>
+                </img>
+                <img src='heart(2).png' className='h-1/2 m-3'>
+                </img>
+                <img src='heart(2).png' className='h-1/2 m-3'>
+                </img>
+                <img src='heart(2).png' className='h-1/2 m-3'>
+                </img>
+              </div>
             <div className="absolute bottom-10   left-20 bg-blue-500" style={{ height: '38px', width: '750px', borderRadius: '50%' }}>
             </div>
           </div>
           <div>
-            <div className="absolute bottom-80 right-80 " style={{ height: '300px', width: '225px' }}>
+            <div className="absolute bottom-80 right-48 h-2/5 w-1/6 ">
               <ProfileCard />
-              <div className='heart bg-blue-200 w-full h-1/5 absolute bottom-20 right-96  '>
-                <p>heart </p>
-              </div>
-
             </div>
-            <div className="absolute bottom-72  right-60 bg-blue-500" style={{ height: '20px', width: '400px', borderRadius: '50%' }}>
+            <div className='heart  w-1/3 h-1/6 absolute bottom-80 right-96 flex  '>
+            <img src='heartG.png' className='h-1/3 m-3'>
+                </img>
+                <img src='heartG.png' className='h-1/3 m-3 '>
+                </img>
+                <img src='heartG.png' className='h-1/3 m-3 '>
+                </img>
+                <img src='heart(2).png' className='h-1/3 m-3'>
+                </img>
+                <img src='heart(2).png' className='h-1/3 m-3'>
+                </img>
+              </div>
+            <div className="absolute bottom-72 right-36 bg-blue-500" style={{ height: '15px', width: '400px', borderRadius: '50%' }}>
 
             </div>
 

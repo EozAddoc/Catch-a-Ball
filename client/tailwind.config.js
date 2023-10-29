@@ -29,7 +29,7 @@ module.exports = {
         'homeN': "url('/public/try.jpg')",
         'townYN': "url('/public/townY.jpg')",
         'townNN': "url('/public/jh.jpeg')",
-        'townN': "url('/public/tttt.png')",
+        'townN': "url('/public/tt.jpg')",
         'profileN':"url('/public/r2.jpg')",
         'deckN':"url('/public/deckR.jpg')",
         'search': "url('/public/search2.png')"

@@ -14,7 +14,7 @@ export default function ErrorPage() {
 
   return (
     <div className="min-h-screen min-w-screen bg-homeN bg-cover">
-      <div className="flex flex-col md:flex-row items-center justify-center text-white">
+      <div className="flex flex-col min-h-screen  md:flex-row items-center justify-center text-white">
         <div className="md:w-1/2 lg:w-1/3 p-8 md:p-12 lg:p-16">
           <img
             src="glitch.gif"

@@ -18,6 +18,7 @@ import Arena from './pages/Arena'
 import Opponent from './pages/Opponent';
 import Battle from './pages/Battle';
 import Logout from './pages/Logout';
+import Deck from './pages/Deck';
 import ProfilePage from './pages/ProfilePage';
 
 const router = createBrowserRouter([
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
   {
     path: "logout",
     element: <Logout />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "Deck",
+    element: <Deck />,
     errorElement: <ErrorPage />
   },
   {

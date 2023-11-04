@@ -7,24 +7,19 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // Define your state setters here
-    // const [auth, setAuth] = useState(false);
-    // const [mess, setMess] = useState("");
+ 
 
     const fetchData = async () => {
       try {
         const url = `http://${process.env.REACT_APP_URL}:1117/api/search?q=${searchTerm}`;
-        console.log(url);
 
         const response = await axios.get(url);
-        console.log(response);
 
         // Handle the response data
         if (response.data) {
           console.log("Search successful:", response.data);
 
           const data = response.data; // Use response.data directly
-          console.log("zz", data);
 
           navigate("/Search", { state: { searchResults: data } });
         } else {

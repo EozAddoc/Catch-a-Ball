@@ -100,8 +100,38 @@ class User {
       });
     });
   }
+
+  //FILTER
   
+  static async filterUsers( filterData, callback) {
+    console.log("data", filterData);
+    const updatePromises = Object.keys(filterData).map((key) => {
+      return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM users WHERE ${key} = ? `;
+        const values = [filterData[key]];
   
+        db.query(query, values, (err, result) => {
+          if (err) {
+            console.error(`Error while filtering user ${key}:`, err);
+            reject(err);
+          } else {
+            console.log(`Users ${key} filtered successfully`);
+            resolve(result);
+          }
+        });
+      });
+    });
+  
+    try {
+      const results = await Promise.all(updatePromises);
+      if (callback) {
+        callback(results);
+      }
+    } catch (error) {
+      // Handle errors here
+      console.error("Error filtering  user:", error);
+    }
+  }
   
 
 

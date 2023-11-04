@@ -15,7 +15,6 @@ router.post("/signup", [
 ], userController.newUser);
 
 
-
 // ADD AVATAR API
 router.post("/signup/avatar", userController.updateAvatar);
 
@@ -23,9 +22,13 @@ router.post("/signup/avatar", userController.updateAvatar);
 //LOGIN USER
 router.post("/login",userController.loginUser);
 
+
+//Profile user info
 router.post("/Profile", userController.updateUser)
 
+router.get('/suggestedPlayers', userController.filterUsers)
 
+//User info 
 router.get('/user', authenticateToken,async ( req,res)=>{
   try {
   const userId = req.userId;

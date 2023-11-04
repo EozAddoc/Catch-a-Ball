@@ -1,9 +1,53 @@
-import React from 'react';
 import Sidebar from '../components/SideBar'
 import Searchbar from '../components/SearchBar'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+
 
 function Arena() {
-  const items = ['Alex', 'Woirda', 'Julie', 'Julie2', 'JUlie3'];
+  const [userData, setUserData] = useState('');
+  const [suggUser, setSuggUser] = useState('');
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    axios.get('http://' + process.env.REACT_APP_URL + ':1117/user')
+        .then(res => {
+            if (res.data.Status === "Success") {
+                setUserData(res.data.userData);
+                console.log(userData.lvl)
+                fetchPotentialOpponents()
+            } else {
+                
+            }
+        })
+        .catch(err => console.log("error", err));
+}, []);
+const hell = []
+  const fetchPotentialOpponents =  () => {
+    axios.get(`http://` + process.env.REACT_APP_URL + `:1117/api/filter?q=${userData.lvl}&field=lvl`)
+    .then(res => {
+        if (res.data) {
+            console.log(res.data[0].username)
+            const z = res.data.map(user => user.username)
+            console.log(z)
+            for(let i=0; i<5; i++){
+              hell.push(z[i])
+            }
+            setItems(hell)
+            console.log(items)
+
+        } else {
+            console.error("err")
+        }
+    })
+    .catch(err => console.log("error", err));
+    const deckInfoArray = [];
+    // for (const deckItem of deckData) {
+    
+    // }
+    
+  };
+
+
 
   return (
     <div className='min-h-screen bg-blue-700'>

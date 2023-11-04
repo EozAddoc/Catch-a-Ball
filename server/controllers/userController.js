@@ -30,6 +30,18 @@ class UserController {
     });
   }
 
+  static async filterUsers(req, res){
+    const filterData = req.body.filterData
+
+    User.filterUsers(userId, (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error' });
+      } else {
+        res.status(201).json({ message: 'Users filtered successfully' });
+      }
+    })
+  }
+
   static async updateAvatar(req, res) {
     const userId = req.body.userId;
     const avatar_api = req.body.avatar_api;

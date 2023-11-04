@@ -39,8 +39,7 @@ updatedUserData.id = userData.id
     if (updatedUser.password !== "") {
       updatedUserData.password = updatedUser.password;
     }
-console.log(updatedUserData)
-console.log("http://" + process.env.REACT_APP_URL + ":1117/Profile")
+
     // Make an API call to update the user information
     axios
       .post('http://'+process.env.REACT_APP_URL+':1117/Profile',{
@@ -50,8 +49,14 @@ console.log("http://" + process.env.REACT_APP_URL + ":1117/Profile")
       .then((res) => {
         if (res.data.Status === "Success") {
           console.log("User updated successfully!");
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         } else {
           setMess(res.data.err);
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         }
       })
       .catch((err) => console.log("error", err));
@@ -63,6 +68,7 @@ console.log("http://" + process.env.REACT_APP_URL + ":1117/Profile")
       .then((res) => {
         if (res.data.Status === "Success") {
           setUserData(res.data.userData);
+         
         } else {
           setMess(res.data.err);
         }

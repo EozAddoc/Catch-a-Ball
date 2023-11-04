@@ -62,7 +62,7 @@ function ProfileCard () {
 
     return  (
       <div className="h-full w-full flex items-center justify-center">
-      <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative" style={{ backgroundImage: 'url("water.jpg")', backgroundSize: 'cover', borderWidth: '20px' }}>
+      <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative" src = {process.env.PUBLIC_URL + "water.jpg " } style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/water.jpg)`, backgroundSize: 'cover', borderWidth: '20px' }}>
           <h1 className="bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 text-center text-l font-bold m-2 italic rounded-full">TRAINER</h1>
 
             <div className="header mb-2">
@@ -73,7 +73,7 @@ function ProfileCard () {
                 <div className="floatRight flex items-center">
                   
                   <p className="health text-black mr-4 mt-2">LVL {userData.lvl}</p>
-                  <button className='bg-blue-200 w-8'> <img src="https://jcr08.github.io/pokemon-card/images/water-energy.png" alt="Water Energy Symbol" />
+                  <button className=' w-8'> <img src="https://jcr08.github.io/pokemon-card/images/water-energy.png" alt="Water Energy Symbol" />
 </button>
 
                 </div>

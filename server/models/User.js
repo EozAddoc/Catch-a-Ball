@@ -28,9 +28,6 @@ class User {
     });
   }
 
-//READ 
-
-
   static async createUser(email, username, password, callback) {
     const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins) VALUES (?, ?,?,"before", 0,0,0)';
     const values = [email, username, password];
@@ -45,6 +42,11 @@ class User {
       }
     });
   }
+
+//READ 
+
+
+
   static async getUserByUsernameAndPassword(username, password, callback) {
     const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
     const values = [username, password];

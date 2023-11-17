@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpw
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - '3306:3306'
+      - '3304:3304'
     volumes:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql

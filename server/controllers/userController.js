@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-
+const Battle = require('../models/Battle')
 class UserController {
   static async newUser(req, res) {
     const email = req.body.email;
@@ -8,6 +8,8 @@ class UserController {
     const password = req.body.password;
 
     User.createUserTableIfNotExists();
+    Battle.createBattleTableIfNotExists()
+
 
     User.checkExistingUser(username, (err, userCount) => {
       if (err) {

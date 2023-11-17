@@ -45,53 +45,8 @@ app.get(`/api/search`, (req, res) => {
   });
 });
 
-app.get(`/api/filter`, (req, res) => {
-  const searchTerm = req.query.q;
-  const filterField = req.query.field;
 
-  console.log(searchTerm, filterField)
 
-  if (!searchTerm || !filterField) {
-    return res.status(400).json({ error: 'Missing required parameters' });
-  }
-
-  // Use parameterized query to prevent SQL injection
-  const query = `SELECT * FROM users WHERE ${filterField} = ?`;
-  
-  // Use an array to pass values securely to the query
-  db.query(query, [`%${searchTerm}%`], (error, results) => {
-    if (error) {
-      console.error('Error executing query:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
-
-    res.json(results);
-  });
-});
-app.get(`/inProgress/filter`, (req, res) => {
-  const searchTerm = req.query.q;
-
-  console.log(searchTerm)
-
-  if (!searchTerm ) {
-    return res.status(400).json({ error: 'Missing required parameters' });
-  }
-
-  // Use parameterized query to prevent SQL injection
-  const query = 'SELECT * FROM battle WHERE status = "InProgress" AND (userIdF = ? OR userIdS = ?)';
-  
-  // Use an array to pass values securely to the query
-  db.query(query, [searchTerm,searchTerm], (error, results) => {
-    if (error) {
-      console.error('Error executing query:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
-
-    res.json(results);
-  });
-});
 
 app.get('/logout', (req,res)=>{
   res.clearCookie('token');

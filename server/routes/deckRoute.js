@@ -5,6 +5,7 @@ const Deck = require('../models/Deck'); // Import the Deck model
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const authenticateToken = require('../middleware/authenticateToken');
+const db = require('../db');
 
 
 router.post('/signup/pokemon', deckController.addCards)
@@ -44,4 +45,29 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
     }
 
 })
+
+router.get(`/api/filter`, (req, res) => {
+  const searchTerm = req.query.q;
+  const filterField = req.query.field;
+
+  console.log(searchTerm, filterField)
+
+  if (!searchTerm || !filterField) {
+    return res.status(400).json({ error: 'Missing required parameters' });
+  }
+
+  // Use parameterized query to prevent SQL injection
+  const query = `SELECT * FROM users WHERE ${filterField} = ?`;
+  
+  // Use an array to pass values securely to the query
+  db.query(query, [`%${searchTerm}%`], (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    res.json(results);
+  });
+});
 module.exports = router;

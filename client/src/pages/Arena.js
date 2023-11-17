@@ -8,6 +8,7 @@ function Arena() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState("");
   const [inProgress, setInProgress] = useState([]);
+  const [users, setUsers] = useState([]);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -26,7 +27,13 @@ function Arena() {
 
           if (inProgressResponse.data) {
             setInProgress(inProgressResponse.data);
-            console.log(inProgressResponse.data);
+            if (inProgressResponse.data.length > 0) {
+              for (let i = 0; i < Math.min(inProgressResponse.data.length, 3); i++) {
+                fetchNames(inProgressResponse.data[i].id);
+              }
+            }
+           
+           
           } else {
             console.error("err");
           }
@@ -43,6 +50,22 @@ function Arena() {
     fetchData();
   }, []); // Empty dependency array means this effect runs once when the component mounts
 
+  const fetchNames = (id) => {
+    axios
+    .get(
+      `http://` +
+        process.env.REACT_APP_URL +
+        `:1117/user/filter?q=${id}`
+    )
+    .then((res)=>{
+      if(res.data){
+        console.log(res.data[0].username)
+        setUsers((prevUsers) => [...prevUsers, res.data[0].username]);   
+         }
+    })
+    .catch((err) => console.log("error", err));
+  }
+
   const fetchPotentialOpponents = () => {
     axios
       .get(
@@ -52,6 +75,7 @@ function Arena() {
       )
       .then((res) => {
         if (res.data) {
+          
           const usernames = res.data.map((user) => user.username);
           const ids = res.data.map((user) => user.id);
           const randomUsernames = getRandomItems(usernames, 5);
@@ -98,7 +122,7 @@ function Arena() {
             <div className="bg-pink-200 w-2/3 h-5/6 flex mt-12 ml-24 flex-col">
               <div className="bg-red-500 h-1/6 flex-1">
                 <h1 className="font-bold text-white text-center m-3">
-                  {" "}
+                  {" "}  
                   Recommended Opponents
                 </h1>
               </div>
@@ -140,21 +164,20 @@ function Arena() {
               <div className="bg-red-500 flex-1 rounded-full flex mt-5 p-3">
                 <p className="text-white flex-1 w-2/3 font-bold text-xl m-3">
                   {" "}
-                  You vs {inProgress.length > 0 ? inProgress[0].userIdS : "No in-progress battles"}
+                  You vs {users.length > 0 ? users[0] : "No in-progress battles"}
                 </p>
               </div>
               <div className="bg-black flex-1 rounded-full mt-5 p-3">
                 <p className="text-red-500 font-bold text-xl m-3">
                   {" "}
-                  You vs  {inProgress.length > 1 ? inProgress[1].userIdS : "No in-progress battles"}
+                  You vs  {users.length > 1 ? users[1] : "No in-progress battles"}
 
                 </p>
               </div>
               <div className="bg-white flex-1 rounded-full mt-5 p-3">
                 <p className="text-black font-bold text-xl m-3">
                   {" "}
-                  You vs {inProgress.length > 2 ? inProgress[2].userIdS : "No in-progress battles"}
-
+                  You vs {users.length > 2 ? users[2] : "No in-progress battles"}
                 </p>
               </div>
             </div>

@@ -24,7 +24,6 @@ class Battle {
   }
 
   static async createBattle(userF, userS) {
-    createBattleTableIfNotExists()
     const query = 'INSERT INTO battle (userIdF, userIdS, status) VALUES (?, ?, "InProgress")';
     const values = [userF, userS];
 
@@ -40,7 +39,6 @@ class Battle {
   }
 
   static async getInProgress(userId) {
-    createBattleTableIfNotExists()
     const query = 'SELECT * FROM battle WHERE status = "InProgress" AND (userIdF = ? OR userIdS = ?)';
     const values = [userId, userId];
   

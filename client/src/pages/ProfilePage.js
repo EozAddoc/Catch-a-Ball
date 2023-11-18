@@ -3,7 +3,6 @@ import Sidebar from "../components/SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 function ProfilePage() {
-  const [mess, setMess] = useState("");
   const [userData, setUserData] = useState("");
   
 
@@ -19,7 +18,6 @@ function ProfilePage() {
          
         } else {
           console.log("oh no")
-          setMess(res.data.err);
         }
       })
       .catch((err) => console.log("error", err));

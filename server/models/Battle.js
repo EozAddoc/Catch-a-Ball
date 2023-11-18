@@ -10,6 +10,7 @@ class Battle {
       id INT AUTO_INCREMENT PRIMARY KEY,
       userIdF INT,
       userIdS INT,
+      winner INT,
       status VARCHAR(255) NOT NULL,
       FOREIGN KEY (userIdF) REFERENCES users(id),
       FOREIGN KEY (userIdS) REFERENCES users(id)
@@ -24,10 +25,12 @@ class Battle {
   }
 
   static async createBattle(userF, userS) {
-    const query = 'INSERT INTO battle (userIdF, userIdS, status) VALUES (?, ?, "InProgress")';
-    const values = [userF, userS];
-
     try {
+      let winner = await this.determineWinner(userF, userS);
+      console.log("winner : " + winner);
+      const query = 'INSERT INTO battle (userIdF, userIdS, winner, status) VALUES (?, ?, ?, "InProgress")';
+      const values = [userF, userS, winner];
+
       const result = await db.query(query, values);
       const userId = result.insertId;
       console.log('Battle created with ID:', userF);
@@ -48,6 +51,31 @@ class Battle {
       return result;
     } catch (err) {
       console.error('Error while fetching battles in progress:', err);
+      throw err;
+    }
+  }
+
+  static async determineWinner(userIdF, userIdS) {
+    try {
+      const user1 = await db.query('SELECT battleLvl FROM users WHERE id = ?', [userIdF]);
+      const user2 = await db.query('SELECT battleLvl FROM users WHERE id = ?', [userIdS]);
+
+      const battleLevel1 = user1;
+      const battleLevel2 = user2;
+      let winner;
+
+      if (battleLevel1 === battleLevel2) {
+         winner = Math.random() < 0.5 ? userIdF : userIdS;
+      } else if (battleLevel1 > battleLevel2) {
+         winner = userIdF;
+      } else {
+         winner = userIdS;
+      }
+
+      console.log(`Final Winner: ${winner}`);
+      return winner;
+    } catch (err) {
+      console.error('Error while determining winner:', err);
       throw err;
     }
   }

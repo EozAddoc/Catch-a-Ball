@@ -14,13 +14,11 @@ async function ApiCall(id) {
 function Deck() {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(false);
-  const [mess, setMess] = useState('');
   const [avatar, setAvatar] = useState('');
   const [userData, setUserData] = useState('');
   const [deckData, setDeckData] = useState([]);
   const [battleLvl, setBattleLvl] = useState(0); // Declare battleLvl state
   const [deckInfo, setDeckInfo] = useState([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
 
   axios.defaults.withCredentials = true;
 
@@ -32,7 +30,6 @@ function Deck() {
           setUserData(res.data.userData);
         } else {
           setAuth(false);
-          setMess(res.data.err);
         }
       })
       .catch(err => console.log('error', err));
@@ -45,7 +42,7 @@ function Deck() {
           setDeckData(res.data.deckData);
 
         } else {
-          setMess(res.data.err);
+          console.log("err")
         }
       })
       .catch(err => console.log('error', err));

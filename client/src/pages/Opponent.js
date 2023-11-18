@@ -2,16 +2,32 @@ import React, { useState, useEffect } from "react";
 import Sidebar from '../components/SideBar'
 import ProfileCard from '../components/ProfileCard';
 import { useNavigate,  useParams } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
+import jsCookie from "js-cookie"
 
 function Opponent() {
-
-  
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  const [myId, setMyId]=useState('')
+  useEffect(() => {
+    const token = jsCookie.get("token");
+console.log(token)
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken.userId)
+        setMyId(decodedToken.userId)
+        // setUserData(decodedToken);
+      } catch (error) {
+        // Handle error, such as invalid token
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  }, []);
 
 // Now 'decoded' contains the decoded JWT payload
 
-  const navigate = useNavigate();
-  const { userId } = useParams();
+ 
   console.log(userId)
   const Battle = (userId) => {
     navigate(`/Battle/${userId}`)
@@ -22,7 +38,7 @@ function Opponent() {
         <div className='h-5/6 w-full flex'>
           <div className=' flex-1   flex justify-center items-center ml-10'>
             <div className=' h-2/3 w-2/5  ml-10'>
-              <ProfileCard id={userId}/>
+              <ProfileCard id={myId}/>
               <div className='bg-red-500 p-3 m-10 rounded-full h-1/6 text-center font-bold '><button onClick={() => Battle(userId)}><h2>Battle</h2></button></div>
 
             </div>

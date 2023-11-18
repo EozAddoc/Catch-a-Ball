@@ -18,7 +18,7 @@ const Logout = () => {
             }).catch(err => {
                 console.log(err);
             })
-    }, []);
+    }, [navigate]);
 }
 
 export default Logout;

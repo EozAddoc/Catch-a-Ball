@@ -9,7 +9,7 @@ function CardPicker({ cardImg, nameAlt, api_Id, onClick, hidden }) {
             setCard(cardImg);
             setName(nameAlt);
         }
-    })
+    },[cardImg, hidden, nameAlt])
 
     const handleClickRevealed = () => {
         onClick(api_Id); // Call the onClick function with the api_Id

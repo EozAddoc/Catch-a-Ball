@@ -102,15 +102,30 @@ function Arena() {
     return shuffled.slice(0, count);
   };
 
-  const sendToBattle = (item) => {
+  // const sendToBattle = (item) => {
+  //   console.log(userData.id, item);
+  //   axios.post(`http://` + process.env.REACT_APP_URL + `:1117/Battle`, {
+  //     userF: userData.id,
+  //     userS: item,
+  //   });
+  //   navigate(`/Battle/${item}`);
+  // };
+  const sendToBattle = async (item) => {
     console.log(userData.id, item);
+  
+    // Use Promise.all to wait for all fetchNames calls to complete
+    await Promise.all(
+      inProgress.map((progressItem) => fetchNames(progressItem.id))
+    );
+  
     axios.post(`http://` + process.env.REACT_APP_URL + `:1117/Battle`, {
       userF: userData.id,
       userS: item,
     });
     navigate(`/Battle/${item}`);
   };
-
+  
+  
   return (
     <div className="min-h-screen bg-blue-700">
       <div className="min-h-screen min-w-screen bg-townYN bg-cover h-screen flex flex-col items-center justify-center">

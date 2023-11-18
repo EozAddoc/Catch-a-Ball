@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/SideBar";
 import ProfileCard from "../components/ProfileCard";
 import { useNavigate, useParams } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import jsCookie from "js-cookie"
 function Battle() {
   const { userId } = useParams();
-  console.log(userId);
+  const [myId, setMyId]=useState('')
+  useEffect(() => {
+    const token = jsCookie.get("token");
+console.log(token)
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken.userId)
+        setMyId(decodedToken.userId)
+        // setUserData(decodedToken);
+      } catch (error) {
+        // Handle error, such as invalid token
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  }, []);
+  console.log(userId, myId);
   return (
     <div className="bg-blue-700">
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
         <div>
           <div className=" bg-blue-950">
             <div className="absolute bottom-28 left-52 h-2/3 w-1/4 ">
-              <ProfileCard id={userId}/>
+              <ProfileCard id={myId}/>
             </div>
             <div className="heart w-1/3 h-1/5 absolute bottom-16 left-1/2 flex  ">
               <img

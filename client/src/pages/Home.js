@@ -8,20 +8,21 @@ import Sidebar from "../components/SideBar";
 import Menu from "../components/HomepageCardMenu/Menu";
 import MissionsHomepage from "../components/MissionsHomepage";
 
-
-
 function Home() {
   const navigate = useNavigate();
+  
   const [auth, setAuth] = useState(false);
   const [mess, setMess] = useState("");
   const [avatar, setAvatar] = useState("");
   const [userData, setUserData] = useState("");
   const [deckData, setDeckData] = useState([]);
   const [deckInfo, setDeckInfo] = useState([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
   const [menuSelected, setMenuSelected] = useState("team");
 
   axios.defaults.withCredentials = true;
+
+
+
   async function ApiCall(id) {
     pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
   
@@ -160,7 +161,35 @@ function Home() {
             navigate("/")
           )}
         </div>
+      )
+      default:
+      // This block will be executed if menuSelected doesn't match any of the cases
+      return (
+        <div className="bg-gray-700">
+          {auth ? (
+            <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+              <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+                <div className="w-3/5">
+                  {" "}
+                  <SearchBar />
+                </div>
+              </div>
+              <div className="text-center min-h-screen px-5 py-5">
+                <div className="flex"></div>
+                <div class="grid grid-cols-2">
+                  {/* Your default content goes here */}
+                  <p>Default content goes here</p>
+                  <Menu setMenuSelected={setCardSelected} />
+                </div>
+                <Sidebar />
+              </div>
+            </div>
+          ) : (
+            navigate("/")
+          )}
+        </div>
       );
   }
 }
+
 export default Home;

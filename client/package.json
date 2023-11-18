@@ -10,6 +10,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.3.1",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "pokemontcgsdk": "^2.0.0",

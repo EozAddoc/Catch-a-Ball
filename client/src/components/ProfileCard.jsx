@@ -28,6 +28,7 @@ console.log("card" +id.toString())
     const [currentType, setCurrentType] = useState("");
     const [typeEn, setTypeEn] = useState("")
     const [bagType, setBagType] = useState("")
+    const [loading, setLoading] = useState(true); // New loading state
     const userId = id.id
     useEffect(() => {
       // Check if userId is available
@@ -49,7 +50,9 @@ console.log("card" +id.toString())
             }
           } catch (err) {
             console.log("error", err);
-          }
+          }finally {
+          setLoading(false); // Set loading to false when data is fetched
+        }
         };
   
         fetchData(); // Call the fetchData function when the component mounts

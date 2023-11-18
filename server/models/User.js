@@ -15,7 +15,8 @@ class User {
       avatar_api VARCHAR(255) NOT NULL,
       battleLvl INT,
       lvl INT,
-      coins INT
+      coins INT,
+      energyChoice VARCHAR(255) NOT NULL
       )
     `;
 
@@ -29,7 +30,7 @@ class User {
   }
 
   static async createUser(email, username, password, callback) {
-    const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins) VALUES (?, ?,?,"before", 0,0,0)';
+    const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins, energyChoice) VALUES (?, ?,?,"before", 0,0,0, "/energy/waterEn.png")';
     const values = [email, username, password];
 
     db.query(query, values, (err, result) => {
@@ -155,7 +156,6 @@ class User {
     });
   }
   static async updateUser(userId, updatedUserData, callback) {
-    console.log("data", updatedUserData);
     const updatePromises = Object.keys(updatedUserData).map((key) => {
       return new Promise((resolve, reject) => {
         const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
@@ -166,7 +166,6 @@ class User {
             console.error(`Error while updating user ${key}:`, err);
             reject(err);
           } else {
-            console.log(`User ${key} updated successfully`);
             resolve(result);
           }
         });

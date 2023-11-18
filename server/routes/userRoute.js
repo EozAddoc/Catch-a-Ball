@@ -24,7 +24,7 @@ router.post("/signup/avatar", userController.updateAvatar);
 router.post("/login",userController.loginUser);
 
 
-//Profile user info
+//Profile user info CREATE
 router.post("/Profile", userController.updateUser)
 
 router.get('/suggestedPlayers', userController.filterUsers)

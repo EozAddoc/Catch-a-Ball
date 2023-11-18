@@ -60,7 +60,6 @@ class Deck {
           console.error('Error while updating chosen for battle:', err);
           callback(err);
         } else {
-          console.log('Updated successfully');
           callback(null, 'Updated successfully');
         }
       });

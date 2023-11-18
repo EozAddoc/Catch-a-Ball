@@ -8,13 +8,7 @@ import Sidebar from "../components/SideBar";
 import Menu from "../components/HomepageCardMenu/Menu";
 import MissionsHomepage from "../components/MissionsHomepage";
 
-async function ApiCall(id) {
-  pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
 
-  const card = await pokemon.card.find(id);
-
-  return card;
-}
 
 function Home() {
   const navigate = useNavigate();
@@ -28,6 +22,13 @@ function Home() {
   const [menuSelected, setMenuSelected] = useState("team");
 
   axios.defaults.withCredentials = true;
+  async function ApiCall(id) {
+    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+  
+    const card = await pokemon.card.find(id);
+  
+    return card;
+  }
 
   const setCardSelected = (menu) => {
     setMenuSelected(menu);

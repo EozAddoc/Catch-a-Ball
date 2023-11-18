@@ -11,7 +11,7 @@ function Battle() {
         <div>
           <div className=" bg-blue-950">
             <div className="absolute bottom-28 left-52 h-2/3 w-1/4 ">
-              <ProfileCard />
+              <ProfileCard id={userId}/>
             </div>
             <div className="heart w-1/3 h-1/5 absolute bottom-16 left-1/2 flex  ">
               <img
@@ -34,7 +34,7 @@ function Battle() {
           </div>
           <div>
             <div className="absolute bottom-80 right-48 h-2/5 w-1/6 ">
-              <ProfileCard />
+              <ProfileCard id={userId}/>
             </div>
             <div className="heart  w-1/3 h-1/6 absolute bottom-80 right-96 flex  ">
               <img src={process.env.PUBLIC_URL + "/heartG.png"} alt="greyheart1" className="h-1/3 m-3"></img>

@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileCard from "./ProfileCard";
 
-function ProfilePage() {
+function ProfilePage(id) {
+  console.log(id.id)
   const navigate = useNavigate();
   const [mess, setMess] = useState("");
   const [userData, setUserData] = useState("");
@@ -67,9 +68,11 @@ updatedUserData.id = userData.id
       .get("http://" + process.env.REACT_APP_URL + ":1117/user")
       .then((res) => {
         if (res.data.Status === "Success") {
+          console.log("in here")
           setUserData(res.data.userData);
          
         } else {
+          console.log("oh no")
           setMess(res.data.err);
         }
       })
@@ -82,7 +85,7 @@ updatedUserData.id = userData.id
 
   return (
     <div className={!isEditMode ? "shadow-md w-1/3 h-5/6" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
-      {!isEditMode && <ProfileCard />}
+      {!isEditMode && <ProfileCard id={id.id} />}
 
       {!isEditMode && (
         <button
@@ -98,7 +101,7 @@ updatedUserData.id = userData.id
       {isEditMode && (
         <div className={`bg-transparent rounded-lg shadow-md flex flex-col sm:flex-row relative `}>
           <div className=" w-full h-full md:w-1/3 sm:w-1/5 flex flex-col items-center justify-center">
-            <ProfileCard />
+            <ProfileCard  id={id.id}/>
           </div>
 
           <div className="bg-gray-300  flex-1 flex flex-col relative">

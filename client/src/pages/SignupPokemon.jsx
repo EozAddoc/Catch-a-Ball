@@ -3,6 +3,7 @@ import ChooseACard from '../components/ChooseACard';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import { getUser, updateUser, getOtherUsersData } from "../api/user";
 
 
 const queryClient = new QueryClient();
@@ -37,16 +38,15 @@ function SignupPokemon() {
     "pl4-65" // Geodude
   ];
   const [userId, setUserId] = useState(0)
-  const [username, setuserName] = useState('')
+  const [username, setUserName] = useState('')
   
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    const url = 'http://'+process.env.REACT_APP_URL+':1117/user'
-    axios.get(url)
+ getUser()
       .then(res => {
         if (res.data.Status === "Success") {
-          setuserName(res.data.userData.username)
+          setUserName(res.data.userData.username)
           setUserId(res.data.userData.id)
         } else {
           console.log(res.data.err)

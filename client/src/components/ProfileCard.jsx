@@ -1,145 +1,111 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import pokemon from 'pokemontcgsdk'
-import '../index'
-import React, { useState, useEffect } from "react";
-import Modal from "./Modal"
+import { useState, useEffect } from "react";
+import Modal from "./Modal";
+import { getUser } from "../api/user";
+import pokemon from "pokemontcgsdk";
+import '../index';
+import '../styles.css'; // Assuming you have a styles.css file for the component styles
 
-async function ApiCall(id) {
-  pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-
-  const card = await pokemon.card.find(id);
-
-  return card;
+async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess) {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_URL}/user/filter?q=${id}`);
+    if (res.data && res.data.length > 0) {
+      const otherUser = res.data[0];
+      setOtherUser(otherUser);
+      setTypeEn(otherUser.energyChoice);
+      let bgType = otherUser.energyChoice.replace(/\/energy\/|\.png|En/g, '');
+      bgType = (["bug", "fire", "poison", "dark", "psychic"].includes(bgType))
+        ? `${bgType}.png`
+        : `${bgType}.jpg`;
+      setBagType(bgType);
+    }
+  } catch (err) {
+    console.log("error", err);
+    setMess(err.message); // Assuming this is an error message
+  }
 }
- // Import the styles.css file
-function ProfileCard (id) {
-console.log("card" +id.toString())
 
- axios.defaults.withCredentials = true;
-  const navigate = useNavigate();
-    const [auth, setAuth] = useState(false);
-    const [mess, setMess] = useState('');
-    const [otherUser,setOtherUser]=useState('')
-    const [avatar, setAvatar] = useState('');
-    const [deckData, setDeckData] = useState([]);
-    const [deckInfo, setDeckInfo] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentType, setCurrentType] = useState("");
-    const [typeEn, setTypeEn] = useState("")
-    const [bagType, setBagType] = useState("")
-    const [loading, setLoading] = useState(true); // New loading state
-    const userId = id.id
-    useEffect(() => {
-      // Check if userId is available
-      if (userId) {
-        const fetchData = async () => {
-          try {
-            const res = await axios.get(`http://${process.env.REACT_APP_URL}:1117/user/filter?q=${userId}`);
-            if (res.data && res.data.length > 0) {
-              setOtherUser(res.data[0]);
-              setTypeEn(res.data[0].energyChoice)
-              let bgType = res.data[0].energyChoice.replace(/\/energy\/|\.png|En/g, '');
-              if(bgType === "bug" || bgType === "fire" || bgType === "poison" || bgType === "dark" || bgType === "psychic"){
-                bgType += ".png"
-                      }else{
-                        bgType +=".jpg"
-                      }
-                      console.log(bgType)
-              setBagType(bgType)
-            }
-          } catch (err) {
-            console.log("error", err);
-          }finally {
-          setLoading(false); // Set loading to false when data is fetched
-        }
-        };
-  
-        fetchData(); // Call the fetchData function when the component mounts
-      }
-    }, [userId]); 
-    const openModal = () => {
-      setIsModalOpen(true);
-    };
-  
-    const closeModal = () => {
-      setIsModalOpen(false);
-    };
+function ProfileCard({ id }) {
+  const [auth, setAuth] = useState(false);
+  const [mess, setMess] = useState('');
+  const [otherUser, setOtherUser] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [deckData, setDeckData] = useState([]);
+  const [deckInfo, setDeckInfo] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentType, setCurrentType] = useState("");
+  const [typeEn, setTypeEn] = useState("");
+  const [bagType, setBagType] = useState("");
+  const [loading, setLoading] = useState(true);
 
-
-    axios.defaults.withCredentials = true;
-
-  
-    const updateUserBg = (energyChoice) => {
-      // Create a copy of the user data with the new values
-      const updatedUserData = {};
-  updatedUserData.id = otherUser.id
-  updatedUserData.energyChoice = energyChoice
-console.log(updatedUserData)
-  
-      // Make an API call to update the user information
-      axios
-        .post('http://'+process.env.REACT_APP_URL+':1117/Profile',{
-  
-          updatedUserData: updatedUserData
-        } )
-        .then((res) => {
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
         try {
-          console.log("User updated successfully!");
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
+          await fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess);
+          setLoading(false);
         } catch (error) {
-          setMess(res.data.err);
-          setTimeout(() => {
-            window.location.reload();
-          }, 100);
+          console.error("Error fetching data:", error);
+          setLoading(false);
         }
+      };
+      fetchData();
+    }
+  }, [id]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const updateUserBg = (energyChoice) => {
+    const updatedUserData = {
+      id: otherUser.id,
+      energyChoice: energyChoice,
+    };
+
+    axios.post(process.env.REACT_APP_URL + '/Profile', {
+      updatedUserData: updatedUserData
+    })
+      .then((res) => {
+        console.log("User updated successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       })
-      .catch((err) => console.log("error", err));
-    };
-    // useEffect(() => {
-    //     axios.get('http://' + process.env.REACT_APP_URL + ':1117/deck')
-    //         .then(res => {
-    //             if (res.data.Status === "Success") {
-    //                 setDeckData(res.data.deckData);
-    //             } else {
-    //                 setMess(res.data.err);
-    //             }
-    //         })
-    //         .catch(err => console.log("error", err));
-    // }, []);
+      .catch((err) => {
+        console.error("Error updating user background:", err);
+        setMess(err.message); // Assuming this is an error message
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      });
+  };
 
-    // useEffect(() => {
-    //     deckData.map(async (deckItem) => {
-    //         const data = await ApiCall(deckItem.card_api);
-    //         setDeckInfo((value) => [...value, data]);
-    //         setAvatar(await ApiCall(otherUser.avatar_api));
-    //     });
-    // }, [deckData]); 
-    const handleTypeChange = (type) => {
-      setCurrentType(type);
-      let bgType = type.split(" ")[0].toLowerCase()
-      if(bgType === "bug" || bgType === "fire" || bgType === "poison" || bgType === "dark" || bgType === "psychic"){
-bgType += ".png"
-      }else{
-        bgType +=".jpg"
-      }
-      setBagType(bgType)
-      const transformedType = type.split(" ")[0].toLowerCase() + "En";
-      const srcType = "/energy/"+transformedType+".png"
-      setTypeEn(srcType)
-      if(typeEn){
-        updateUserBg(srcType)
-      }
-    };
-  
-    useEffect(() => {
-      handleTypeChange(currentType);
-    }, [currentType]);
+  const handleTypeChange = (type) => {
+    setCurrentType(type);
+    let bgType = type.split(" ")[0].toLowerCase();
+    bgType = (["bug", "fire", "poison", "dark", "psychic"].includes(bgType))
+      ? `${bgType}.png`
+      : `${bgType}.jpg`;
+    setBagType(bgType);
+    const transformedType = type.split(" ")[0].toLowerCase() + "En";
+    const srcType = `/energy/${transformedType}.png`;
+    setTypeEn(srcType);
+    if (typeEn) {
+      updateUserBg(srcType);
+    }
+  };
+
+  useEffect(() => {
+    handleTypeChange(currentType);
+  }, [currentType]);
 
 
-    
+
 
   
 

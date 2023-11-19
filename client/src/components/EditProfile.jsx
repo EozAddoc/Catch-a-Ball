@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileCard from "./ProfileCard";
+import { getUser, updateUser, getOtherUsersData } from "../api/user";
 
 function ProfilePage(id) {
   console.log(id.id)
@@ -43,7 +44,7 @@ updatedUserData.id = userData.id
 
     // Make an API call to update the user information
     axios
-      .post('http://'+process.env.REACT_APP_URL+':1117/Profile',{
+      .post(process.env.REACT_APP_URL+'/Profile',{
 
         updatedUserData: updatedUserData
       } )
@@ -64,8 +65,7 @@ updatedUserData.id = userData.id
   };
 
   useEffect(() => {
-    axios
-      .get("http://" + process.env.REACT_APP_URL + ":1117/user")
+      getUser()
       .then((res) => {
         if (res.data.Status === "Success") {
           console.log("in here")

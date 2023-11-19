@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import { getUser, updateUser, getOtherUsersData,filterUsers } from "../api/user";
+
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -11,15 +13,14 @@ const SearchBar = () => {
 
     const fetchData = async () => {
       try {
-        const url = `http://${process.env.REACT_APP_URL}:1117/api/search?q=${searchTerm}`;
-
-        const response = await axios.get(url);
+        const url =  filterUsers(searchTerm)
+    
+        const response = await url;
 
         // Handle the response data
-        if (response.data) {
-          console.log("Search successful:", response.data);
+        if (response) {
 
-          const data = response.data; // Use response.data directly
+          const data = response; // Use response.data directly
 
           navigate("/Search", { state: { searchResults: data } });
         } else {

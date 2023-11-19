@@ -37,7 +37,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://" + process.env.REACT_APP_URL + ":1117/user")
+      .get( process.env.REACT_APP_URL + "/user")
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);
@@ -52,7 +52,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://" + process.env.REACT_APP_URL + ":1117/deck")
+      .get( process.env.REACT_APP_URL + "/deck")
       .then((res) => {
         if (res.data.Status === "Success") {
           setDeckData(res.data.deckData);
@@ -69,7 +69,7 @@ function Home() {
       setDeckInfo((value) => [...value, data]);
       setAvatar(await ApiCall(userData.avatar_api));
     });
-  }, [deckData]);
+  }, [deckData,userData]);
 
   switch (menuSelected) {
     case "team":
@@ -120,7 +120,6 @@ function Home() {
                   {" "}
                   <SearchBar />
                 </div>
-                {/* Don't forget to pass searchResults as a prop to SearchBar */}
               </div>
               <div className="text-center min-h-screen px-5 py-5">
                 <div className="flex"></div>
@@ -146,7 +145,6 @@ function Home() {
                   {" "}
                   <SearchBar />
                 </div>
-                {/* Don't forget to pass searchResults as a prop to SearchBar */}
               </div>
               <div className="text-center min-h-screen px-5 py-5">
                 <div className="flex"></div>
@@ -163,7 +161,6 @@ function Home() {
         </div>
       )
       default:
-      // This block will be executed if menuSelected doesn't match any of the cases
       return (
         <div className="bg-gray-700">
           {auth ? (
@@ -177,7 +174,6 @@ function Home() {
               <div className="text-center min-h-screen px-5 py-5">
                 <div className="flex"></div>
                 <div class="grid grid-cols-2">
-                  {/* Your default content goes here */}
                   <p>Default content goes here</p>
                   <Menu setMenuSelected={setCardSelected} />
                 </div>

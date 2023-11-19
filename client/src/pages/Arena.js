@@ -2,6 +2,8 @@ import Sidebar from "../components/SideBar";
 import Searchbar from "../components/SearchBar";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUser, getOtherUsersData, getInProgressData ,getPotentialOpponents} from "../api/user";
+
 import axios from "axios";
 
 function Arena() {
@@ -14,16 +16,12 @@ function Arena() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axios.get("http://" + process.env.REACT_APP_URL + ":1117/user");
+        const userResponse = await getUser();
 
         if (userResponse.data.Status === "Success") {
           setUserData(userResponse.data.userData);
 
-          const inProgressResponse = await axios.get(
-            `http://` +
-            process.env.REACT_APP_URL +
-            `:1117/inProgress/filter?q=${userResponse.data.userData.id}`
-          );
+          const inProgressResponse = await getInProgressData(userResponse.data.userData.id)
 
           if (inProgressResponse.data) {
             setInProgress(inProgressResponse.data);
@@ -48,48 +46,29 @@ function Arena() {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []);
 
   const fetchNames = (id) => {
-    axios
-    .get(
-      `http://` +
-        process.env.REACT_APP_URL +
-        `:1117/user/filter?q=${id}`
-    )
+  getOtherUsersData(id)
     .then((res)=>{
       if(res.data){
-        console.log(res.data[0].username)
         setUsers((prevUsers) => [...prevUsers, res.data[0].username]);   
          }
     })
     .catch((err) => console.log("error", err));
   }
-
-  const fetchPotentialOpponents = () => {
-    axios
-      .get(
-        `http://` +
-          process.env.REACT_APP_URL +
-          `:1117/api/filter?q=${userData.lvl}&field=lvl`
-      )
+const fetchPotentialOpponents = () => {
+   getPotentialOpponents(userData.lvl)
       .then((res) => {
-        if (res.data) {
-          
-          const usernames = res.data.map((user) => user.username);
-          const ids = res.data.map((user) => user.id);
-          const randomUsernames = getRandomItems(usernames, 5);
-          setItems(randomUsernames);
-          const randomIds = getRandomItems(ids, 5);
-
-          const opponentsData = randomUsernames.map((username, index) => {
+        console.log(res)
+        if (res) {
+          const opponentData = res.slice(0, 5).map((user) => {
             return {
-              username,
-              id: randomIds[index],
+              id: user.id,
+              username: user.username,
             };
           });
-
-          setItems(opponentsData);
+          setItems(opponentData);
         } else {
           console.error("err");
         }
@@ -97,35 +76,15 @@ function Arena() {
       .catch((err) => console.log("error", err));
   };
 
-  const getRandomItems = (array, count) => {
-    const shuffled = array.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
-
-  // const sendToBattle = (item) => {
-  //   console.log(userData.id, item);
-  //   axios.post(`http://` + process.env.REACT_APP_URL + `:1117/Battle`, {
-  //     userF: userData.id,
-  //     userS: item,
-  //   });
-  //   navigate(`/Battle/${item}`);
-  // };
-  const sendToBattle = async (item) => {
-    console.log(userData.id, item);
-  
-    // Use Promise.all to wait for all fetchNames calls to complete
-    await Promise.all(
-      inProgress.map((progressItem) => fetchNames(progressItem.id))
-    );
-  
-    axios.post(`http://` + process.env.REACT_APP_URL + `:1117/Battle`, {
+  const sendToBattle = (item) => {
+    console.log("send to battle : " +userData.id, item);
+    axios.post( process.env.REACT_APP_URL + `/Battle`, {
       userF: userData.id,
       userS: item,
     });
     navigate(`/Battle/${item}`);
   };
-  
-  
+
   return (
     <div className="min-h-screen bg-blue-700">
       <div className="min-h-screen min-w-screen bg-townYN bg-cover h-screen flex flex-col items-center justify-center">

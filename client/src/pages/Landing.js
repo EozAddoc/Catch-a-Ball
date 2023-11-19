@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function Landing() {
+
   return (
 
       <div className="min-h-screen bg-night bg-cover ">

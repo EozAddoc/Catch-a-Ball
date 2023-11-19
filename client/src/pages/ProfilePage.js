@@ -10,7 +10,7 @@ function ProfilePage() {
   
   useEffect(() => {
     axios
-      .get("http://" + process.env.REACT_APP_URL + ":1117/user")
+      .get( process.env.REACT_APP_URL + "/user")
       .then((res) => {
         if (res.data.Status === "Success") {
           console.log("in here")

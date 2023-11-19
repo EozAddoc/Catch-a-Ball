@@ -25,7 +25,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const registerF = (e) => {
     e.preventDefault();
-    const url ="http://"+process.env.REACT_APP_URL+":1117/signup"
+    const url =process.env.REACT_APP_URL+"/signup"
     Axios.post(url, {
       email: email,
       username: username,
@@ -49,7 +49,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
   const loginF = (e) => {
     e.preventDefault();
-    Axios.post("http://"+process.env.REACT_APP_URL+":1117/login", {
+    Axios.post(process.env.REACT_APP_URL+"/login", {
       username: username,
       password: password,
     }).then((resp) => {

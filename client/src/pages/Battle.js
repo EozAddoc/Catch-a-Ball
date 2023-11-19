@@ -5,6 +5,27 @@ import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
 function Battle() {
+  const initialTime = 60 * 60; // 1 hour in seconds
+  const [time, setTime] = useState(initialTime);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const pad = (num) => (num < 10 ? '0' + num : num);
+
+    return `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
+  }
   const { userId } = useParams();
   const [myId, setMyId]=useState('')
   useEffect(() => {
@@ -27,7 +48,10 @@ console.log(token)
     <div className="bg-blue-700">
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
         <div>
-          <div className=" bg-blue-950">
+          <div className=" ">
+            <div>
+              <h1 className="text-yellow-300 absolute top-4 right-4 text-yellow-300 sm:top-8 sm:right-8 md:text-lg lg:text-xl"> Time remaining : {formatTime(time)}</h1>
+            </div>
             <div className="absolute bottom-28 left-52 h-2/3 w-1/4 ">
               <ProfileCard id={myId}/>
             </div>

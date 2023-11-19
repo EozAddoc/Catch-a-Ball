@@ -8,7 +8,7 @@ const Logout = () => {
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        axios.get('http://'+process.env.REACT_APP_URL+':1117/logout')
+        axios.get(process.env.REACT_APP_URL+'/logout')
             .then(res => {
                 if (res.data.Status === "Success") {
                     navigate('/');

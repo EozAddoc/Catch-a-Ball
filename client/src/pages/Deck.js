@@ -23,7 +23,7 @@ function Deck() {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get('http://' + process.env.REACT_APP_URL + ':1117/user')
+    axios.get( process.env.REACT_APP_URL + '/user')
       .then(res => {
         if (res.data.Status === 'Success') {
           setAuth(true);
@@ -36,7 +36,7 @@ function Deck() {
   }, []);
 
   useEffect(() => {
-    axios.get('http://' + process.env.REACT_APP_URL + ':1117/deck')
+    axios.get(  process.env.REACT_APP_URL + '/deck')
       .then(res => {
         if (res.data.Status === 'Success') {
           setDeckData(res.data.deckData);

@@ -4,8 +4,9 @@ import pokemon from 'pokemontcgsdk';
 import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
+import { getUser, updateUser, getOtherUsersData } from "../api/user";
 
-function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, redirectHome}) {
+function ChooseACard({ apiIds,userId, text, maxCardsChosen, hidden, redirectHome}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -45,10 +46,9 @@ function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, re
       }
    
     }
-  }, [api_Ids, navigate]);
+  }, [api_Ids, navigate,maxCardsChosen,redirectHome]);
 
   const handleCardClick = (api_Id) => {
-    console.log(userId)
     setSelectedCardApis((prevSelectedCardApis) => {
       if (prevSelectedCardApis.length < maxCardsChosen) {
         return [...prevSelectedCardApis, api_Id];
@@ -66,10 +66,9 @@ function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, re
       return;
     }
     if (redirectHome) {
-      console.log(userId);
       let avatar_api = api_Ids[0]; // Assuming you're only selecting one avatar
       try {
-         Axios.post('http://'+process.env.REACT_APP_URL+':1117/signup/avatar', {
+         Axios.post(process.env.REACT_APP_URL+'/signup/avatar', {
           userId: userId,
           avatar_api: avatar_api,
         });
@@ -79,7 +78,7 @@ function ChooseACard({ apiIds,userId, text, username, maxCardsChosen, hidden, re
       }
     } else {
       try {
-        Axios.post('http://'+process.env.REACT_APP_URL+':1117/signup/pokemon', {
+        Axios.post(process.env.REACT_APP_URL+'/signup/pokemon', {
           userId: userId,
           api_Ids: api_Ids,
         });

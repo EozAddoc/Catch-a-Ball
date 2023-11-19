@@ -20,7 +20,7 @@ function SignupAvatar() {
     const [userId, setUserId] = useState(0);
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://'+process.env.REACT_APP_URL+':1117/user')
+    axios.get(process.env.REACT_APP_URL+'/user')
       .then(res => {
         if (res.data.Status === "Success") {
           setUserId(res.data.userData.id)

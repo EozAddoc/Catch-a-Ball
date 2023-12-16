@@ -12,6 +12,7 @@ class Battle {
       userIdS INT,
       winner INT,
       status VARCHAR(255) NOT NULL,
+      time DATETIME,
       FOREIGN KEY (userIdF) REFERENCES users(id),
       FOREIGN KEY (userIdS) REFERENCES users(id)
     )`;
@@ -25,10 +26,11 @@ class Battle {
   }
 
   static async createBattle(userF, userS) {
+    
     try {
       let winner = await this.determineWinner(userF, userS);
       console.log("winner : " + winner);
-      const query = 'INSERT INTO battle (userIdF, userIdS, winner, status) VALUES (?, ?, ?, "InProgress")';
+      const query = 'INSERT INTO battle (userIdF, userIdS, winner, status, time) VALUES (?, ?, ?, "InProgress", NOW())';
       const values = [userF, userS, winner];
 
       const result = await db.query(query, values);

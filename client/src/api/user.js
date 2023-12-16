@@ -13,11 +13,13 @@ export const updateUser = (userData) => {
 };
 
 export const getInProgressData = async (userId) => {
+  console.log(  `${process.env.REACT_APP_URL}/inProgress/filter?q=${userId}`)
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_URL}/inProgress/filter?q=${userId}`
     );
-    return response.data || [];
+    console.log(response.data)
+    return response || [];
   } catch (error) {
     console.error("Error fetching in-progress data:", error);
     return [];
@@ -30,7 +32,7 @@ export const getOtherUsersData = async (id) => {
       `${process.env.REACT_APP_URL}/user/filter?q=${id}`
     );
     return response.data && response.data.length > 0
-      ? response.data
+      ? response
       : null;
   } catch (error) {
     console.error("Error fetching user names:", error);

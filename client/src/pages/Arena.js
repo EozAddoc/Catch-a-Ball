@@ -12,6 +12,8 @@ function Arena() {
   const [inProgress, setInProgress] = useState([]);
   const [users, setUsers] = useState([]);
   const [items, setItems] = useState([]);
+  const [usersId, setUsersId] =useState([])
+  const [time,setTime]= useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +29,9 @@ function Arena() {
             setInProgress(inProgressResponse.data);
             if (inProgressResponse.data.length > 0) {
               for (let i = 0; i < Math.min(inProgressResponse.data.length, 3); i++) {
-                fetchNames(inProgressResponse.data[i].id);
+                console.log(inProgressResponse.data[i].userIdS)
+                fetchNames(inProgressResponse.data[i].userIdS);
+                setTime((prevUsers) => [...prevUsers, inProgressResponse.data[0].time])
               }
             }
            
@@ -53,6 +57,7 @@ function Arena() {
     .then((res)=>{
       if(res.data){
         setUsers((prevUsers) => [...prevUsers, res.data[0].username]);   
+        setUsersId((prevUsers) => [...prevUsers, res.data[0].id])
          }
     })
     .catch((err) => console.log("error", err));
@@ -77,13 +82,19 @@ const fetchPotentialOpponents = () => {
   };
 
   const sendToBattle = (item) => {
-    console.log("send to battle : " +userData.id, item);
+    const time = new Date().toISOString();
+        console.log("send to battle : " +userData.id, item, time);
     axios.post( process.env.REACT_APP_URL + `/Battle`, {
       userF: userData.id,
       userS: item,
     });
-    navigate(`/Battle/${item}`);
+    
+    navigate(`/Battle/${item}/${time}`);
   };
+  const sendToOngoingBattle = (userId, time) => {
+    console.log("time" +time)
+    navigate(`/Battle/${userId}/${time}`)
+  }
 
   return (
     <div className="min-h-screen bg-blue-700">
@@ -119,7 +130,7 @@ const fetchPotentialOpponents = () => {
 
                     <button
                       className="bg-yellow-300 text-center font-bold rounded-full ml-3 mr-4 w-25 mt-10"
-                      onClick={() => sendToBattle(item.id)}
+                      onClick={() => sendToBattle(item.id, item.time)}
                     >
                       {" "}
                       <p className="mt-3">B A T T L E</p>
@@ -135,22 +146,23 @@ const fetchPotentialOpponents = () => {
                 I N &nbsp; P R O G R E S S :
               </h2>
 
-              <div className="bg-red-500 flex-1 rounded-full flex mt-5 p-3">
+              <div className="bg-red-500 flex-1 rounded-full flex mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[0], time[0])}>
                 <p className="text-white flex-1 w-2/3 font-bold text-xl m-3">
                   {" "}
                   You vs {users.length > 0 ? users[0] : "No in-progress battles"}
                 </p>
               </div>
-              <div className="bg-black flex-1 rounded-full mt-5 p-3">
+              <div className="bg-black flex-1 rounded-full mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[1],time[1])}>
                 <p className="text-red-500 font-bold text-xl m-3">
                   {" "}
                   You vs  {users.length > 1 ? users[1] : "No in-progress battles"}
 
                 </p>
               </div>
-              <div className="bg-white flex-1 rounded-full mt-5 p-3">
+              <div className="bg-white flex-1 rounded-full mt-5 p-3" onClick={() => {sendToOngoingBattle(usersId[2], time[2]); console.log("testtime" + time[2])}}>
                 <p className="text-black font-bold text-xl m-3">
                   {" "}
+
                   You vs {users.length > 2 ? users[2] : "No in-progress battles"}
                 </p>
               </div>

@@ -21,13 +21,9 @@ function Home() {
 
   axios.defaults.withCredentials = true;
 
-
-
   async function ApiCall(id) {
     pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-  
     const card = await pokemon.card.find(id);
-  
     return card;
   }
 
@@ -35,41 +31,49 @@ function Home() {
     setMenuSelected(menu);
   };
 
+  const [loadingApiCall, setLoadingApiCall] = useState(true);
+
   useEffect(() => {
-    axios
-      .get( process.env.REACT_APP_URL + "/user")
-      .then((res) => {
-        if (res.data.Status === "Success") {
+    const fetchData = async () => {
+      try {
+        const userResponse = await axios.get(process.env.REACT_APP_URL + "/user");
+        const deckResponse = await axios.get(process.env.REACT_APP_URL + "/deck");
+
+        if (userResponse.data.Status === "Success") {
           setAuth(true);
-          setUserData(res.data.userData);
+          setUserData(userResponse.data.userData);
         } else {
           setAuth(false);
-          setMess(res.data.err);
+          setMess(userResponse.data.err);
         }
-      })
-      .catch((err) => console.log("error", err));
-  }, []);
 
-  useEffect(() => {
-    axios
-      .get( process.env.REACT_APP_URL + "/deck")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          setDeckData(res.data.deckData);
+        if (deckResponse.data.Status === "Success") {
+          setDeckData(deckResponse.data.deckData);
         } else {
-          setMess(res.data.err);
+          setMess(deckResponse.data.err);
         }
-      })
-      .catch((err) => console.log("error", err));
+
+        setTimeout(() => {
+          setLoadingApiCall(false);
+        }, 4000);   
+      
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
-    deckData.map(async (deckItem) => {
-      const data = await ApiCall(deckItem.card_api);
-      setDeckInfo((value) => [...value, data]);
-      setAvatar(await ApiCall(userData.avatar_api));
-    });
-  }, [deckData,userData]);
+    if (!loadingApiCall) {
+      deckData.forEach(async (deckItem) => {
+        const data = await ApiCall(deckItem.card_api);
+        setDeckInfo((value) => [...value, data]);
+        setAvatar(await ApiCall(userData.avatar_api));
+      });
+    }
+  }, [deckData, userData, loadingApiCall]);
 
   switch (menuSelected) {
     case "team":
@@ -77,32 +81,36 @@ function Home() {
         <div className="bg-gray-700">
           {auth ? (
             <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
-              <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
-                <div className="w-3/5">
-                  {" "}
-                  <SearchBar />
-                </div>
-                {/* Don't forget to pass searchResults as a prop to SearchBar */}
-              </div>
-              <div className="text-center min-h-screen px-5 py-5">
-                <div className="flex"></div>
-                <div class="grid grid-cols-2">
-                  <div className="ml-24 grid grid-cols-2 md:grid-cols-3 place-items-center">
-                    {deckInfo.length > 0 &&
-                      deckInfo.map((card) => {
-                        return (
-                          <img
-                            className="hover:scale-150 transition w-36 p-2 md:w-64"
-                            src={card.images?.large}
-                            alt={card.name}
-                          />
-                        );
-                      })}
+              {loadingApiCall ? (
+                <LoadingPage />
+              ) : (
+                <>
+                  <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+                    <div className="w-3/5">
+                      <SearchBar />
+                    </div>
                   </div>
-                  <Menu setMenuSelected={setCardSelected} />
-                </div>
-                <Sidebar />
-              </div>
+                  <div className="text-center min-h-screen px-5 py-5">
+                    <div className="flex"></div>
+                    <div class="grid grid-cols-2">
+                      <div className="ml-24 grid grid-cols-2 md:grid-cols-3 place-items-center">
+                        {deckInfo.length > 0 &&
+                          deckInfo.map((card) => {
+                            return (
+                              <img
+                                className="hover:scale-150 transition w-36 p-2 md:w-64"
+                                src={card.images?.large}
+                                alt={card.name}
+                              />
+                            );
+                          })}
+                      </div>
+                      <Menu setMenuSelected={setCardSelected} />
+                    </div>
+                    <Sidebar />
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             navigate("/")
@@ -161,29 +169,34 @@ function Home() {
         </div>
       )
       default:
-      return (
-        <div className="bg-gray-700">
-          {auth ? (
-            <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
-              <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
-                <div className="w-3/5">
-                  {" "}
-                  <SearchBar />
+          return (
+            <div className="bg-gray-700">
+              {auth ? (
+                <div class="h-screen w-screen bg-homeN bg-cover opacity-100">
+                  {loadingApiCall ? (
+                    <LoadingPage />
+                  ) : (
+                    <>
+                      <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+                        <div className="w-3/5 pt-10">
+                          <SearchBar />
+                        </div>
+                      </div>
+                      <div className="text-center min-h-screen px-5 py-5">
+                        <div className="flex"></div>
+                        <div class="grid grid-cols-2">
+                          <p>Default content goes here</p>
+                          <Menu setMenuSelected={setCardSelected} />
+                        </div>
+                        <Sidebar />
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
-              <div className="text-center min-h-screen px-5 py-5">
-                <div className="flex"></div>
-                <div class="grid grid-cols-2">
-                  <p>Default content goes here</p>
-                  <Menu setMenuSelected={setCardSelected} />
-                </div>
-                <Sidebar />
-              </div>
+              ) : (
+                navigate("/")
+              )}
             </div>
-          ) : (
-            navigate("/")
-          )}
-        </div>
       );
   }
 }

@@ -49,7 +49,8 @@ updatedUserData.id = userData.id
         updatedUserData: updatedUserData
       } )
       .then((res) => {
-        if (res.data.Status === "Success") {
+        if (res.data === 201) {
+          setIsEditMode(!isEditMode);
           console.log("User updated successfully!");
           setTimeout(() => {
             window.location.reload();
@@ -61,7 +62,11 @@ updatedUserData.id = userData.id
           }, 100);
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => {
+        setIsEditMode(!isEditMode);
+        console.log("error", err);
+      });
+      
   };
 
   useEffect(() => {
@@ -99,7 +104,7 @@ updatedUserData.id = userData.id
       )}
 
       {isEditMode && (
-        <div className={`bg-transparent rounded-lg shadow-md flex flex-col sm:flex-row relative `}>
+        <div className={`bg-transparent rounded-lg shadow-md flex flex-col sm:flex-row relative w-full `}>
           <div className=" w-full h-full md:w-1/3 sm:w-1/5 flex flex-col items-center justify-center">
             <ProfileCard  id={id.id}/>
           </div>

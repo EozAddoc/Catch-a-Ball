@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import { getUser } from "../api/user";
 import pokemon from "pokemontcgsdk";
 import '../index';
-import '../styles.css'; // Assuming you have a styles.css file for the component styles
+import '../styles.css'; 
 
 async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess) {
   try {

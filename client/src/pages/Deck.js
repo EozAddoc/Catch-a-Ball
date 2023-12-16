@@ -69,7 +69,7 @@ function Deck() {
   return (
     <div className='bg-gray-700'>
       {auth ? (
-        <div class='min-h-screen min-w-screen bg-homeN bg-cover opacity-100'>
+        <div class='h-screen w-screen bg-homeN bg-cover opacity-100'>
           <div className='text-center w-full text-yellow-500 p-5'>
             <h1 > Current Battle level : {battleLvl} </h1>
           </div>

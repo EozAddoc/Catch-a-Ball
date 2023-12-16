@@ -5,16 +5,57 @@ import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
 function Battle() {
-  const initialTime = 60 * 60; // 1 hour in seconds
-  const [time, setTime] = useState(initialTime);
+  const { userId, time: initialTime } = useParams();
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
+    const token = jsCookie.get("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken.userId);
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
+
+    // Calculate the time difference and update the time state
+    const calculateDiff = (time) => {
+      const dateString = time;
+      const targetDate = new Date(dateString);
+      const currentDate = new Date();
+      const diff = Math.floor((currentDate - targetDate) / 1000);
+      const remainingTime = 3600 - diff
+console.log(remainingTime, targetDate, currentDate, diff)
+  setTime(remainingTime > 0 ? remainingTime : 0);
+    };
+
+    calculateDiff(initialTime);
+
+    // Update the time every second
     const intervalId = setInterval(() => {
       setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
+  }, [initialTime]);
+
+  const [myId, setMyId] = useState("");
+
+  useEffect(() => {
+    const token = jsCookie.get("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken.userId);
+        setMyId(decodedToken.userId);
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
   }, []);
 
   const formatTime = (seconds) => {
@@ -22,35 +63,17 @@ function Battle() {
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
-    const pad = (num) => (num < 10 ? '0' + num : num);
+    const pad = (num) => (num < 10 ? "0" + num : num);
 
     return `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
-  }
-  const { userId } = useParams();
-  const [myId, setMyId]=useState('')
-  useEffect(() => {
-    const token = jsCookie.get("token");
-console.log(token)
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        console.log(decodedToken.userId)
-        setMyId(decodedToken.userId)
-        // setUserData(decodedToken);
-      } catch (error) {
-        // Handle error, such as invalid token
-        console.error("Error decoding token:", error.message);
-      }
-    }
-  }, []);
-  console.log(userId, myId);
+  };
   return (
     <div className="bg-blue-700">
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
         <div>
           <div className=" ">
             <div>
-              <h1 className="text-yellow-300 absolute top-4 right-4 text-yellow-300 sm:top-8 sm:right-8 md:text-lg lg:text-xl"> Time remaining : {formatTime(time)}</h1>
+              <h1 className="text-yellow-300 absolute top-4 right-4 text-yellow-300 sm:top-8 sm:right-8 md:text-lg lg:text-xl"> Time remaining :{formatTime(time)}</h1>
             </div>
             <div className="absolute bottom-28 left-52 h-2/3 w-1/4 ">
               <ProfileCard id={myId}/>

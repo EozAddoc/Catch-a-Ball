@@ -20,6 +20,8 @@ import Battle from './pages/Battle';
 import Logout from './pages/Logout';
 import Deck from './pages/Deck';
 import ProfilePage from './pages/ProfilePage';
+import MyCarousel from './pages/MyCarousel';
+import LoadingPage from './LoadingPage';
 
 const router = createBrowserRouter([
   {
@@ -63,7 +65,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "Battle/:userId",
+    path: "Battle/:userId/:time",
     element: <Battle />,
     errorElement: <ErrorPage />
   },
@@ -90,6 +92,22 @@ const router = createBrowserRouter([
   {
     path: "signup/avatar",
     element: <SignupAvatar />,
+    errorElement: <ErrorPage />
+  }
+  ,
+  {
+    path: "myCarousel",
+    element: <MyCarousel />,
+    errorElement: <ErrorPage />
+  } ,
+  {
+    path: "Loading",
+    element: <LoadingPage />,
+    errorElement: <ErrorPage />
+  } ,
+  {
+    path: "Error",
+    element: <ErrorPage />,
     errorElement: <ErrorPage />
   }
 ])

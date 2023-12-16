@@ -25,7 +25,7 @@ function ProfilePage() {
 
   return (
     <div className='bg-gray-700'>
-      <div className="min-h-screen bg-profileN bg-cover h-screen flex items-center justify-center">
+      <div className="h-screen bg-profileN bg-cover w-screen flex items-center justify-center">
         <Sidebar />
         <Profile id={userData.id}/>
       </div>

@@ -6,9 +6,9 @@ function Landing() {
 
   return (
 
-      <div className="min-h-screen bg-night bg-cover ">
+      <div className="h-screen bg-night bg-cover ">
 
-        <header className="flex flex-col min-h-screen  items-center justify-center ">
+        <header className="flex flex-col h-screen  items-center justify-center ">
           <img
             src="cab2.png"
             className="w-full lg:w-10/11 md:w-2/3 sm:w-3/4 mt-0"

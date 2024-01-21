@@ -16,7 +16,8 @@ class User {
       battleLvl INT,
       lvl INT,
       coins INT,
-      energyChoice VARCHAR(255) NOT NULL
+      energyChoice VARCHAR(255) NOT NULL,
+      notifications JSON
       )
     `;
 
@@ -30,8 +31,8 @@ class User {
   }
 
   static async createUser(email, username, password, callback) {
-    const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins, energyChoice) VALUES (?, ?,?,"before", 0,0,0, "/energy/waterEn.png")';
-    const values = [email, username, password];
+    const query = 'INSERT INTO users (email, username, password, avatar_api, battleLvl,lvl, coins, energyChoice, notifications) VALUES (?, ?,?,"before", 0,0,0, "/energy/waterEn.png",?)';
+    const values = [email, username, password, `["Welcome ${username}"]`];
 
     db.query(query, values, (err, result) => {
       if (err) {
@@ -155,6 +156,37 @@ class User {
       }
     });
   }
+  static async updateNotificationArray(userId, newNotificationsArray) {
+    // Update the database with the new array of notifications
+    const updateQuery = 'UPDATE users SET notifications = ? WHERE id = ?';
+    const updateValues = [JSON.stringify(newNotificationsArray), userId];
+  
+    db.query(updateQuery, updateValues, (updateErr, updateResult) => {
+      if (updateErr) {
+        console.error('Error while updating notifications:', updateErr);
+      } else {
+        console.log('Notifications replaced successfully');
+      }
+    });
+  }
+   static async levelUp(userId) {
+    // Update the database with the new array of notifications
+    const updateQuery = 'UPDATE users SET battleLvl= battleLvl +1 WHERE id = ?';
+    const updateValues = [userId];
+  console.log("user Id winner" + userId)
+    db.query(updateQuery, updateValues, (updateErr, updateResult) => {
+      if (updateErr) {
+        console.error('Error while leveling:', updateErr);
+      } else {
+        console.log('Leveled successfully');
+      }
+    });
+  }
+
+  
+  
+  
+
   static async updateUser(userId, updatedUserData, callback) {
     const updatePromises = Object.keys(updatedUserData).map((key) => {
       return new Promise((resolve, reject) => {

@@ -4,17 +4,58 @@ import ProfileCard from "../components/ProfileCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
+import { getBattle, endBattle } from "../api/battle";
+import { levelUp } from "../api/user"
+
 function Battle() {
   const { userId, time: initialTime } = useParams();
   const [time, setTime] = useState(0);
+  const [myId, setMyId] = useState("");
+  const [notification, setNotification] = useState("");
+  const [battleData, setBattleData]= useState()
+  const navigate = useNavigate();
+const getBattleInfo= async (initialTime)=>{
+  try {
+    const res = await getBattle(initialTime);
+    if (res) {
+      setBattleData(res);
+    }
+  } catch (error) {
+    console.error("Error fetching battle data:", error);
+  }
+  }
 
+  const winOrLose = (myId, winnerId)=>{
+  
+if(battleData){
+console.log("battle Data id :" + battleData.id)
+  const end =  endBattle(battleData.id)
+ 
+
+  if(end.data){
+    console.log(end + "end")
+    
+  }
+  
+}
+    if (myId === winnerId){
+      setNotification(`You won the battle against ${userId}`);     
+
+    }else{
+    setNotification(`You lost and really are a loser the battle against ${userId}`);     
+    }
+   // navigate("/home");
+
+    
+  }
   useEffect(() => {
+    getBattleInfo(initialTime)
+
     const token = jsCookie.get("token");
 
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken.userId);
       } catch (error) {
         console.error("Error decoding token:", error.message);
       }
@@ -27,7 +68,23 @@ function Battle() {
       const currentDate = new Date();
       const diff = Math.floor((currentDate - targetDate) / 1000);
       const remainingTime = 3600 - diff
-console.log(remainingTime, targetDate, currentDate, diff)
+if (remainingTime <= 0) {
+  if(battleData){
+    console.log(battleData)
+    const winner = battleData.winner
+    if(winner){
+      const level = levelUp(winner) 
+      if (level.data){
+        console.log(level.data)
+      }
+    }
+    winOrLose(myId, winner)
+
+  }
+
+
+
+}
   setTime(remainingTime > 0 ? remainingTime : 0);
     };
 
@@ -42,7 +99,6 @@ console.log(remainingTime, targetDate, currentDate, diff)
     return () => clearInterval(intervalId);
   }, [initialTime]);
 
-  const [myId, setMyId] = useState("");
 
   useEffect(() => {
     const token = jsCookie.get("token");
@@ -50,14 +106,13 @@ console.log(remainingTime, targetDate, currentDate, diff)
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken.userId);
         setMyId(decodedToken.userId);
       } catch (error) {
         console.error("Error decoding token:", error.message);
       }
     }
   }, []);
-
+  
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -67,6 +122,8 @@ console.log(remainingTime, targetDate, currentDate, diff)
 
     return `${pad(hours)}:${pad(minutes)}:${pad(remainingSeconds)}`;
   };
+
+ 
   return (
     <div className="bg-blue-700">
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
@@ -123,7 +180,7 @@ console.log(remainingTime, targetDate, currentDate, diff)
           </div>
         </div>
       </div>
-      <Sidebar />
+      <Sidebar notification={notification} />
     </div>
   );
 }

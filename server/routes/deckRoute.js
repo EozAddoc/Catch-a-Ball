@@ -56,10 +56,8 @@ router.get(`/api/filter`, (req, res) => {
     return res.status(400).json({ error: 'Missing required parameters' });
   }
 
-  // Use parameterized query to prevent SQL injection
   const query = `SELECT * FROM users WHERE ${filterField} = ?`;
   
-  // Use an array to pass values securely to the query
   db.query(query, [`%${searchTerm}%`], (error, results) => {
     if (error) {
       console.error('Error executing query:', error);

@@ -3,19 +3,22 @@ import Searchbar from "../components/SearchBar";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, getOtherUsersData, getInProgressData ,getPotentialOpponents} from "../api/user";
-
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import jsCookie from "js-cookie"
 
 function Arena() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState("");
   const [inProgress, setInProgress] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [usersName, setUsersName] = useState([]);
   const [items, setItems] = useState([]);
   const [usersId, setUsersId] =useState([])
   const [time,setTime]= useState([])
-
   useEffect(() => {
+    const token = jsCookie.get("token");
+
+   
     const fetchData = async () => {
       try {
         const userResponse = await getUser();
@@ -24,13 +27,20 @@ function Arena() {
           setUserData(userResponse.data.userData);
 
           const inProgressResponse = await getInProgressData(userResponse.data.userData.id)
-
+const myId =userResponse.data.userData.id
           if (inProgressResponse.data) {
             setInProgress(inProgressResponse.data);
             if (inProgressResponse.data.length > 0) {
-              for (let i = 0; i < Math.min(inProgressResponse.data.length, 3); i++) {
-                console.log(inProgressResponse.data[i].userIdS)
-                fetchNames(inProgressResponse.data[i].userIdS);
+              for (let i = 0; i < Math.min(inProgressResponse.data.length,3); i++) {
+                console.log(inProgressResponse.data.length)
+                if(myId !== inProgressResponse.data[i].userIdS){
+                  fetchNames(inProgressResponse.data[i].userIdS);
+                }else{
+                  fetchNames(inProgressResponse.data[i].userIdF)
+                }
+
+                
+
                 setTime((prevUsers) => [...prevUsers, inProgressResponse.data[0].time])
               }
             }
@@ -56,7 +66,8 @@ function Arena() {
   getOtherUsersData(id)
     .then((res)=>{
       if(res.data){
-        setUsers((prevUsers) => [...prevUsers, res.data[0].username]);   
+console.log(res.data[0])
+        setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);   
         setUsersId((prevUsers) => [...prevUsers, res.data[0].id])
          }
     })
@@ -65,7 +76,6 @@ function Arena() {
 const fetchPotentialOpponents = () => {
    getPotentialOpponents(userData.lvl)
       .then((res) => {
-        console.log(res)
         if (res) {
           const opponentData = res.slice(0, 5).map((user) => {
             return {
@@ -83,7 +93,6 @@ const fetchPotentialOpponents = () => {
 
   const sendToBattle = (item) => {
     const time = new Date().toISOString();
-        console.log("send to battle : " +userData.id, item, time);
     axios.post( process.env.REACT_APP_URL + `/Battle`, {
       userF: userData.id,
       userS: item,
@@ -92,7 +101,6 @@ const fetchPotentialOpponents = () => {
     navigate(`/Battle/${item}/${time}`);
   };
   const sendToOngoingBattle = (userId, time) => {
-    console.log("time" +time)
     navigate(`/Battle/${userId}/${time}`)
   }
 
@@ -149,13 +157,13 @@ const fetchPotentialOpponents = () => {
               <div className="bg-red-500 flex-1 rounded-full flex mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[0], time[0])}>
                 <p className="text-white flex-1 w-2/3 font-bold text-xl m-3">
                   {" "}
-                  You vs {users.length > 0 ? users[0] : "No in-progress battles"}
+                  You vs {usersName.length > 0 ? usersName[0] : "No in-progress battles"}
                 </p>
               </div>
               <div className="bg-black flex-1 rounded-full mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[1],time[1])}>
                 <p className="text-red-500 font-bold text-xl m-3">
                   {" "}
-                  You vs  {users.length > 1 ? users[1] : "No in-progress battles"}
+                  You vs  {usersName.length > 1 ? usersName[1] : "No in-progress battles"}
 
                 </p>
               </div>
@@ -163,7 +171,7 @@ const fetchPotentialOpponents = () => {
                 <p className="text-black font-bold text-xl m-3">
                   {" "}
 
-                  You vs {users.length > 2 ? users[2] : "No in-progress battles"}
+                  You vs {usersName.length > 2 ? usersName[2] : "No in-progress battles"}
                 </p>
               </div>
             </div>

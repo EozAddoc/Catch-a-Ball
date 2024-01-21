@@ -11,6 +11,13 @@ export const getUser = () => {
 export const updateUser = (userData) => {
   return axios.post(`${BASE_URL}/Profile`, { updatedUserData: userData });
 };
+export const updateNotifications = (newNotifications) => {
+  return axios.post(`${BASE_URL}/Notifications`, { newNotificationData: newNotifications });
+};
+export const levelUp = (userId) => {
+  console.log("leveling up user " +userId)
+  return   axios.put(`${BASE_URL}/LevelUp`, { userId: userId });
+};
 
 export const getInProgressData = async (userId) => {
   console.log(  `${process.env.REACT_APP_URL}/inProgress/filter?q=${userId}`)

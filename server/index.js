@@ -13,7 +13,7 @@ app.use(express.json());
 const url = "http://"+process.env.URL+":3000"
 app.use(cors({
   origin:[url], 
-  methods:["POST","GET","PUT"],
+  methods:["POST","GET","PUT", "PATCH"],
   credentials: true
 }));
 app.use(cookieParser());
@@ -23,10 +23,6 @@ app.use(userRoute)
 app.use(deckRoute)
 app.use(battleRoute)
 
-app.get('/test', (res)=>{
-  res.json("e")
-}
-)
 app.get(`/api/search`, (req, res) => {
 
   const searchTerm = req.query.q;

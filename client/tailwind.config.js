@@ -22,18 +22,18 @@ module.exports = withMT({
         menu: "menu 0.5s ease-in-out"
       },
       backgroundImage: {
-        'night': "url('/public/night.jpeg')",
-        'castleN': "url('/public/tot.webp')",
-        'waterN': "url('/public/wat.jpg')",
-        'shopN': "url('/public/shop.jpg')",
-        'routeN': "url('/public/route.jpg')",
-        'homeN': "url('/public/try.jpg')",
-        'townYN': "url('/public/townY.jpg')",
-        'townNN': "url('/public/jh.jpeg')",
-        'townN': "url('/public/tt.jpg')",
-        'profileN': "url('/public/r2.jpg')",
-        'deckN': "url('/public/deckR.jpg')",
-        'search': "url('/public/search2.png')"
+        'night': "url('/public/dark/night.jpeg')",
+        'castleN': "url('/public/dark/tot.webp')",
+        'waterN': "url('/public/dark/wat.jpg')",
+        'shopN': "url('/public/dark/shop.jpg')",
+        'routeN': "url('/public/dark/route.jpg')",
+        'homeN': "url('/public/dark/try.jpg')",
+        'townYN': "url('/public/dark/townY.jpg')",
+        'townNN': "url('/public/dark/jh.jpeg')",
+        'townN': "url('/public/dark/tt.jpg')",
+        'profileN': "url('/public/dark/r2.jpg')",
+        'deckN': "url('/public/dark/deckR.jpg')",
+        'search': "url('/public/dark/search2.png')"
       },
       filter: {
         'blue': 'brightness(80%) saturate(200%) hue-rotate(200deg)',

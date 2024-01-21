@@ -14,8 +14,9 @@ const Menu = () => {
     }
 
     return (
-        <div>
-            <img onClick={clickOnMenu} className='h-16' src='logo192.png'/>
+        <div >
+      
+            <img onClick={clickOnMenu} alt="logo" className='h-16' src='logo192.png'/>
             <div id="menu" className={menuOpened ? 'animate-menuOpened text-menuBlue bg-amber-400 w-1/5 transition duration-300 rounded-r-lg'
                 : 'absolute -left-5 transition rotate-6 right-50 w-10 h-96 bg-amber-400 rounded-r-lg'}>
                 {menuOpened && <List />}

@@ -56,6 +56,21 @@ class Battle {
       throw err;
     }
   }
+  static async endBattle(id){
+    //update status to ended 
+    const query = 'UPDATE battle SET status = ? WHERE id = ?';
+  const values = ['ended', id];
+  console.log("endBattle", id )
+  
+    try {
+      const result = await db.query(query, values);
+      console.log('Battle ended:', result);
+      return result;
+    } catch (err) {
+      console.error('Error while ending battles in progress:', err);
+      throw err;
+    }
+  }
 
   static async determineWinner(userIdF, userIdS) {
     try {

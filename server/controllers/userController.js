@@ -31,7 +31,17 @@ class UserController {
       }
     });
   }
+  static async levelingUp(req, res) {
+    const winner = req.body.winner;
 
+    User.levelUp(winner, (err) => {
+      if (err) {
+        res.status(500).json({ message: "Internal server error" });
+      } else {
+        res.status(201).json({ message: "Leveled up successfully" });
+      }
+    });
+  }
   static async filterUsers(req, res){
     const filterData = req.body.filterData
 
@@ -69,6 +79,31 @@ class UserController {
         res.status(201).json({ message: 'Success' });
       }
     });
+  }
+  static async levelUpUser(req, res) {
+    const userId = req.body.userId;
+console.log("winner" + userId)
+    User.levelUp(userId,  (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error' });
+      } else {
+        res.status(200).json({ message: 'Success in leveling up' });
+      }
+    });
+  }
+  static async updateNotifications(req, res) {
+    const userId = req.body.newNotificationData.id;
+    const newNotification = req.body.newNotificationData.notifications
+    console.log("notifdata", newNotification)
+
+    User.updateNotificationArray(userId, newNotification, (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error' });
+      } else {
+        res.status(201).json({ message: 'Success in deleting notification' });
+      }
+    });
+
   }
 
   static async loginUser(req, res) {

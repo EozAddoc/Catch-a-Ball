@@ -6,8 +6,6 @@ const userController = require('../controllers/userController')
 const authenticateToken = require('../middleware/authenticateToken');
 const db = require('../db');
 
-
-
 //SIGNUP USER 
 router.post("/signup", [
   body('email').isEmail(),
@@ -25,9 +23,14 @@ router.post("/login",userController.loginUser);
 
 
 //Profile user info CREATE
-router.post("/Profile", userController.updateUser)
-
 router.get('/suggestedPlayers', userController.filterUsers)
+
+
+//UPDATE
+router.post('/Notifications', userController.updateNotifications )
+router.post("/Profile", userController.updateUser)
+router.put('/LevelUp', userController.levelUpUser)
+
 
 //User info 
 router.get('/user', authenticateToken,async ( req,res)=>{

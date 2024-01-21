@@ -80,7 +80,7 @@ function Home() {
       return (
         <div className="bg-gray-700">
           {auth ? (
-            <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
               {loadingApiCall ? (
                 <LoadingPage />
               ) : (
@@ -92,12 +92,13 @@ function Home() {
                   </div>
                   <div className="text-center min-h-screen px-5 py-5">
                     <div className="flex"></div>
-                    <div class="grid grid-cols-2">
+                    <div className="grid grid-cols-2">
                       <div className="ml-24 grid grid-cols-2 md:grid-cols-3 place-items-center">
                         {deckInfo.length > 0 &&
                           deckInfo.map((card) => {
                             return (
                               <img
+                              key={card.id}
                                 className="hover:scale-150 transition w-36 p-2 md:w-64"
                                 src={card.images?.large}
                                 alt={card.name}
@@ -122,7 +123,7 @@ function Home() {
       return (
         <div className="bg-gray-700">
           {auth ? (
-            <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
               <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
                 <div className="w-3/5">
                   {" "}
@@ -131,7 +132,7 @@ function Home() {
               </div>
               <div className="text-center min-h-screen px-5 py-5">
                 <div className="flex"></div>
-                <div class="grid grid-cols-2">
+                <div className="grid grid-cols-2">
                   <Menu setMenuSelected={setCardSelected} />
                 </div>
                 <Sidebar />
@@ -147,7 +148,7 @@ function Home() {
       return (
         <div className="bg-gray-700">
           {auth ? (
-            <div class="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
               <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
                 <div className="w-3/5">
                   {" "}
@@ -156,7 +157,7 @@ function Home() {
               </div>
               <div className="text-center min-h-screen px-5 py-5">
                 <div className="flex"></div>
-                <div class="grid grid-cols-2">
+                <div className="grid grid-cols-2">
                     <MissionsHomepage />
                   <Menu setMenuSelected={setCardSelected} />
                 </div>
@@ -172,7 +173,7 @@ function Home() {
           return (
             <div className="bg-gray-700">
               {auth ? (
-                <div class="h-screen w-screen bg-homeN bg-cover opacity-100">
+                <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
                   {loadingApiCall ? (
                     <LoadingPage />
                   ) : (
@@ -184,7 +185,7 @@ function Home() {
                       </div>
                       <div className="text-center min-h-screen px-5 py-5">
                         <div className="flex"></div>
-                        <div class="grid grid-cols-2">
+                        <div className="grid grid-cols-2">
                           <p>Default content goes here</p>
                           <Menu setMenuSelected={setCardSelected} />
                         </div>

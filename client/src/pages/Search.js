@@ -31,6 +31,7 @@ function Search() {
             {searchResults.length}&nbsp; R E S U L T S :{' '}
           </h2>
           <div className="w-full">
+          <div className="max-h-96 overflow-y-auto   p-4">
             {searchResults.map((result, index) => (
               <div key={index} className="flex w-full">
                 <div
@@ -58,6 +59,7 @@ function Search() {
                 </div>
               </div>
             ))}
+          </div>
           </div>
         </div>
       </div>

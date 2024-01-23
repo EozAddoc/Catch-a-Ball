@@ -9,7 +9,7 @@ router.post("/Battle", battleController.newBattle)
 router.get('/inProgress', battleController.getInProgress)
 router.patch('/End',battleController.battleEnding)
 router.get('/Battle/filter', (req,res)=>{
-  console.log(req.query)
+  console.log("Battle/filter" + req.query)
   const initialTime = req.query.time;
   
   console.log("initial time " +initialTime)

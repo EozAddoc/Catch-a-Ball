@@ -5,16 +5,16 @@ axios.defaults.withCredentials = true;
 const BASE_URL = process.env.REACT_APP_URL;
 
 export const getBattle = async (initialTime) => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/Battle/filter?time=${initialTime}`
-      );
-      return response.data[0] || [];
-    } catch (error) {
-      console.error("Error fetching in-progress data:", error);
-      return [];
-    }
-  };
+  const url = `${BASE_URL}/Battle/filter?time=${initialTime}`;
+
+  try {
+    const response = await axios.get(url);
+    return response.data[0] || null;
+  } catch (error) {
+    console.error(`Error fetching battle data from ${url}:`, error);
+    return null;
+  }
+}
   export const endBattle = async (id) => {
     console.log(`${BASE_URL}/End`)
     try {

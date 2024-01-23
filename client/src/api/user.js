@@ -4,6 +4,7 @@ axios.defaults.withCredentials = true;
 
 const BASE_URL = process.env.REACT_APP_URL;
 
+
 export const getUser = () => {
   return axios.get(`${BASE_URL}/user`);
 };
@@ -14,9 +15,9 @@ export const updateUser = (userData) => {
 export const updateNotifications = (newNotifications) => {
   return axios.post(`${BASE_URL}/Notifications`, { newNotificationData: newNotifications });
 };
-export const levelUp = (userId) => {
+export const levelUp = async (userId) => {
   console.log("leveling up user " +userId)
-  return   axios.put(`${BASE_URL}/LevelUp`, { userId: userId });
+  return   await axios.put(`${BASE_URL}/LevelUp`, { userId: userId });
 };
 
 export const getInProgressData = async (userId) => {

@@ -16,10 +16,10 @@ class battleController {
   }
  
   static async battleEnding(req, res) {
-    const id = req.body.id;
-    console.log("end battle id :", id);
+    const battleId = req.body.battleId;
+    console.log("end battle id :", battleId);
 
-    Battle.endBattle(id)
+    Battle.endBattle(battleId)
       .then(() => {
         res.status(200).json({ message: "Battle ended successfully" });
       })

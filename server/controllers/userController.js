@@ -81,12 +81,14 @@ class UserController {
     });
   }
   static async levelUpUser(req, res) {
+    console.log("in levelUpUser")
     const userId = req.body.userId;
 console.log("winner" + userId)
     User.levelUp(userId,  (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {
+        console.log("success in leveling up")
         res.status(200).json({ message: 'Success in leveling up' });
       }
     });

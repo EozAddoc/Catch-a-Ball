@@ -15,9 +15,16 @@ export const updateUser = (userData) => {
 export const updateNotifications = (newNotifications) => {
   return axios.post(`${BASE_URL}/Notifications`, { newNotificationData: newNotifications });
 };
-export const levelUp = async (userId) => {
+export const levelUp =  async (userId) => {
   console.log("leveling up user " +userId)
-  return   await axios.put(`${BASE_URL}/LevelUp`, { userId: userId });
+  try {
+    const response =  await axios.patch(`${BASE_URL}/LevelUp`, { userId: userId });
+    console.log("res in lvl up: ", response);
+    return response.data;
+  } catch (error) {
+    console.error("Error leveling up:", error);
+    throw error;
+  }
 };
 
 export const getInProgressData = async (userId) => {

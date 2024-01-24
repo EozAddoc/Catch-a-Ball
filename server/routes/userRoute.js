@@ -29,7 +29,7 @@ router.get('/suggestedPlayers', userController.filterUsers)
 //UPDATE
 router.post('/Notifications', userController.updateNotifications )
 router.post("/Profile", userController.updateUser)
-router.put('/LevelUp', userController.levelUpUser)
+router.patch('/LevelUp', userController.levelUpUser)
 
 
 //User info 

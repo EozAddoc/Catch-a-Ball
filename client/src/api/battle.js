@@ -15,10 +15,11 @@ export const getBattle = async (initialTime) => {
     return null;
   }
 }
-  export const endBattle = async (id) => {
+  export const endBattle = async (battleId) => {
     console.log(`${BASE_URL}/End`)
+    console.log("battle id " + battleId)
     try {
-      const response = await axios.patch(`${BASE_URL}/End`, { id: id });
+      const response = await axios.patch(`${BASE_URL}/End`, { battleId: battleId });
       console.log("res in endBattle: ", response.data);
       return response.data;
     } catch (error) {

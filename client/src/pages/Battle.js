@@ -12,7 +12,7 @@ function Battle() {
   const [time, setTime] = useState(0);
   const [myId, setMyId] = useState("");
   const [notification, setNotification] = useState("");
-  const [battleData, setBattleData] = useState();
+  const [battleData, setBattleData] = useState({});
   const navigate = useNavigate();
 
   //Battle winner function
@@ -22,16 +22,26 @@ function Battle() {
       const res = await getBattle(newTime);
       if (res) {
         setBattleData(res);
+        return res;
       }
     } catch (error) {
       console.error("Error fetching battle data:", error);
     }
     console.log(battleData)
   }; 
-  
-  useEffect(() => {
-    getBattleInfo(initialTime);
-  }, []);
+  useEffect(()=>{
+    const token = jsCookie.get("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log("token ", decodedToken.userId)
+        setMyId(decodedToken.userId)
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  },[])
 
   const formatSQLTime = (time) => {
     const dateObject = new Date(time);
@@ -69,39 +79,28 @@ function Battle() {
   const finishBattle = async () => {
     console.log("Finish battle button clicked!");
 const test = await getBattleInfo(initialTime)
-if (battleData.winner){
-   await levelUp(battleData.winner);
-    winOrLose(myId, battleData.winner);
+if (test){
+  console.log(test)
+  await endBattle(test.id);
+  console.log( "winner " + test.winner)
+  winOrLose(test.winner)
+  await levelUp(test.winner)
 };
 }
-    // Simulate the end of the battle
-   
-
-//End function determines winner/loser sends to home and levels up
-  const winOrLose = async (myId, winnerId) => {
-     await endBattle(battleData.id);  
-    if (myId === winnerId) {
-      setNotification(`You won the battle against ${userId}`);
+const winOrLose = (winner) => {
+  console.log("in win or lose")
+  try {
+    if (myId === winner) {
+    //  setNotification(`You won the battle against ${userId}`);
     } else {
-      setNotification(
-        `You lost and really are a loser the battle against ${userId}`
-      );
+     // setNotification(`You lost the battle against ${userId}`);
     }
-     navigate("/home");
-  };
-
-  
+    navigate("/home");
+  } catch (error) {
+    console.error("Error determining winner/loser:", error);
+  }
+};
   useEffect(() => {
-
-    const token = jsCookie.get("token");
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-      } catch (error) {
-        console.error("Error decoding token:", error.message);
-      }
-    }
 
     // Calculate the time difference and update the time state
    

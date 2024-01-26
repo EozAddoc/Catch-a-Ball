@@ -1,14 +1,17 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState, useEffect, useRef }from 'react';
 import List from './Menu/List';
 import NotificationDropdown from './NotificationDropdown';
 import { getUser, getOtherUsersData, updateNotifications} from "../api/user";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
+
 const Sidebar = ({notification}) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [id, setId] = useState()
+  const ref = useRef(null);
+
   useEffect(() => {
     const token = jsCookie.get("token");
 
@@ -64,8 +67,22 @@ const Sidebar = ({notification}) => {
     setShowNotifications(!showNotifications);
     console.log(showNotifications)
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!ref?.current?.contains(e.target)) {
+        setShowSidebar(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+  }, [ref]);
+
   return (
-    <>
+    <div ref={ref}>
       {showSidebar ? (
         <button
           className="flex text-4xl text-white items-center cursor-pointer fixed left-10 top-6 z-50"
@@ -109,7 +126,7 @@ const Sidebar = ({notification}) => {
           <List />
         </h3>
       </div>
-    </>
+    </div>
   );
 };
 

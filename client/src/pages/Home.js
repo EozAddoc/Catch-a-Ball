@@ -10,7 +10,7 @@ import MissionsHomepage from "../components/MissionsHomepage";
 
 function Home() {
   const navigate = useNavigate();
-  
+
   const [auth, setAuth] = useState(false);
   const [mess, setMess] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -36,8 +36,12 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axios.get(process.env.REACT_APP_URL + "/user");
-        const deckResponse = await axios.get(process.env.REACT_APP_URL + "/deck");
+        const userResponse = await axios.get(
+          process.env.REACT_APP_URL + "/user"
+        );
+        const deckResponse = await axios.get(
+          process.env.REACT_APP_URL + "/deck"
+        );
 
         if (userResponse.data.Status === "Success") {
           setAuth(true);
@@ -55,8 +59,7 @@ function Home() {
 
         setTimeout(() => {
           setLoadingApiCall(false);
-        }, 4000);   
-      
+        }, 4000);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -78,19 +81,19 @@ function Home() {
   switch (menuSelected) {
     case "team":
       return (
-        <div className="bg-gray-700">
+        <div>
           {auth ? (
-            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
+            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
               {loadingApiCall ? (
                 <LoadingPage />
               ) : (
                 <>
-                  <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+                  <div className="search ml-10 top-24 p-5 flex justify-center items-center">
                     <div className="w-3/5">
                       <SearchBar />
                     </div>
                   </div>
-                  <div className="text-center min-h-screen px-5 py-5">
+                  <div className="text-center px-5 py-5">
                     <div className="flex"></div>
                     <div className="grid grid-cols-2">
                       <div className="ml-24 grid grid-cols-2 md:grid-cols-3 place-items-center">
@@ -98,7 +101,7 @@ function Home() {
                           deckInfo.map((card) => {
                             return (
                               <img
-                              key={card.id}
+                                key={card.id}
                                 className="hover:scale-150 transition w-36 p-2 md:w-64"
                                 src={card.images?.large}
                                 alt={card.name}
@@ -121,16 +124,16 @@ function Home() {
 
     case "trainer":
       return (
-        <div className="bg-gray-700">
+        <div>
           {auth ? (
-            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
-              <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
+              <div className="search ml-10 top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   {" "}
                   <SearchBar />
                 </div>
               </div>
-              <div className="text-center min-h-screen px-5 py-5">
+              <div className="text-center px-5 py-5">
                 <div className="flex"></div>
                 <div className="grid grid-cols-2">
                   <Menu setMenuSelected={setCardSelected} />
@@ -146,19 +149,19 @@ function Home() {
 
     case "missions":
       return (
-        <div className="bg-gray-700">
+        <div>
           {auth ? (
-            <div className="min-h-screen min-w-screen bg-homeN bg-cover opacity-100">
-              <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
+            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
+              <div className="search ml-10 top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   {" "}
                   <SearchBar />
                 </div>
               </div>
-              <div className="text-center min-h-screen px-5 py-5">
+              <div className="text-center px-5 py-5">
                 <div className="flex"></div>
                 <div className="grid grid-cols-2">
-                    <MissionsHomepage />
+                  <MissionsHomepage />
                   <Menu setMenuSelected={setCardSelected} />
                 </div>
                 <Sidebar />
@@ -168,36 +171,36 @@ function Home() {
             navigate("/")
           )}
         </div>
-      )
-      default:
-          return (
-            <div className="bg-gray-700">
-              {auth ? (
-                <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
-                  {loadingApiCall ? (
-                    <LoadingPage />
-                  ) : (
-                    <>
-                      <div className="search w-full ml-10 top-24 p-5 flex justify-center items-center ">
-                        <div className="w-3/5 pt-10">
-                          <SearchBar />
-                        </div>
-                      </div>
-                      <div className="text-center min-h-screen px-5 py-5">
-                        <div className="flex"></div>
-                        <div className="grid grid-cols-2">
-                          <p>Default content goes here</p>
-                          <Menu setMenuSelected={setCardSelected} />
-                        </div>
-                        <Sidebar />
-                      </div>
-                    </>
-                  )}
-                </div>
+      );
+    default:
+      return (
+        <div>
+          {auth ? (
+            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
+              {loadingApiCall ? (
+                <LoadingPage />
               ) : (
-                navigate("/")
+                <>
+                  <div className="search ml-10 top-24 p-5 flex justify-center items-center">
+                    <div className="w-3/5 pt-10">
+                      <SearchBar />
+                    </div>
+                  </div>
+                  <div className="text-center px-5 py-5">
+                    <div className="flex"></div>
+                    <div className="grid grid-cols-2">
+                      <p>Default content goes here</p>
+                      <Menu setMenuSelected={setCardSelected} />
+                    </div>
+                    <Sidebar />
+                  </div>
+                </>
               )}
             </div>
+          ) : (
+            navigate("/")
+          )}
+        </div>
       );
   }
 }

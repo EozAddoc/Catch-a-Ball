@@ -15,21 +15,21 @@ router.post("/signup", [
 
 
 // ADD AVATAR API
-router.post("/signup/avatar", userController.updateAvatar);
+router.post("/signup/avatar",authenticateToken, userController.updateAvatar);
 
 
 //LOGIN USER
-router.post("/login",userController.loginUser);
+router.post("/login",authenticateToken, userController.loginUser);
 
 
 //Profile user info CREATE
-router.get('/suggestedPlayers', userController.filterUsers)
+router.get('/suggestedPlayers',authenticateToken, userController.filterUsers)
 
 
 //UPDATE
-router.post('/Notifications', userController.updateNotifications )
-router.post("/Profile", userController.updateUser)
-router.patch('/LevelUp', userController.levelUpUser)
+router.post('/Notifications',authenticateToken, userController.updateNotifications )
+router.post("/Profile",authenticateToken, userController.updateUser)
+router.patch('/LevelUp',authenticateToken,  userController.levelUpUser)
 
 
 //User info 
@@ -51,7 +51,7 @@ router.get('/user', authenticateToken,async ( req,res)=>{
   }
 
 })
-router.get(`/user/filter`, (req, res) => {
+router.get(`/user/filter`,authenticateToken, (req, res) => {
   const searchTerm = req.query.q;
 
   console.log(searchTerm)

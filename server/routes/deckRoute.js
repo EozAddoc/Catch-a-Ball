@@ -8,7 +8,7 @@ const authenticateToken = require('../middleware/authenticateToken');
 const db = require('../db');
 
 
-router.post('/signup/pokemon', deckController.addCards)
+router.post('/signup/pokemon',authenticateToken, deckController.addCards)
 router.get('/home',authenticateToken,(req,res)=>{
     return res.json({
         Status: "Success",
@@ -46,7 +46,7 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
 
 })
 
-router.get(`/api/filter`, (req, res) => {
+router.get(`/api/filter`,authenticateToken, (req, res) => {
   const searchTerm = req.query.q;
   const filterField = req.query.field;
 

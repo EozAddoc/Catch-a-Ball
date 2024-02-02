@@ -7,10 +7,26 @@ const Logout = () => {
 
     axios.defaults.withCredentials = true;
 
+// Function to set the token in headers
+const setAuthToken = (token) => {
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+};
+    const clearAuthToken = () => {
+        localStorage.removeItem('token');
+
+        // You may also want to clear the token from the axios headers
+        setAuthToken(null);
+      };
+
     useEffect(() => {
         axios.get(process.env.REACT_APP_URL+'/logout')
             .then(res => {
                 if (res.data.Status === "Success") {
+                  clearAuthToken()
                     navigate('/');
                 } else {
                     alert("error logging out")

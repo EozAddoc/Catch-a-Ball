@@ -52,16 +52,21 @@ class User {
   static async getUserByUsernameAndPassword(username, password, callback) {
     const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
     const values = [username, password];
-
-    db.query(query, values, (err, result) => {
-      if (err) {
-        console.error('Error while retrieving user:', err);
-        callback(err);
-      } else {
-        callback(null, result);
-        console.log("userPage", result)
-      }
-    });
+    try {
+      db.query(query, values, (err, result) => {
+        if (err) {
+          console.error('Error while retrieving user:', err);
+          callback(err);
+        } else {
+          console.log("userPage", result)
+          callback(null,result);
+        }
+      });
+    }catch{
+      console.log("err retrieving user ")
+    }
+ 
+ 
   }
 
   static async checkExistingUser(username, callback) {
@@ -216,21 +221,21 @@ class User {
   }
   
   
+//TO DO 
+  // static async DeleteUser(userId,callback) {
 
-  static async DeleteUser(userId,callback) {
+  //   const query = 'DELETE users WHERE id = ?';
+  //   const values = [userId];
 
-    const query = 'DELETE users WHERE id = ?';
-    const values = [userId];
+  //   db.query(query, values, (err, result) => {
+  //     if (err) {
+  //       console.error('Error while adding avatar:', err);
+  //     } else {
+  //       console.log(callback,'User deleted succesfully ')
 
-    db.query(query, values, (err, result) => {
-      if (err) {
-        console.error('Error while adding avatar:', err);
-      } else {
-        console.log(callback,'Avatar added succesfully ')
-
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
   
 
   

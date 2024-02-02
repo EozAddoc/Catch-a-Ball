@@ -2,10 +2,14 @@ import Sidebar from "../components/SideBar";
 import Searchbar from "../components/SearchBar";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, getOtherUsersData, getInProgressData ,getPotentialOpponents} from "../api/user";
+import {
+  getUser,
+  getOtherUsersData,
+  getInProgressData,
+  getPotentialOpponents,
+} from "../api/user";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import jsCookie from "js-cookie"
+
 
 function Arena() {
   const navigate = useNavigate();
@@ -13,70 +17,107 @@ function Arena() {
   const [inProgress, setInProgress] = useState([]);
   const [usersName, setUsersName] = useState([]);
   const [items, setItems] = useState([]);
-  const [usersId, setUsersId] =useState([])
-  const [time,setTime]= useState([])
+  const [usersId, setUsersId] = useState([]);
+  const [time, setTime] = useState([]);
   useEffect(() => {
-    const token = jsCookie.get("token");
-
-   
-    const fetchData = async () => {
-      try {
-        const userResponse = await getUser();
-
-        if (userResponse.data.Status === "Success") {
-          setUserData(userResponse.data.userData);
-
-          const inProgressResponse = await getInProgressData(userResponse.data.userData.id)
-const myId =userResponse.data.userData.id
-          if (inProgressResponse.data) {
-            setInProgress(inProgressResponse.data);
-            if (inProgressResponse.data.length > 0) {
-              for (let i = 0; i < Math.min(inProgressResponse.data.length,3); i++) {
-                console.log(inProgressResponse.data.length)
-                if(myId !== inProgressResponse.data[i].userIdS){
-                  fetchNames(inProgressResponse.data[i].userIdS);
-                }else{
-                  fetchNames(inProgressResponse.data[i].userIdF)
-                }
-
-                
-
-                setTime((prevUsers) => [...prevUsers, inProgressResponse.data[0].time])
-              }
-            }
-           
-           
-          } else {
-            console.error("err");
-          }
-
-          fetchPotentialOpponents();
-        } else {
-          // handle error if needed
-        }
-      } catch (err) {
-        console.log("error", err);
+    const storedToken = localStorage.getItem('token');
+    const setAuthToken = (token) => {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      } else {
+        delete axios.defaults.headers.common['Authorization'];
       }
     };
+  if (storedToken) {
+    // Set the token in headers
+    setAuthToken(storedToken);
 
+    // Verify the token on the server (optional)
+    axios.get('/verify-token')
+      .then(response => {
+        console.log("verified")
+        // Token is valid, user is authenticated
+        // Set user state or perform other actions
+      })
+      .catch(error => {
+        console.log("error token" )
+        // Token is invalid or expired
+        // Redirect to login or perform other actions
+      });
+  }
+    const res =getUser();
+    setUserData(res)
     fetchData();
+    fetchPotentialOpponents();
   }, []);
+  const fetchData = async () => {
+    try {
+      const userResponse = await getUser();
+
+      if (userResponse.data.Status === "Success") {
+        setUserData(userResponse.data.userData);
+
+        const inProgressResponse = await getInProgressData(
+          userResponse.data.userData.id
+        );
+        const myId = userResponse.data.userData.id;
+        if (inProgressResponse.data) {
+          setInProgress(inProgressResponse.data);
+          if (inProgressResponse.data.length > 0) {
+            for (
+              let i = 0;
+              i < Math.min(inProgressResponse.data.length, 3);
+              i++
+            ) {
+              if (myId !== inProgressResponse.data[i].userIdS) {
+                fetchNames(inProgressResponse.data[i].userIdS);
+              } else {
+                fetchNames(inProgressResponse.data[i].userIdF);
+              }
+
+              setTime((prevUsers) => [
+                ...prevUsers,
+                inProgressResponse.data[0].time,
+              ]);
+            }
+          }
+        } else {
+          console.error("err");
+        }
+
+      } else {
+        // handle error if needed
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
 
   const fetchNames = (id) => {
-  getOtherUsersData(id)
-    .then((res)=>{
-      if(res.data){
-console.log(res.data[0])
-        setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);   
-        setUsersId((prevUsers) => [...prevUsers, res.data[0].id])
-         }
-    })
-    .catch((err) => console.log("error", err));
-  }
-const fetchPotentialOpponents = () => {
-   getPotentialOpponents(userData.lvl)
+    getOtherUsersData(id)
       .then((res) => {
+        if (res.data) {
+          setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);
+          setUsersId((prevUsers) => [...prevUsers, res.data[0].id]);
+        }
+      })
+      .catch((err) => console.log("error", err));
+  };
+
+
+  const fetchPotentialOpponents =  async () => {
+    const userResponse = await getUser();
+
+    if (userResponse.data.Status === "Success") {
+      const lvl = userResponse.data.userData.battleLvl
+    
+    console.log("user lvl" + userData.battleLvl)
+    await getPotentialOpponents(lvl)
+      .then((res) => {
+        console.log(res)
         if (res) {
+          console.log(res)
           const opponentData = res.slice(0, 5).map((user) => {
             return {
               id: user.id,
@@ -89,20 +130,21 @@ const fetchPotentialOpponents = () => {
         }
       })
       .catch((err) => console.log("error", err));
+    }
   };
 
   const sendToBattle = (item) => {
     const time = new Date().toISOString();
-    axios.post( process.env.REACT_APP_URL + `/Battle`, {
+    axios.post(process.env.REACT_APP_URL + `/Battle`, {
       userF: userData.id,
       userS: item,
     });
-    
+
     navigate(`/Battle/${item}/${time}`);
   };
   const sendToOngoingBattle = (userId, time) => {
-    navigate(`/Battle/${userId}/${time}`)
-  }
+    navigate(`/Battle/${userId}/${time}`);
+  };
 
   return (
     <div className="min-h-screen bg-blue-700">
@@ -115,7 +157,7 @@ const fetchPotentialOpponents = () => {
             <div className="bg-pink-200 w-2/3 h-5/6 flex mt-12 ml-24 flex-col">
               <div className="bg-red-500 h-1/6 flex-1">
                 <h1 className="font-bold text-white text-center m-3">
-                  {" "}  
+                  {" "}
                   Recommended Opponents
                 </h1>
               </div>
@@ -132,7 +174,7 @@ const fetchPotentialOpponents = () => {
                         <p className="font-bold ">{item.username}</p>
                       </div>
                       <div className="flex-1 font-bold mt-3 w-1/6">
-                        <p>L V L {userData.lvl}</p>
+                        <p>L V L {userData.battleLvl}</p>
                       </div>
                     </div>
 
@@ -154,24 +196,42 @@ const fetchPotentialOpponents = () => {
                 I N &nbsp; P R O G R E S S :
               </h2>
 
-              <div className="bg-red-500 flex-1 rounded-full flex mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[0], time[0])}>
+              <div
+                className="bg-red-500 flex-1 rounded-full flex mt-5 p-3"
+                onClick={() => sendToOngoingBattle(usersId[0], time[0])}
+              >
                 <p className="text-white flex-1 w-2/3 font-bold text-xl m-3">
                   {" "}
-                  You vs {usersName.length > 0 ? usersName[0] : "No in-progress battles"}
+                  You vs{" "}
+                  {usersName.length > 0
+                    ? usersName[0]
+                    : "No in-progress battles"}
                 </p>
               </div>
-              <div className="bg-black flex-1 rounded-full mt-5 p-3" onClick={() => sendToOngoingBattle(usersId[1],time[1])}>
+              <div
+                className="bg-black flex-1 rounded-full mt-5 p-3"
+                onClick={() => sendToOngoingBattle(usersId[1], time[1])}
+              >
                 <p className="text-red-500 font-bold text-xl m-3">
                   {" "}
-                  You vs  {usersName.length > 1 ? usersName[1] : "No in-progress battles"}
-
+                  You vs{" "}
+                  {usersName.length > 1
+                    ? usersName[1]
+                    : "No in-progress battles"}
                 </p>
               </div>
-              <div className="bg-white flex-1 rounded-full mt-5 p-3" onClick={() => {sendToOngoingBattle(usersId[2], time[2]); console.log("testtime" + time[2])}}>
+              <div
+                className="bg-white flex-1 rounded-full mt-5 p-3"
+                onClick={() => {
+                  sendToOngoingBattle(usersId[2], time[2]);
+                }}
+              >
                 <p className="text-black font-bold text-xl m-3">
                   {" "}
-
-                  You vs {usersName.length > 2 ? usersName[2] : "No in-progress battles"}
+                  You vs{" "}
+                  {usersName.length > 2
+                    ? usersName[2]
+                    : "No in-progress battles"}
                 </p>
               </div>
             </div>

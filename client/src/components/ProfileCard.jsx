@@ -133,7 +133,7 @@ function ProfileCard({ id }) {
             </div>
             <div className=" w-6/7 h-1/3 m-4 flex items-center justify-center">
   <div className="border-gray-400 border-8 shadow-2xl h-full w-full rounded-2xl">
-    <img src={avatar.images?.large}  alt="AvatarImg" className="personnel-img" />
+    <img src={avatar.images?.large}  alt="_m" className="personnel-img" />
   </div>
 </div>
 <ls></ls>

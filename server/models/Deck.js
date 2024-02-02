@@ -14,13 +14,12 @@ class Deck {
           )
           
         `  
-        db.query(query, (err) => {
-            if (err) {
-              console.error('Error while creating user table:', err);
-            } else {
-              console.log('User table created or already exists.');
-            }
-          });
+        try {
+          await db.query(query);
+          console.log('Deck table created or already exists.');
+        } catch (err) {
+          console.error('Error while creating user table:', err);
+        }
     }
 
     static async getDeckByUserId(userId) {
@@ -54,34 +53,44 @@ class Deck {
     static async chooseForBattle(card_api, userId, callback) {
       const query = 'UPDATE deck SET Chosen_For_Battle = true WHERE user_id = ? AND card_api = ?';
       const values = [userId, card_api];
-    
-      db.query(query, values, (err, result) => {
-        if (err) {
-          console.error('Error while updating chosen for battle:', err);
-          callback(err);
-        } else {
-          callback(null, 'Updated successfully');
-        }
-      });
+      try {
+        await db.query(query,values);
+        console.log('Updated successfully');
+        callback(null, 'Updated successfully');
+
+      } catch (err) {
+        console.error('Error in chooseForBattle method:', err);
+        callback(err);      }
+  
     }
     
-
     
+
     static async addCards(userId, api_Ids, callback) {
-        const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
-        const user_id= userId
-        api_Ids.forEach((card_api) => {
-            const values = [user_id, card_api];
+      const query = 'INSERT INTO deck (user_id,card_api,Experience,Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
+      const user_id = userId;
+    
+      try {
+        for (const card_api of api_Ids) {
+          const values = [user_id, card_api];
+          await new Promise((resolve, reject) => {
             db.query(query, values, (err, result) => {
               if (err) {
                 console.error('Error while adding cards:', err);
-                callback(err);
+                reject(err);
+              } else {
+                resolve(result);
               }
             });
           });
-        
-          callback(null, 'Cards added successfully');
         }
-      
+    
+        callback(null, 'Cards added successfully');
+      } catch (err) {
+        console.error('Error in addCards method:', err);
+        callback(err);
+      }
+    }
+    
 }
 module.exports = Deck;

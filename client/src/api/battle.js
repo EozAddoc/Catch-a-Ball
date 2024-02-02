@@ -14,17 +14,19 @@ export const getBattle = async (initialTime) => {
     console.error(`Error fetching battle data from ${url}:`, error);
     return null;
   }
-}
-  export const endBattle = async (battleId) => {
-    console.log(`${BASE_URL}/End`)
-    console.log("battle id " + battleId)
-    try {
-      const response = await axios.patch(`${BASE_URL}/End`, { battleId: battleId });
-      console.log("res in endBattle: ", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error ending battle:", error);
-      throw error;
-    }
-    
-  };
+};
+
+export const endBattle = async (battleId) => {
+  console.log(`${BASE_URL}/End`);
+  console.log("battle id " + battleId);
+  try {
+    const response = await axios.patch(`${BASE_URL}/End`, {
+      battleId: battleId,
+    });
+    console.log("res in endBattle: ", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error ending battle:", error);
+    throw error;
+  }
+};

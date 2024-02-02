@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef }from 'react';
-import List from './Menu/List';
-import NotificationDropdown from './NotificationDropdown';
-import { getUser, getOtherUsersData, updateNotifications} from "../api/user";
+import React, { useState, useEffect, useRef } from "react";
+import List from "./Menu/List";
+import NotificationDropdown from "./NotificationDropdown";
+import { getUser, getOtherUsersData, updateNotifications } from "../api/user";
 import { jwtDecode } from "jwt-decode";
-import jsCookie from "js-cookie"
+import jsCookie from "js-cookie";
 
-const Sidebar = ({notification}) => {
+const Sidebar = ({ notification }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
-  const [id, setId] = useState()
+  const [id, setId] = useState();
   const ref = useRef(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Sidebar = ({notification}) => {
       try {
         const decodedToken = jwtDecode(token);
         console.log("decoded token " + decodedToken.userId);
-        setId(decodedToken.userId)
+        setId(decodedToken.userId);
       } catch (error) {
         console.error("Error decoding token:", error.message);
       }
@@ -29,43 +29,49 @@ const Sidebar = ({notification}) => {
         const userResponse = await getUser();
 
         if (userResponse.data.Status === "Success") {
-          const notificationsMap = JSON.parse(userResponse.data.userData.notifications)
+          const notificationsMap = JSON.parse(
+            userResponse.data.userData.notifications
+          );
 
           const mappedNotifications = notificationsMap.map((item) => item);
-          setNotifications(notificationsMap)
+          setNotifications(notificationsMap);
+        }
+      } catch (err) {
+        console.log("error", err);
+      }
+    };
 
-        }} catch (err) {
-          console.log("error", err);
-        }}
-    
-    fetchData()
+    fetchData();
   }, []);
- 
+
   useEffect(() => {
     if (notification) {
-     const updatedNotifications = setNotifications((prevNotifications) => [...prevNotifications, notification]);
-     const newNotificationsData = {}
-     newNotificationsData.id = id;
-     newNotificationsData.notifications = updatedNotifications;
-     updateNotifications(newNotificationsData)
-     console.log(updatedNotifications)
-     setNotifications(updatedNotifications)
+      const updatedNotifications = setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        notification,
+      ]);
+      const newNotificationsData = {};
+      newNotificationsData.id = id;
+      newNotificationsData.notifications = updatedNotifications;
+      updateNotifications(newNotificationsData);
+      console.log(updatedNotifications);
+      setNotifications(updatedNotifications);
     }
   }, []);
 
   const onCloseNotification = (index) => {
     const updatedNotifications = [...notifications];
     updatedNotifications.splice(index, 1);
-    const newNotificationsData = {}
+    const newNotificationsData = {};
     newNotificationsData.id = id;
     newNotificationsData.notifications = updatedNotifications;
-    console.log(newNotificationsData)
-    updateNotifications(newNotificationsData)
-    setNotifications(updatedNotifications)
+    console.log(newNotificationsData);
+    updateNotifications(newNotificationsData);
+    setNotifications(updatedNotifications);
   };
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
-    console.log(showNotifications)
+    console.log(showNotifications);
   };
 
   useEffect(() => {
@@ -73,12 +79,12 @@ const Sidebar = ({notification}) => {
       if (!ref?.current?.contains(e.target)) {
         setShowSidebar(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleOutsideClick);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
-    }
+    };
   }, [ref]);
 
   return (
@@ -107,22 +113,32 @@ const Sidebar = ({notification}) => {
       )}
 
       {/* Notification icon on top right */}
-    
 
       <div
-        className={`top-0 left-0 w-full md:w-[40vw] lg:w-[30vw] bg-yellow-500 md:p-10 xl:pl-20 text-white fixed min-h-screen xl:h-full z-40 ease-in-out duration-300 ${showSidebar ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={`top-0 left-0 w-full md:w-[40vw] lg:w-[30vw] bg-yellow-500 md:p-10 xl:pl-20 text-white fixed min-h-screen xl:h-full z-40 ease-in-out duration-300 ${
+          showSidebar ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
-        <div className={`absolute ${notifications.length > 0  ? 'animate-bounce' : ''} top-2 right-2 p-2`}>        <img
-          src="notification2.png"
-          alt="Notification icon"
-          className="h-8 cursor-pointer"
-          onClick={toggleNotifications}
-        />
-              <NotificationDropdown notifications={notifications} onCloseNotification={onCloseNotification} isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-
-      </div>
-        <h3 className="mt-[30px]  text-4xl font-semibold text-white">
+        <div
+          className={`absolute ${
+            notifications.length > 0 ? "animate-bounce" : ""
+          } top-2 right-2 p-2`}
+        >
+          {" "}
+          <img
+            src="notification2.png"
+            alt="Notification icon"
+            className="h-8 cursor-pointer"
+            onClick={toggleNotifications}
+          />
+          <NotificationDropdown
+            notifications={notifications}
+            onCloseNotification={onCloseNotification}
+            isOpen={showNotifications}
+            onClose={() => setShowNotifications(false)}
+          />
+        </div>
+        <h3 className="mt-[30px] text-4xl font-semibold text-white">
           <List />
         </h3>
       </div>

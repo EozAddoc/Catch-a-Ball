@@ -83,26 +83,25 @@ function Home() {
       return (
         <div>
           {auth ? (
-            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
+            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
               {loadingApiCall ? (
                 <LoadingPage />
               ) : (
                 <>
-                  <div className="search ml-10 top-24 p-5 flex justify-center items-center">
+                  <div className="search top-24 p-5 flex justify-center items-center">
                     <div className="w-3/5">
                       <SearchBar />
                     </div>
                   </div>
                   <div className="text-center px-5 py-5">
-                    <div className="flex"></div>
-                    <div className="grid grid-cols-2">
-                      <div className="ml-24 grid grid-cols-2 md:grid-cols-3 place-items-center">
+                    <div className="flex md:gap-20 flex-col items-center">
+                      <div className="grid grid-cols-2 md:grid-cols-3 place-items-center">
                         {deckInfo.length > 0 &&
                           deckInfo.map((card) => {
                             return (
                               <img
                                 key={card.id}
-                                className="hover:scale-150 transition w-36 p-2 md:w-64"
+                                className="hover:scale-150 z-30 transition w-36 p-2 md:w-64"
                                 src={card.images?.large}
                                 alt={card.name}
                               />
@@ -126,16 +125,20 @@ function Home() {
       return (
         <div>
           {auth ? (
-            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
-              <div className="search ml-10 top-24 p-5 flex justify-center items-center">
+            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+              <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
-                  {" "}
                   <SearchBar />
                 </div>
               </div>
               <div className="text-center px-5 py-5">
-                <div className="flex"></div>
-                <div className="grid grid-cols-2">
+                <div className="flex md:gap-20 flex-col items-center">
+                  <img
+                    key={avatar.id}
+                    className="hover:scale-150 z-30 transition w-36 md:w-64"
+                    src={avatar.images?.large}
+                    alt={avatar.name}
+                  />
                   <Menu setMenuSelected={setCardSelected} />
                 </div>
                 <Sidebar />
@@ -151,17 +154,17 @@ function Home() {
       return (
         <div>
           {auth ? (
-            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
-              <div className="search ml-10 top-24 p-5 flex justify-center items-center">
+            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+              <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
-                  {" "}
                   <SearchBar />
                 </div>
               </div>
               <div className="text-center px-5 py-5">
-                <div className="flex"></div>
-                <div className="grid grid-cols-2">
+                <div className="flex md:gap-20 flex-col items-center">
+                  {/* <div className="grid grid-cols-2"> */}
                   <MissionsHomepage />
+                  {/* </div> */}
                   <Menu setMenuSelected={setCardSelected} />
                 </div>
                 <Sidebar />
@@ -172,24 +175,36 @@ function Home() {
           )}
         </div>
       );
+
     default:
       return (
         <div>
           {auth ? (
-            <div className="h-screen w-screen bg-homeN bg-cover opacity-100">
+            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
               {loadingApiCall ? (
                 <LoadingPage />
               ) : (
                 <>
-                  <div className="search ml-10 top-24 p-5 flex justify-center items-center">
-                    <div className="w-3/5 pt-10">
+                  <div className="search top-24 p-5 flex justify-center items-center">
+                    <div className="w-3/5">
                       <SearchBar />
                     </div>
                   </div>
                   <div className="text-center px-5 py-5">
-                    <div className="flex"></div>
-                    <div className="grid grid-cols-2">
-                      <p>Default content goes here</p>
+                    <div className="flex md:gap-20 flex-col items-end">
+                      <div className="grid grid-cols-2 md:grid-cols-3 place-items-center">
+                        {deckInfo.length > 0 &&
+                          deckInfo.map((card) => {
+                            return (
+                              <img
+                                key={card.id}
+                                className="hover:scale-150 transition w-36 p-2 md:w-64"
+                                src={card.images?.large}
+                                alt={card.name}
+                              />
+                            );
+                          })}
+                      </div>
                       <Menu setMenuSelected={setCardSelected} />
                     </div>
                     <Sidebar />

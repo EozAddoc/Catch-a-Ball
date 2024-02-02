@@ -91,7 +91,7 @@ const Sidebar = ({ notification }) => {
     <div ref={ref}>
       {showSidebar ? (
         <button
-          className="flex text-4xl text-white items-center cursor-pointer fixed left-10 top-6 z-50"
+          className="text-4xl text-white cursor-pointer fixed left-10 top-6 z-50"
           onClick={() => setShowSidebar(!showSidebar)}
         >
           x
@@ -138,7 +138,7 @@ const Sidebar = ({ notification }) => {
             onClose={() => setShowNotifications(false)}
           />
         </div>
-        <h3 className="mt-[30px] text-4xl font-semibold text-white">
+        <h3 className="mt-[10%] ml-[20%] md:ml-0 text-4xl font-semibold text-white">
           <List />
         </h3>
       </div>

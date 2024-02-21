@@ -16,10 +16,8 @@ export const updateNotifications = (newNotifications) => {
   return axios.post(`${BASE_URL}/Notifications`, { newNotificationData: newNotifications });
 };
 export const levelUp =  async (userId) => {
-  console.log("leveling up user " +userId)
   try {
     const response =  await axios.patch(`${BASE_URL}/LevelUp`, { userId: userId });
-    console.log("res in lvl up: ", response);
     return response.data;
   } catch (error) {
     console.error("Error leveling up:", error);
@@ -28,12 +26,10 @@ export const levelUp =  async (userId) => {
 };
 
 export const getInProgressData = async (userId) => {
-  console.log(  `${process.env.REACT_APP_URL}/inProgress/filter?q=${userId}`)
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_URL}/inProgress/filter?q=${userId}`
     );
-    console.log(response.data)
     return response || [];
   } catch (error) {
     console.error("Error fetching in-progress data:", error);
@@ -56,8 +52,6 @@ export const getOtherUsersData = async (id) => {
 };
 
 export const getPotentialOpponents = async (userLevel) => {
-  console.log(userLevel)
-  console.log( `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl`)
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl`

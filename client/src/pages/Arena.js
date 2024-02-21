@@ -29,20 +29,14 @@ function Arena() {
       }
     };
   if (storedToken) {
-    // Set the token in headers
     setAuthToken(storedToken);
 
-    // Verify the token on the server (optional)
     axios.get('/verify-token')
       .then(response => {
         console.log("verified")
-        // Token is valid, user is authenticated
-        // Set user state or perform other actions
       })
       .catch(error => {
         console.log("error token" )
-        // Token is invalid or expired
-        // Redirect to login or perform other actions
       });
   }
     const res =getUser();
@@ -112,7 +106,6 @@ function Arena() {
     if (userResponse.data.Status === "Success") {
       const lvl = userResponse.data.userData.battleLvl
     
-    console.log("user lvl" + userData.battleLvl)
     await getPotentialOpponents(lvl)
       .then((res) => {
         console.log(res)

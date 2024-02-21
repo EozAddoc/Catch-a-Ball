@@ -3,7 +3,6 @@ import VerticalList from "./scrollList";
 const Modal = ({ isOpen, onClose, children,onTypeChange}) => {
     const [currentType, setCurrentType] = useState("water");
      const handleItemClick = (type) => {
-        console.log("Closing modal for type:", type);
         onTypeChange(type)
         onClose();
       };

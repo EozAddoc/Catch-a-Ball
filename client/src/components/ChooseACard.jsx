@@ -43,7 +43,6 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
             userId: userId,
             avatar_api: avatar_api,
           });
-          console.log('Avatar sent to the back-end successfully');
         } catch (error) {
           console.error('Error sending avatar:', error);
         }
@@ -53,7 +52,6 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
             userId: userId,
             api_Ids: api_Ids,
           });
-          console.log('Cards sent successfully');
         } catch (error) {
           console.error(error);
         }
@@ -77,7 +75,6 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
       if (prevSelectedCardApis.length < maxCardsChosen) {
         return [...prevSelectedCardApis, api_Id];
       }
-      console.log('Clicked card with api_Id:', prevSelectedCardApis);
       return prevSelectedCardApis;
     });
   };

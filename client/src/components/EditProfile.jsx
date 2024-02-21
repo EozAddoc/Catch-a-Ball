@@ -5,7 +5,6 @@ import ProfileCard from "./ProfileCard";
 import { getUser, updateUser, getOtherUsersData } from "../api/user";
 
 function ProfilePage(id) {
-  console.log(id.id)
   const navigate = useNavigate();
   const [mess, setMess] = useState("");
   const [userData, setUserData] = useState("");
@@ -51,7 +50,6 @@ updatedUserData.id = userData.id
       .then((res) => {
         if (res.data === 201) {
           setIsEditMode(!isEditMode);
-          console.log("User updated successfully!");
           setTimeout(() => {
             window.location.reload();
           }, 100);
@@ -73,11 +71,9 @@ updatedUserData.id = userData.id
       getUser()
       .then((res) => {
         if (res.data.Status === "Success") {
-          console.log("in here")
           setUserData(res.data.userData);
          
         } else {
-          console.log("oh no")
           setMess(res.data.err);
         }
       })

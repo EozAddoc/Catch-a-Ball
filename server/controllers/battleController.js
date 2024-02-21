@@ -3,16 +3,16 @@ const jwt = require("jsonwebtoken");
 
 class battleController {
   static async newBattle(req, res) {
-    const userF = req.body.userF;
-    const userS = req.body.userS;
+    try {
+      const userF = req.body.userF;
+      const userS = req.body.userS;
 
-    Battle.createBattle(userF, userS, (err) => {
-      if (err) {
-        res.status(500).json({ message: "Internal server error" });
-      } else {
-        res.status(201).json({ message: "Battle created successfully" });
-      }
-    });
+      await Battle.createBattle(userF, userS);
+      res.status(201).json({ message: "Battle created successfully" });
+    } catch (err) {
+      console.error('Error while creating battle:', err);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
  
   static async battleEnding(req, res) {

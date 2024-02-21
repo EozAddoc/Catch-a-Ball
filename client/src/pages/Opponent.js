@@ -11,15 +11,11 @@ function Opponent() {
   const [myId, setMyId]=useState('')
   useEffect(() => {
     const token = jsCookie.get("token");
-console.log(token)
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken.userId)
         setMyId(decodedToken.userId)
-        // setUserData(decodedToken);
       } catch (error) {
-        // Handle error, such as invalid token
         console.error("Error decoding token:", error.message);
       }
     }

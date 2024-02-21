@@ -1,8 +1,10 @@
-const Battle = require('../../models/Battle');
-const db = require('../../db');
+const db = require('../db');
+const Battle = require('../models/Battle');
+const request = require('supertest');
+const express = require('express');
+const battleController = require('../controllers/battleController');
 
-// Mocking the database query method
-jest.mock('../../db');
+jest.mock('../db');
 
 describe('Battle Class Tests', () => {
   // Reset the mock implementation before each test

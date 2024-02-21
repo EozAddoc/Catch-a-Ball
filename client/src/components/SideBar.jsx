@@ -18,7 +18,6 @@ const Sidebar = ({notification}) => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("decoded token " + decodedToken.userId);
         setId(decodedToken.userId)
       } catch (error) {
         console.error("Error decoding token:", error.message);
@@ -48,7 +47,6 @@ const Sidebar = ({notification}) => {
      newNotificationsData.id = id;
      newNotificationsData.notifications = updatedNotifications;
      updateNotifications(newNotificationsData)
-     console.log(updatedNotifications)
      setNotifications(updatedNotifications)
     }
   }, []);
@@ -59,13 +57,11 @@ const Sidebar = ({notification}) => {
     const newNotificationsData = {}
     newNotificationsData.id = id;
     newNotificationsData.notifications = updatedNotifications;
-    console.log(newNotificationsData)
     updateNotifications(newNotificationsData)
     setNotifications(updatedNotifications)
   };
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
-    console.log(showNotifications)
   };
 
   useEffect(() => {

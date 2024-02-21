@@ -76,14 +76,13 @@ class User {
     db.query(query, values, (err, result) => {
       if (err) {
         console.error("Error while checking username:", err);
-        callback(err); // Call the callback with the error
+        callback(err); 
       } else {
         const userCount = result[0].count;
         if (userCount > 0) {
-          // Username or email already exists, send error response
-          callback(null, true); // Call the callback with userExists = true
+          callback(null, true); 
         } else {
-          callback(null, false); // Call the callback with userExists = false
+          callback(null, false);
         }
       }
     });
@@ -178,7 +177,6 @@ class User {
     // Update the database with the new array of notifications
     const updateQuery = 'UPDATE users SET battleLvl= battleLvl +1 WHERE id = ?';
     const updateValues = [userId];
-  console.log("user Id winner" + userId)
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while leveling:', updateErr);
@@ -219,27 +217,8 @@ class User {
       console.error("Error updating user:", error);
     }
   }
-  
-  
-//TO DO 
-  // static async DeleteUser(userId,callback) {
+    
 
-  //   const query = 'DELETE users WHERE id = ?';
-  //   const values = [userId];
-
-  //   db.query(query, values, (err, result) => {
-  //     if (err) {
-  //       console.error('Error while adding avatar:', err);
-  //     } else {
-  //       console.log(callback,'User deleted succesfully ')
-
-  //     }
-  //   });
-  // }
-  
-
-  
-  
 
     }
 

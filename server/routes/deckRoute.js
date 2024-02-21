@@ -20,7 +20,6 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
     const userId = req.userId;
     const deck = await Deck.getDeckByUserId(userId);
     if ( deck) {
-      console.log("res :"+ deck.length,deck[0].card_api)
       if (deck.length < 4) {
         deck.forEach(e => {
           Deck.chooseForBattle(e.card_api, userId, (err, result) => {
@@ -49,9 +48,6 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
 router.get(`/api/filter`,authenticateToken, (req, res) => {
   const searchTerm = req.query.q;
   const filterField = req.query.field;
-
-  console.log(searchTerm, filterField)
-
   if (!searchTerm || !filterField) {
     return res.status(400).json({ error: 'Missing required parameters' });
   }

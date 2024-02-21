@@ -10,10 +10,8 @@ router.post("/Battle",authenticateToken, battleController.newBattle)
 router.get('/inProgress',authenticateToken, battleController.getInProgress)
 router.patch('/End',authenticateToken, battleController.battleEnding)
 router.get('/Battle/filter',authenticateToken, (req,res)=>{
-  console.log("Battle/filter" + req.query)
   const initialTime = req.query.time;
   
-  console.log("initial time " +initialTime)
 
   if (!initialTime ) {
     return res.status(400).json({ error: 'Missing required parameters' });

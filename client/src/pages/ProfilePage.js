@@ -13,7 +13,6 @@ function ProfilePage() {
       .get( process.env.REACT_APP_URL + "/user")
       .then((res) => {
         if (res.data.Status === "Success") {
-          console.log("in here")
           setUserData(res.data.userData);
          
         } else {

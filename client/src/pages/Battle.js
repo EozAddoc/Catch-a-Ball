@@ -27,7 +27,6 @@ function Battle() {
     } catch (error) {
       console.error("Error fetching battle data:", error);
     }
-    console.log(battleData)
   }; 
   useEffect(()=>{
     const token = jsCookie.get("token");
@@ -35,7 +34,6 @@ function Battle() {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log("token ", decodedToken.userId)
         setMyId(decodedToken.userId)
       } catch (error) {
         console.error("Error decoding token:", error.message);
@@ -77,18 +75,14 @@ function Battle() {
 
   //For testing purposes so we dont have to wait an hour 
   const finishBattle = async () => {
-    console.log("Finish battle button clicked!");
 const test = await getBattleInfo(initialTime)
 if (test){
-  console.log(test)
   await endBattle(test.id);
-  console.log( "winner " + test.winner)
   winOrLose(test.winner)
   await levelUp(test.winner)
 };
 }
 const winOrLose = (winner) => {
-  console.log("in win or lose")
   try {
     if (myId === winner) {
     //  setNotification(`You won the battle against ${userId}`);

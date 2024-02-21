@@ -4,7 +4,6 @@ const VerticalList = ({ onItemClick }) => {
   const handleClick = (altText) => {
     let type = altText
     
-    console.log("Clicked item with type:", type);
     onItemClick(type);
   };
 

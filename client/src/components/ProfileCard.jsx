@@ -17,7 +17,6 @@ async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,se
     const res = await axios.get(`${process.env.REACT_APP_URL}/user/filter?q=${id}`);
     if (res.data && res.data.length > 0) {
       const otherUser = res.data[0];
-      console.log(otherUser.avatar_api)
       setOtherUser(otherUser);
       setAvatar(await ApiCall(otherUser.avatar_api));
       setTypeEn(otherUser.energyChoice);
@@ -79,7 +78,6 @@ function ProfileCard({ id }) {
       updatedUserData: updatedUserData
     })
       .then((res) => {
-        console.log("User updated successfully!");
         setTimeout(() => {
           window.location.reload();
         }, 100);

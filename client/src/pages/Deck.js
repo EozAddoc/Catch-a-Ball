@@ -60,7 +60,6 @@ function Deck() {
         setAvatar(await ApiCall(userData.avatar_api));
       }
       setBattleLvl(battleLvl); // Update battleLvl state
-      console.log(battleLvl);
     };
 
     fetchData();

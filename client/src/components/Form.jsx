@@ -13,7 +13,6 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Perform different actions based on the text of the button
     if (text === "Login") {
       loginF(event);
     } else if (text === "Sign Up") {
@@ -36,8 +35,6 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
       password: password
     })
       .then((resp) => {
-        console.log("ACCOUNT CREATED SUCCESSFULLY");
-        console.log("form ", username , url )
         navigate("/signup/pokemon");
       })
       .catch((error) => {
@@ -45,33 +42,27 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
           setErrorMessage(error.response.data.error);
         } else {
           console.error("Error during registration:", error);
-          console.log(url)
         }
       });
   };
 
 
   const loginF = (e) => {
-    console.log("logging  in", username, password)
     e.preventDefault();
     Axios.post(process.env.REACT_APP_URL+"/login", {
       username: username,
       password: password,
     }).then((resp) => {
       if (resp.data.message) {
-        console.log(resp.data.message);
         navigate("/home");
       } else {
         setErrorMessage(resp.data.error)
-        console.log("res : " + JSON.stringify(resp.data.error));
       }
     }).catch((error) => {
       if (error.response && error.response.status === 401) {
         setErrorMessage(error.response.data.error);
       } else {
         console.error("Error during login:", error);
-        console.error(error);
-        console.log(username);
       }
     });
   };

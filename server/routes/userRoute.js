@@ -4,11 +4,14 @@ const User = require('../models/User');
 const router = express.Router();
 const userController = require('../controllers/userController')
 const authenticateToken = require('../middleware/authenticateToken');
-const db = require('../db');
+const request = require('supertest');
+const db = require('../../db');
 
+// Mocking the database query method
+jest.mock('../../db');
 //SIGNUP USER 
 router.post("/signup", [
-  body('email').isEmail(),
+  body('email').notEmpty(),
   body('username').notEmpty(),
   body('password').notEmpty()
 ], userController.newUser);
@@ -53,8 +56,6 @@ router.get('/user', authenticateToken,async ( req,res)=>{
 })
 router.get(`/user/filter`,authenticateToken, (req, res) => {
   const searchTerm = req.query.q;
-
-  console.log(searchTerm)
 
   if (!searchTerm ) {
     return res.status(400).json({ error: 'Missing required parameters' });

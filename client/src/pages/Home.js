@@ -28,8 +28,7 @@ function Home() {
         return card;
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          console.log('Card not found:', error.response.data);
-          return null; // 
+          return null; 
         } else {
           throw error;
         }

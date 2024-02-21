@@ -8,24 +8,29 @@ import jsCookie from "js-cookie"
 function Opponent() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const [myId, setMyId]=useState('')
-  useEffect(() => {
-    const token = jsCookie.get("token");
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setMyId(decodedToken.userId)
-      } catch (error) {
-        console.error("Error decoding token:", error.message);
+    const [myId, setMyId]=useState('')
+    useEffect(() => {
+      const token = jsCookie.get("token");
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          setMyId(decodedToken.userId)
+        } catch (error) {
+          console.error("Error decoding token:", error.message);
+        }
       }
-    }
-  }, []);
+    }, []);
 
 // Now 'decoded' contains the decoded JWT payload
 
  
-  console.log(userId)
   const Battle = (userId) => {
+    console.log(typeof myId, typeof userId); // Log the types of myId and userId
+    console.log(myId, userId)
+    if(myId === parseInt(userId)){
+      alert("You cannot battle yourself!");
+      return; 
+    }
     const time = new Date().toISOString();
     navigate(`/Battle/${userId}/${time}`)
   }

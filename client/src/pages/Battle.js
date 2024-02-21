@@ -73,21 +73,27 @@ function Battle() {
     setTime(remainingTime > 0 ? remainingTime : 0);
   };
 
-  //For testing purposes so we dont have to wait an hour 
-  const finishBattle = async () => {
-const test = await getBattleInfo(initialTime)
-if (test){
-  await endBattle(test.id);
-  winOrLose(test.winner)
-  await levelUp(test.winner)
+
+const finishBattle = async () => {
+  try {
+    const test = await getBattleInfo(initialTime);
+    if (test) {
+      await endBattle(test.id);
+      winOrLose(test.winner);
+      await levelUp(test.winner);
+    }
+  } catch (error) {
+    console.error('Error finishing battle:', error);
+    // Handle the error (e.g., show an error message to the user)
+  }
 };
-}
+
 const winOrLose = (winner) => {
   try {
     if (myId === winner) {
-    //  setNotification(`You won the battle against ${userId}`);
+      setNotification(`You won the battle against ${userId}`);
     } else {
-     // setNotification(`You lost the battle against ${userId}`);
+      setNotification(`You lost the battle against ${userId}`);
     }
     navigate("/home");
   } catch (error) {

@@ -111,11 +111,11 @@ class User {
 
   //FILTER
   
-  static async filterUsers( filterData, callback) {
-    console.log("data", filterData);
+  static async filterUsers( level,userId, callback) {
+    console.log("data", level, userId);
     const updatePromises = Object.keys(filterData).map((key) => {
       return new Promise((resolve, reject) => {
-        const query = `SELECT * FROM users WHERE ${key} = ? `;
+        const query = `SELECT * FROM users WHERE battleLvl = ? and id != ?`;
         const values = [filterData[key]];
   
         db.query(query, values, (err, result) => {

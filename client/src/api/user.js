@@ -18,6 +18,7 @@ export const updateNotifications = (newNotifications) => {
 export const levelUp =  async (userId) => {
   try {
     const response =  await axios.patch(`${BASE_URL}/LevelUp`, { userId: userId });
+    console.log("level up ", response.data)
     return response.data;
   } catch (error) {
     console.error("Error leveling up:", error);
@@ -51,10 +52,12 @@ export const getOtherUsersData = async (id) => {
   }
 };
 
-export const getPotentialOpponents = async (userLevel) => {
+export const getPotentialOpponents = async (userLevel,userId) => {
+  console.log("type of", userId, typeof user);
+  console.log(`${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl&userId=${userId}`);
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl`
+      `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl&userId=${userId}`
     );
     return response.data || [];
   } catch (error) {

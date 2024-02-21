@@ -39,9 +39,9 @@ class UserController {
 
   //FORGOT
   static async filterUsers(req, res){
-    const filterData = req.body.filterData
+    const level= req.body.lvl
 
-    User.filterUsers(userId, (err, result) => {
+    User.filterUsers(lvl, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {

@@ -105,8 +105,8 @@ function Arena() {
 
     if (userResponse.data.Status === "Success") {
       const lvl = userResponse.data.userData.battleLvl
-    
-    await getPotentialOpponents(lvl)
+    const id=userResponse.data.userData.id
+    await getPotentialOpponents(lvl,id)
       .then((res) => {
         console.log(res)
         if (res) {
@@ -127,6 +127,10 @@ function Arena() {
   };
 
   const sendToBattle = (item) => {
+    if (item === userData.id) {
+      alert("You cannot battle yourself!");
+      return; 
+    }
     const time = new Date().toISOString();
     axios.post(process.env.REACT_APP_URL + `/Battle`, {
       userF: userData.id,

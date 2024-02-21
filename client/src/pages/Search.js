@@ -1,13 +1,26 @@
-import React from 'react';
 import Sidebar from '../components/SideBar'
 import Searchbar from '../components/SearchBar'
 import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import jsCookie from "js-cookie"
 
 function Search() {
   const navigate = useNavigate();
   const location = useLocation();
   const searchResults = location.state ? location.state.searchResults : [];
-
+  const [myId, setMyId]=useState('')
+  useEffect(() => {
+    const token = jsCookie.get("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setMyId(decodedToken.userId)
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  }, []);
   function getRandomColor(index) {
     const colors = ['#D70F0F', '#299917', '#9036AF', '#0909F9'];
     const colorIndex = index % colors.length;
@@ -15,6 +28,12 @@ function Search() {
   }
 
   const Battle = (userId) => {
+    console.log(typeof myId, typeof userId); // Log the types of myId and userId
+    console.log(myId, userId)
+    if(myId === parseInt(userId)){
+      alert("You cannot battle yourself!");
+      return; 
+    }
     navigate(`/Opponent/${userId}`);
   };
 
@@ -47,7 +66,7 @@ function Search() {
                     <p>{result.username}</p>
                   </div>
                   <div className="flex-1 text-white font-semibold mt-3 w-1/6 tracking-wide">
-                    L V L {result.lvl}
+                    L V L {result.battleLvl}
                   </div>
                 </div>
                 <div className="bg-yellow-300 text-center font-bold text-xl rounded-full ml-10 mt-10 ">

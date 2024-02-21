@@ -6,10 +6,19 @@ import pokemon from "pokemontcgsdk";
 import '../index';
 import '../styles.css'; 
 
+
 async function ApiCall(id) {
-  pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-  const card = await pokemon.card.find(id);
-  return card;
+  try {
+    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+    const card = await pokemon.card.find(id);
+    return card;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null; 
+    } else {
+      throw error;
+    }
+  }
 }
 
 async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,setAvatar) {

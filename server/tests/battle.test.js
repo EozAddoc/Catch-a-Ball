@@ -7,28 +7,22 @@ const battleController = require('../controllers/battleController');
 jest.mock('../db');
 
 describe('Battle Class Tests', () => {
-  // Reset the mock implementation before each test
   beforeEach(() => {
     db.query.mockReset();
   });
 
-  // Test for createBattleTableIfNotExists
   it('should create battle table if not exists', async () => {
     db.query.mockImplementation(async () => {
-      // Mock implementation for the query method
       return Promise.resolve(null);
     });
 
     await Battle.createBattleTableIfNotExists();
 
     expect(db.query).toHaveBeenCalledWith(expect.any(String));
-    // Add more assertions based on your requirements
   });
 
-  // Test for createBattle
   it('should create a new battle', async () => {
     db.query.mockImplementation(async () => {
-      // Mock implementation for the query method
       return Promise.resolve({ insertId: 1 }); // Simulating a successful insert
     });
 
@@ -36,13 +30,10 @@ describe('Battle Class Tests', () => {
 
     expect(db.query).toHaveBeenCalledWith(expect.any(String), expect.any(Array));
     expect(winner).toBeDefined();
-    // Add more assertions based on your requirements
   });
 
-  // Test for getInProgress
   it('should fetch battles in progress for a user', async () => {
     db.query.mockImplementation(async () => {
-      // Mock implementation for the query method
       return Promise.resolve([{ id: 1, status: 'InProgress' }]);
     });
 

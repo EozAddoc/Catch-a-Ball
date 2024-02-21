@@ -63,8 +63,7 @@ class Battle {
   console.log("endBattle", id )
   
     try {
-      const result = await db.query(query, values);
-      console.log('Battle ended:', result);
+      const result =  db.query(query, values);
       return result;
     } catch (err) {
       console.error('Error while ending battles in progress:', err);

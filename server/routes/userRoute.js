@@ -5,10 +5,8 @@ const router = express.Router();
 const userController = require('../controllers/userController')
 const authenticateToken = require('../middleware/authenticateToken');
 const request = require('supertest');
-const db = require('../../db');
+const db = require('../db');
 
-// Mocking the database query method
-jest.mock('../../db');
 //SIGNUP USER 
 router.post("/signup", [
   body('email').notEmpty(),

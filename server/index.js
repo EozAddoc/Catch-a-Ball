@@ -10,10 +10,12 @@ const app = express();
 require('dotenv').config();
 
 app.use(express.json());
-const url = "http://"+process.env.URL+":3000"
+const front ="http://"+process.env.URL+":3000"
+const allowedOrigin = "https://api.pokemontcg.io/v2/cards/*"
+
 app.use(cors({
-  origin:[url], 
-  methods:["POST","GET","PUT", "PATCH"],
+  origin: [front, allowedOrigin],
+    methods:["POST","GET","PUT", "PATCH"],
   credentials: true
 }));
 app.use(cookieParser());

@@ -30,7 +30,8 @@ console.log(token)
  
   console.log(userId)
   const Battle = (userId) => {
-    navigate(`/Battle/${userId}`)
+    const time = new Date().toISOString();
+    navigate(`/Battle/${userId}/${time}`)
   }
   return (
       <div className="bg-townN bg-cover h-screen flex flex-col items-center justify-center">

@@ -181,26 +181,6 @@ updatedUserData.id = userData.id
                   />
                 </div>
               </div>
-
-              <div className="m-3 h-1/5 flex items-center">
-                <div className="w-full">
-                  <label
-                    htmlFor="password"
-                    className="p-2 block font-medium text-3xl sm:text-lg md:text-2xl text-gray-700"
-                  >
-                    Introduction:
-                  </label>
-                  <input
-                    type="text"
-                    name="introduction"
-                    value={updatedUser.introduction}
-                    onChange={handleInputChange}
-                    placeholder={userData.introduction}
-                    className="w-full px-2 py-2 text-xl text-gray-700 bg-gray-100 rounded border-2 border-gray-300 focus:outline-none focus:border-red-500"
-                  />
-                </div>
-              </div>
-
               <div className="absolute m-4 bottom-4 right-0 sm:bottom-8 sm:right-0">
                 <button
                   onClick={updateUser}

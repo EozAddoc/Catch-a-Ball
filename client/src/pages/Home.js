@@ -22,9 +22,18 @@ function Home() {
   axios.defaults.withCredentials = true;
 
   async function ApiCall(id) {
-    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-    const card = await pokemon.card.find(id);
-    return card;
+      try {
+        pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+        const card = await pokemon.card.find(id);
+        return card;
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log('Card not found:', error.response.data);
+          return null; // 
+        } else {
+          throw error;
+        }
+      }
   }
 
   const setCardSelected = (menu) => {
@@ -63,6 +72,7 @@ function Home() {
     };
 
     fetchData();
+    
   }, []);
 
   useEffect(() => {
@@ -74,6 +84,7 @@ function Home() {
       });
     }
   }, [deckData, userData, loadingApiCall]);
+  
 
   switch (menuSelected) {
     case "team":

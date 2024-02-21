@@ -6,12 +6,20 @@ import pokemon from "pokemontcgsdk";
 import '../index';
 import '../styles.css'; 
 
-async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess) {
+async function ApiCall(id) {
+  pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+  const card = await pokemon.card.find(id);
+  return card;
+}
+
+async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,setAvatar) {
   try {
     const res = await axios.get(`${process.env.REACT_APP_URL}/user/filter?q=${id}`);
     if (res.data && res.data.length > 0) {
       const otherUser = res.data[0];
+      console.log(otherUser.avatar_api)
       setOtherUser(otherUser);
+      setAvatar(await ApiCall(otherUser.avatar_api));
       setTypeEn(otherUser.energyChoice);
       let bgType = otherUser.energyChoice.replace(/\/energy\/|\.png|En/g, '');
       bgType = (["bug", "fire", "poison", "dark", "psychic"].includes(bgType))
@@ -42,7 +50,7 @@ function ProfileCard({ id }) {
     if (id) {
       const fetchData = async () => {
         try {
-          await fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess);
+          await fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,setAvatar);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);

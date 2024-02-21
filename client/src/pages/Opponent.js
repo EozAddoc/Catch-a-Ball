@@ -4,6 +4,7 @@ import ProfileCard from '../components/ProfileCard';
 import { useNavigate,  useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
+import axios from "axios";
 
 function Opponent() {
   const navigate = useNavigate();
@@ -32,6 +33,10 @@ function Opponent() {
       return; 
     }
     const time = new Date().toISOString();
+    axios.post(process.env.REACT_APP_URL + `/Battle`, {
+      userF: myId,
+      userS: userId,
+    });
     navigate(`/Battle/${userId}/${time}`)
   }
   return (

@@ -6,7 +6,7 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 export const getBattle = async (initialTime) => {
   const url = `${BASE_URL}/Battle/filter?time=${initialTime}`;
-
+console.log('battle' + url)
   try {
     const response = await axios.get(url);
     console.log("getBattle", response.data)

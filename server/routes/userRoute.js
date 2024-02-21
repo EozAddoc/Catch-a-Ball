@@ -19,7 +19,7 @@ router.post("/signup/avatar",authenticateToken, userController.updateAvatar);
 
 
 //LOGIN USER
-router.post("/login",authenticateToken, userController.loginUser);
+router.post("/login", userController.loginUser);
 
 
 //Profile user info CREATE

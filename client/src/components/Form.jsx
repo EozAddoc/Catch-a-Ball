@@ -17,7 +17,11 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     if (text === "Login") {
       loginF(event);
     } else if (text === "Sign Up") {
-      registerF(event);
+      if(validatePassword()){
+        registerF(event);
+      }else{
+        setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
+      }
     } else {
       console.log("Error");
     }
@@ -48,6 +52,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
 
 
   const loginF = (e) => {
+    console.log("logging  in", username, password)
     e.preventDefault();
     Axios.post(process.env.REACT_APP_URL+"/login", {
       username: username,
@@ -57,7 +62,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         console.log(resp.data.message);
         navigate("/home");
       } else {
-        console.log(resp.data[0].email);
+        setErrorMessage(resp.data.error)
+        console.log("res : " + JSON.stringify(resp.data.error));
       }
     }).catch((error) => {
       if (error.response && error.response.status === 401) {
@@ -68,6 +74,10 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         console.log(username);
       }
     });
+  };
+  const validatePassword = () => {
+    const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
+    return regex.test(password);
   };
   return (
     <div>

@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const Battle = require('../models/Battle')
+const bcrypt = require('bcrypt')
 class UserController {
 
   //REGISTER
@@ -8,7 +9,10 @@ class UserController {
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
-
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = await bcrypt.hash(password,salt)
+    const isValid = await bcrypt.compare(password,hashedPassword)
+    console.log(password, hashedPassword, isValid,User.password)
     User.createUserTableIfNotExists();
     Battle.createBattleTableIfNotExists()
 
@@ -20,7 +24,7 @@ class UserController {
         if (userCount > 0) {
           res.status(409).json({ error: 'Username or email already exists' });
         } else {
-          User.createUser(email, username, password, (err,userId) => {
+          User.createUser(email, username, hashedPassword, (err,userId) => {
             if (err) {
               res.status(500).json({ message: 'Internal server error' });
             } else {
@@ -113,17 +117,27 @@ console.log("winner" + userId)
   static async loginUser(req, res) {
     const username = req.body.username;
     const password = req.body.password;
-
-    User.getUserByUsernameAndPassword(username, password, (err, result) => {
+console.log("logging in " + username )
+    User.getUserByUsername(username, async (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {
         if (result.length > 0) {
+          const hashedPassword = result[0].password;
+          console.log(hashedPassword)
+        const passwordMatch = await bcrypt.compare(password, hashedPassword);
+        console.log("password match: " + passwordMatch)
+        if(passwordMatch){
           const username = result[0].username;
           const userId = result[0].id
           const token = jwt.sign({ username, userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
           res.cookie('token', token);
           res.status(200).json({ message: 'Successful login' });
+        }else{
+          res.status(401).json({ error: 'Wrong username or password' });
+
+        }
+        
         } else {
           res.status(401).json({ error: 'Wrong username or password' });
         }

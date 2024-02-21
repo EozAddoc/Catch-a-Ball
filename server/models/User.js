@@ -49,9 +49,9 @@ class User {
 
 
 
-  static async getUserByUsernameAndPassword(username, password, callback) {
-    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
-    const values = [username, password];
+  static async getUserByUsername(username, callback) {
+    const query = 'SELECT * FROM users WHERE username = ?';
+    const values = [username];
     try {
       db.query(query, values, (err, result) => {
         if (err) {

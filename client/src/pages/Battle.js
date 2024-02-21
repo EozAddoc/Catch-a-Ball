@@ -6,15 +6,15 @@ import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie";
 import { getBattle, endBattle } from "../api/battle";
 import { levelUp } from "../api/user";
+import { getOtherUsersData, updateNotifications } from "../api/user";
 
 function Battle() {
   const { userId, time: initialTime } = useParams();
   const [time, setTime] = useState(0);
   const [myId, setMyId] = useState("");
-  const [notification, setNotification] = useState("");
   const [battleData, setBattleData] = useState({});
   const navigate = useNavigate();
-
+const [userName,setUserName]=useState("")
   //Battle winner function
   const getBattleInfo = async (initialTime) => {
     const newTime =  formatSQLTime(initialTime)
@@ -28,6 +28,24 @@ function Battle() {
       console.error("Error fetching battle data:", error);
     }
   }; 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getOtherUsersData(userId);
+        if (res && res.data) {
+          console.log("Other user data:", res.data[0]);
+          const name =res.data[0].username;
+          console.log(name)
+          setUserName(name)
+        }
+      } catch (error) {
+        console.error("Error fetching other user data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [userId]);
+
   useEffect(()=>{
     const token = jsCookie.get("token");
 
@@ -39,6 +57,7 @@ function Battle() {
         console.error("Error decoding token:", error.message);
       }
     }
+  
   },[])
 
   const formatSQLTime = (time) => {
@@ -91,9 +110,11 @@ const finishBattle = async () => {
 const winOrLose = (winner) => {
   try {
     if (myId === winner) {
-      setNotification(`You won the battle against ${userId}`);
+      updateNotifications({ myId, notifications: `You won the battle against ${userName}`});
+
     } else {
-      setNotification(`You lost the battle against ${userId}`);
+      updateNotifications({ myId, notifications: `You lost the battle against ${userName}` });
+
     }
     navigate("/home");
   } catch (error) {
@@ -205,7 +226,7 @@ const winOrLose = (winner) => {
           </div>
         </div>
       </div>
-      <Sidebar notification={notification} />
+      <Sidebar/>
     </div>
   );
 }

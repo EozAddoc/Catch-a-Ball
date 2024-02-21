@@ -13,7 +13,8 @@ export const updateUser = (userData) => {
   return axios.post(`${BASE_URL}/Profile`, { updatedUserData: userData });
 };
 export const updateNotifications = (newNotifications) => {
-  return axios.post(`${BASE_URL}/Notifications`, { newNotificationData: newNotifications });
+  console.log('nw not ! ' + JSON.stringify(newNotifications))
+  return axios.post(`${BASE_URL}/Notifications`, {newNotificationData: newNotifications });
 };
 export const levelUp =  async (userId) => {
   try {
@@ -39,10 +40,12 @@ export const getInProgressData = async (userId) => {
 };
 
 export const getOtherUsersData = async (id) => {
+  console.log("in other" + id)
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_URL}/user/filter?q=${id}`
     );
+    console.log("other user " + response.data)
     return response.data && response.data.length > 0
       ? response
       : null;

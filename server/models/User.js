@@ -162,7 +162,7 @@ class User {
   }
   static async updateNotificationArray(userId, newNotificationsArray) {
     // Update the database with the new array of notifications
-    const updateQuery = 'UPDATE users SET notifications = ? WHERE id = ?';
+    const updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
     const updateValues = [JSON.stringify(newNotificationsArray), userId];
   
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {

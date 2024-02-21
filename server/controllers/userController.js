@@ -98,7 +98,7 @@ console.log("winner" + userId)
 
   //NOTIFICATIONS
   static async updateNotifications(req, res) {
-    const userId = req.body.newNotificationData.id;
+    const userId = req.body.newNotificationData.myId;
     const newNotification = req.body.newNotificationData.notifications
     console.log("notifdata", newNotification)
 

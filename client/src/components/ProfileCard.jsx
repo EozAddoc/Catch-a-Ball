@@ -38,6 +38,12 @@ function ProfileCard({ id }) {
   const [bagType, setBagType] = useState("");
   const [loading, setLoading] = useState(true);
 
+  async function ApiCall(id) {
+    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+    const card = await pokemon.card.find(id);
+    return card;
+  }
+
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
@@ -104,6 +110,16 @@ function ProfileCard({ id }) {
     handleTypeChange(currentType);
   }, [currentType]);
 
+
+  useEffect(() => {
+    async function fetchAvatarData() {
+      setAvatar(await ApiCall(otherUser.avatar_api));
+    }
+    if (Object.keys(otherUser).length !== 0) {
+      fetchAvatarData()
+    }
+  }, [otherUser])
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative " src="/bg/water.jpg" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg/${bagType})`, backgroundSize: 'cover', borderWidth: '20px' }}>
@@ -124,7 +140,7 @@ function ProfileCard({ id }) {
         </div>
         <div className=" w-6/7 h-1/3 m-4 flex items-center justify-center">
           <div className="border-gray-400 border-8 shadow-2xl h-full w-full rounded-2xl">
-            <img src={avatar.images?.large} alt="AvatarImg" className="personnel-img" />
+            <img src={avatar.images?.large} alt="avatar trainer card" className="personnel-img" />
           </div>
         </div>
         <ls></ls>

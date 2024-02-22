@@ -153,7 +153,7 @@ function Arena() {
         onClick={() => sendToOngoingBattle(usersId[number], time[number])}
       >
         <p className={`${textColor} flex-1 w-2/3 font-bold text-xl m-3`}>
-          {usersName.length > 0 ? "You vs " + usersName[number] : "No in-progress battles"}
+          {usersName.length > number ? "You vs " + usersName[number] : "No in-progress battles"}
         </p>
       </div>
     )

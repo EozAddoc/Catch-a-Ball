@@ -142,7 +142,7 @@ function Battle() {
 
   return (
     <div className="bg-blue-700">
-      <div className="h-full lg:h-screen bg-routeN bg-cover">
+      <div className="h-full bg-routeN bg-cover">
         <div className="flex flex-col gap-x-5 lg:flex-row p-3 justify-center items-center">
           <h1 className="text-yellow-300 text-yellow-300 text-xl">
             Time remaining: {formatTime(time)}
@@ -154,7 +154,7 @@ function Battle() {
             Finish Battle
           </button>
         </div>
-        <div className="flex lg:mt-20 gap-6 flex-col lg:flex-row items-center justify-center">
+        <div className="flex gap-6 flex-col lg:flex-row items-center justify-center">
           <div className="order-1 heart gap-2 h-1/5 m-3 flex items-center">
             <Hearts numberOfHearts={3} grayHearts={true} />
             <Hearts numberOfHearts={2} grayHearts={false} />

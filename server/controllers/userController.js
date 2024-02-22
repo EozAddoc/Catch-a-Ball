@@ -74,9 +74,9 @@ class UserController {
 
     User.updateUser(userId, updatedUserData, (err, result) => {
       if (err) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' +err});
       } else {
-        res.status(201).json({ message: 'Success' });
+        res.status(201).json({ message: 'Success'});
       }
     });
   }
@@ -88,7 +88,7 @@ class UserController {
 console.log("winner" + userId)
     User.levelUp(userId,  (err, result) => {
       if (err) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error'+err });
       } else {
         console.log("success in leveling up")
         res.status(200).json({ message: 'Success in leveling up' });
@@ -104,7 +104,7 @@ console.log("winner" + userId)
 
     User.updateNotificationArray(userId, newNotification, (err, result) => {
       if (err) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' +err});
       } else {
         res.status(201).json({ message: 'Success in deleting notification' });
       }

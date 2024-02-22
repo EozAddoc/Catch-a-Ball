@@ -8,7 +8,7 @@ const authenticateToken = require('../middleware/authenticateToken');
 
 router.post("/Battle",authenticateToken, battleController.newBattle)
 router.get('/inProgress',authenticateToken, battleController.getInProgress)
-router.patch('/End',authenticateToken, battleController.battleEnding)
+router.patch('/End', battleController.battleEnding)
 router.get('/Battle/filter',authenticateToken, (req,res)=>{
   const initialTime = req.query.time;
   

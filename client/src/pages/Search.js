@@ -74,7 +74,7 @@ function Search() {
                     {result.username}
                   </div>
                   <div className="flex-1 text-white font-semibold tracking-wide">
-                    L&nbsp;V&nbsp;L {result.lvl}
+                    L&nbsp;V&nbsp;L {result.battleLvl}
                   </div>
                 </div>
                 <div className="bg-yellow-300 text-center font-bold text-xl rounded-full mt-4 lg:m-0 lg:w-1/5">
@@ -102,7 +102,7 @@ function Search() {
                     {result.username}
                   </div>
                   <div className="flex-1 text-white font-semibold tracking-wide">
-                    L&nbsp;V&nbsp;L {result.lvl}
+                    L&nbsp;V&nbsp;L {result.battleLvl}
                   </div>
                 </div>
                 <div className="bg-yellow-300 text-center font-bold text-xl rounded-full lg:m-0 lg:w-1/5">

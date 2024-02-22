@@ -37,6 +37,8 @@ function Arena() {
       })
       .catch(error => {
         console.log("error token" )
+
+        throw error;
       });
   }
     const res = getUser();

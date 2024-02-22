@@ -29,8 +29,8 @@ router.get('/suggestedPlayers',authenticateToken, userController.filterUsers)
 
 //UPDATE
 router.post('/Notifications',authenticateToken, userController.updateNotifications )
-router.post("/Profile",authenticateToken, userController.updateUser)
-router.patch('/LevelUp',authenticateToken,  userController.levelUpUser)
+router.post("/Profile", userController.updateUser)
+router.patch('/LevelUp',  userController.levelUpUser)
 
 
 //User info 

@@ -54,7 +54,7 @@ function Opponent() {
 
   return (
       <div className="bg-townN bg-cover h-screen flex flex-col items-center justify-center">
-        <h1 className='text-yellow-500 italic font-light uppercase '> F a c e   D A V I D 5 5 5 </h1>
+      <h1 className='text-yellow-500 italic font-light uppercase m-6'> Face {opponentName.length > 0 && opponentName}</h1>
         <div className='h-5/6 w-full flex'>
           <div className=' flex-1   flex justify-center items-center sm:ml-10 ml-0'>
             <div className=' h-1/3 w-3/5 sm:h-2/3 sm:w-2/5   sm:ml-10 ml-0'>

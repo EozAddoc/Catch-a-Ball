@@ -172,7 +172,7 @@ updatedUserData.id = userData.id
                     name="password"
                     value={updatedUser.password}
                     onChange={handleInputChange}
-                    placeholder={userData.password}
+                    placeholder="******"
                     className="w-full px-2 py-2 text-xl text-gray-700 bg-gray-100 rounded border-2 border-gray-300 focus:outline-none focus:border-red-500"
                   />
                 </div>

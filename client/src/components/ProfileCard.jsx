@@ -55,9 +55,17 @@ function ProfileCard({ id }) {
   const [loading, setLoading] = useState(true);
 
   async function ApiCall(id) {
-    pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
-    const card = await pokemon.card.find(id);
-    return card;
+    try {
+      pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
+      const card = await pokemon.card.find(id);
+      return card;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return null; 
+      } else {
+        throw error;
+      }
+    }
   }
 
   useEffect(() => {
@@ -146,7 +154,7 @@ function ProfileCard({ id }) {
             <p className="name font-bold text-lg">{otherUser.username}</p>
 
             <div className="floatRight flex items-center">
-              <p className="health text-black mr-4 text-lg">LVL {otherUser.lvl}</p>
+              <p className="health text-black mr-4 text-lg">LVL {otherUser.battleLvl}</p>
               <button className=' w-8' onClick={openModal}> <img src={typeEn} alt={currentType} />
               </button>
               <Modal isOpen={isModalOpen} onClose={closeModal} onTypeChange={handleTypeChange} />

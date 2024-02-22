@@ -82,7 +82,8 @@ function Home() {
       deckData.forEach(async (deckItem) => {
         const data = await ApiCall(deckItem.card_api);
         setDeckInfo((value) => [...value, data]);
-        setAvatar(await ApiCall(userData.avatar_api));
+        const avatar = setAvatar(await ApiCall(userData.avatar_api));
+        console.log(avatar)
       });
     }
   }, [deckData, userData, loadingApiCall]);

@@ -176,51 +176,96 @@ function Battle() {
   }
 
   return (
-    <div className="bg-blue-700">
-      <div className="h-full bg-routeN bg-cover">
-        <div className="flex flex-col gap-x-5 lg:flex-row p-3 justify-center items-center">
-          <h1 className="text-yellow-300 text-yellow-300 text-xl">
-            Time remaining: {formatTime(time)}
-          </h1>
-          <button
-            onClick={finishBattle}
-            className="bg-yellow-500 p-2 rounded-md"
-          >
-            Finish Battle
-          </button>
+      <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
+        <div>
+          <div className=" ">
+            <div>
+            <button
+              onClick={finishBattle}
+              className="absolute bottom-10 right-10 bg-yellow-500 p-2 rounded-md"
+            >
+              Finish Battle
+            </button>
+              <h1 className="text-yellow-300 absolute top-4 right-4 text-yellow-300 sm:top-8 sm:right-8 md:text-lg lg:text-xl">
+                {" "}
+                Time remaining :{formatTime(time)}
+              </h1>
+            </div>
+            <div className="absolute bottom-28 left-5 sm:left-52 sm:bottom-28  w-1/2 h-1/3 sm:h-2/3 sm:w-1/4 ">
+              <ProfileCard id={myId} />
+            </div>
+            <div className="hidden lg:flex heart w-1/3 h-1/5 absolute bottom-16 left-1/2  ">
+              <img
+                src={process.env.PUBLIC_URL + "/heartG.png"}
+                className="h-1/2 m-3"
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/heartG.png"}
+                alt="greyheart"
+                className="h-1/2 m-3 "
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/heartG.png"}
+                alt="greyheart"
+                className="h-1/2 m-3"
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/Rheart.png"}
+                alt="greyheart"
+                className="h-1/2 m-3"
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/Rheart.png"}
+                alt="greyheart"
+                className="h-1/2 m-3"
+              ></img>
+            </div>
+            <div
+              className="hidden lg:flex  absolute bottom-10   left-20 bg-blue-500"
+              style={{ height: "38px", width: "750px", borderRadius: "50%" }}
+            ></div>
+          </div>
+          <div>
+            <div className="absolute top-20 right-10 sm:right-48 sm:bottom-80 h-1/3 w-1/2 sm:h-1/2 sm:w-1/5  ">/
+              <ProfileCard id={userId} />
+            </div>
+            <div className="hidden lg:flex   heart  w-1/3 h-1/6 absolute bottom-80 right-96   ">
+              <img
+                src={process.env.PUBLIC_URL + "/heartG.png"}
+                alt="greyheart1"
+                className="h-1/3 m-3"
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/heartG.png"}
+                alt="greyheart2"
+                className="h-1/3 m-3 "
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/Rheart.png"}
+                alt="greyheart3"
+                className="h-1/3 m-3 "
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/Rheart.png"}
+                alt="redHeart"
+                className="h-1/3 m-3"
+              ></img>
+              <img
+                src={process.env.PUBLIC_URL + "/Rheart.png"}
+                alt="redHeart"
+                className="h-1/3 m-3"
+              ></img>
+            </div>
+            <div
+              className="hidden lg:flex absolute bottom-72 right-36 bg-blue-500"
+              style={{ height: "15px", width: "400px", borderRadius: "50%" }}
+            ></div>
+          </div>
         </div>
-        <div className="flex gap-6 flex-col lg:flex-row items-center justify-center">
-          <div className="order-1 heart gap-2 h-1/5 m-3 flex items-center">
-            <Hearts numberOfHearts={3} grayHearts={true} />
-            <Hearts numberOfHearts={2} grayHearts={false} />
-          </div>
-          <div className="order-2 w-4/5 md:w-2/5 lg:w-1/5 mb-3 flex flex-col items-center">
-            <ProfileCard id={myId} />
-            {!isMobile && <div
-              className="bg-blue-500 mt-8 w-4/5 h-6"
-              style={{ borderRadius: "50%" }}
-            />}
-          </div>
-          <div className="order-3 text-white text-xl font-semibold">
-            VS.
-          </div>
-          <div className="order-5 lg:order-last gap-2 h-1/5 m-3 flex items-center">
-            <Hearts numberOfHearts={2} grayHearts={true} />
-            <Hearts numberOfHearts={3} grayHearts={false} />
-          </div>
-          <div className="order-6 lg:order-4 w-4/5 md:w-2/5 lg:w-1/5 mb-3 flex flex-col items-center">
-            <ProfileCard id={userId} />
-            {!isMobile && <div
-              className="bg-blue-500 mt-8 w-4/5 h-6"
-              style={{ borderRadius: "50%" }}
-            />}
-          </div>
-        </div>
-      </div>
-      <Sidebar />
+      <Sidebar/>
     </div>
   );
 }
 
-
 export default Battle;
+

@@ -180,7 +180,7 @@ function Arena() {
                       <p className="font-bold">{item.username}</p>
                     </div>
                     <div className="flex-1 font-bold mt-3 w-1/6 text-center">
-                      <p>L&nbsp;V&nbsp;L  {userData.lvl}</p>
+                      <p>L&nbsp;V&nbsp;L  {userData.battleLvl}</p>
                     </div>
                   </div>
 

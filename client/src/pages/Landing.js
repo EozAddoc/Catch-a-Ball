@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function Landing() {
   return (
-    <div className="w-full lg:h-full h-screen bg-night bg-cover">
+    <div className="w-full h-screen bg-night bg-cover">
       <header className="flex flex-col items-center justify-center ">
         <img
           src="cab2.png"

@@ -100,10 +100,10 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
 
   return (
     <>
-      <div className="text-center flex justify-center p-6">
+      <div className="text-center flex justify-center pt-3">
         <h1 className="text-yellow-400 text-l font-bold">{text}</h1>
       </div>
-      <div className="grid grid-cols-2 justify-items-center lg:grid-cols-4 lg:gap-4">
+      <div className="grid grid-cols-2 justify-items-center lg:grid-cols-4">
         {isLoading ? <div>Loading...</div> : cardImgs}
       </div>
     </>

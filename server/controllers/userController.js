@@ -12,8 +12,8 @@ class UserController {
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = await bcrypt.hash(password,salt)
     const isValid = await bcrypt.compare(password,hashedPassword)
-    // User.createUserTableIfNotExists();
-    // Battle.createBattleTableIfNotExists()
+    User.createUserTableIfNotExists();
+    Battle.createBattleTableIfNotExists()
 
 
     User.checkExistingUser(username, (err, userCount) => {

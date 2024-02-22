@@ -144,10 +144,10 @@ function Home() {
               <div className="text-center px-5 py-5">
                 <div className="flex md:gap-20 flex-col items-center">
                   <img
-                    key={avatar.id}
+                    key={avatar?.id}
                     className="hover:scale-150 z-30 transition w-36 md:w-64"
-                    src={avatar.images?.large}
-                    alt={avatar.name}
+                    src={avatar?.images?.large}
+                    alt={avatar?.name}
                   />
                   <Menu setMenuSelected={setCardSelected} />
                 </div>

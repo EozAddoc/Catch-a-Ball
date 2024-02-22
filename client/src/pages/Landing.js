@@ -16,7 +16,7 @@ function Landing() {
         <div className="relative flex flex-col justify-end">
           <img
             src="pok3.png"
-            className="w-full lg:w-128 md:mt-[-100px] mt-[50px]"
+            className="w-full lg:w-128 md:mt-[-50px] mt-[50px]"
             alt="three pokemons"
           />
           <div className="md:flex-row md:gap-96 sm:gap-16 gap-8 items-center justify-center flex flex-col md:mt-0 mt-20 pb-[50px]">

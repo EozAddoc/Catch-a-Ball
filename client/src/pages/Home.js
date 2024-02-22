@@ -135,7 +135,7 @@ function Home() {
       return (
         <div>
           {auth ? (
-            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+            <div className="h-screen md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
               <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   <SearchBar />
@@ -164,7 +164,7 @@ function Home() {
       return (
         <div>
           {auth ? (
-            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+            <div className="h-screen md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
               <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   <SearchBar />

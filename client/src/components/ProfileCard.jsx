@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import { getUser } from "../api/user";
 import pokemon from "pokemontcgsdk";
 import '../index';
-import '../styles.css'; 
+import '../styles.css';
 
 async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess) {
   try {
@@ -104,91 +104,82 @@ function ProfileCard({ id }) {
     handleTypeChange(currentType);
   }, [currentType]);
 
+  return (
+    <div className="h-full w-full flex items-center justify-center">
+      <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative " src="/bg/water.jpg" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg/${bagType})`, backgroundSize: 'cover', borderWidth: '20px' }}>
+        <h1 className="bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 text-center text-l font-bold m-2 italic rounded-full">TRAINER</h1>
 
+        <div className="header mb-2">
 
+          <div className="nameAndHealth flex justify-between mx-7">
+            <p className="name font-bold text-lg">{otherUser.username}</p>
 
-  
-
-    return  (
-      <div className="h-full w-full flex items-center justify-center">
-      <div className="shadow-md w-full h-full cardBody rounded-2xl bg-cover border-gray-400 overflow-hidden relative " src =  "/bg/water.jpg "  style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bg/${bagType})`, backgroundSize: 'cover', borderWidth: '20px' }}>
-          <h1 className="bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 text-center text-l font-bold m-2 italic rounded-full">TRAINER</h1>
-
-            <div className="header mb-2">
-
-         <div className="nameAndHealth flex justify-between mx-7">
-                <p className="name text-m font-bold"> {otherUser.username}</p>
-           
-                <div className="floatRight flex items-center">
-                  
-                  <p className="health text-black mr-4 mt-2">LVL {otherUser.lvl}</p>
-                  <button className=' w-8'    onClick={openModal}> <img src={typeEn} alt={currentType}/>
-</button>
-<Modal isOpen={isModalOpen} onClose={closeModal} onTypeChange={handleTypeChange}>
-       
-      </Modal>
-
-                </div>
-              </div>
-            </div>
-            <div className=" w-6/7 h-1/3 m-4 flex items-center justify-center">
-  <div className="border-gray-400 border-8 shadow-2xl h-full w-full rounded-2xl">
-    <img src={avatar.images?.large}  alt="AvatarImg" className="personnel-img" />
-  </div>
-</div>
-<ls></ls>
-
-    
-            <div className="stats bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 rounded-2xl text-xs italic rounded-xl whitespace-nowrap mx-auto w-3/4 text-center mt-2">
-              <p>New Player</p>
-            </div>
-    
-            <div className="attacks">
-              {/* Pokemon Attacks */}
-              <div className="specificAttack  items-center">
-               
-                <div className="attackDescription m-3 ">
-                  <p>
-                    <span className="attackName font-bold text-lg">Introduction</span> Optional
-                  </p>
-                </div>
-                <div className="power text-center text-xl">
-                  10
-                </div>
-              </div>
-    
-              <hr className=" border-black w-95 mx-auto" />
-    
-            </div>
-    
-            <div className="attributes grid grid-cols-3 text-center w-full">
-              {/* Deck Attributes */}
-              <div className="weakness">
-                <p className="font-bold text-sm">Attack</p>
-                <img src="https://jcr08.github.io/pokemon-card/images/electric-energy.png" alt="Electric Energy Symbol" className="w-4" />
-              </div>
-              <div className="resistance">
-                <p className="font-bold text-sm">Defence</p>
-              </div>
-              <div className="retreatCost">
-                <p className="font-bold text-sm">retreat cost</p>
-                <img src="https://jcr08.github.io/pokemon-card/images/normal-energy.png" alt="Normal Energy Symbol" className="w-4" />
-              </div>
-            </div>
-    
-            <div className="description border-2 border-gray-400 text-xs italic mx-auto w-5/6 p-1 mt-1.5">
-              <p>
-                Description
-              </p>
-            </div>
-    
-            <div className="footer text-xs p-0.5 text-center absolute bottom-0 left-0 w-full">
-              <div>
-                <strong>Illus.MitsuhiroArica</strong>
-              </div>
+            <div className="floatRight flex items-center">
+              <p className="health text-black mr-4 text-lg">LVL {otherUser.lvl}</p>
+              <button className=' w-8' onClick={openModal}> <img src={typeEn} alt={currentType} />
+              </button>
+              <Modal isOpen={isModalOpen} onClose={closeModal} onTypeChange={handleTypeChange} />
             </div>
           </div>
         </div>
-    )
+        <div className=" w-6/7 h-1/3 m-4 flex items-center justify-center">
+          <div className="border-gray-400 border-8 shadow-2xl h-full w-full rounded-2xl">
+            <img src={avatar.images?.large} alt="AvatarImg" className="personnel-img" />
+          </div>
+        </div>
+        <ls></ls>
+
+
+        <div className="stats bg-gradient-to-t from-gray-400 via-gray-200 to-gray-400 rounded-2xl text-xs italic rounded-xl whitespace-nowrap mx-auto w-3/4 text-center mt-2">
+          <p>New Player</p>
+        </div>
+
+        <div className="attacks">
+          {/* Pokemon Attacks */}
+          <div className="specificAttack  items-center">
+
+            <div className="attackDescription m-3 ">
+              <p>
+                <span className="attackName font-bold text-lg">Introduction</span> Optional
+              </p>
+            </div>
+            <div className="power text-center text-xl">
+              10
+            </div>
+          </div>
+
+          <hr className=" border-black w-95 mx-auto" />
+
+        </div>
+
+        <div className="attributes grid grid-cols-3 justify-items-center text-center w-full">
+          {/* Deck Attributes */}
+          <div className="weakness flex items-center flex-col">
+            <p className="font-bold text-sm">Attack</p>
+            <img src="https://jcr08.github.io/pokemon-card/images/electric-energy.png" alt="Electric Energy Symbol" className="w-4" />
+          </div>
+          <div className="resistance flex items-center flex-col">
+            <p className="font-bold text-sm">Defense</p>
+          </div>
+          <div className="retreatCost flex items-center flex-col">
+            <p className="font-bold text-sm">Retreat Cost</p>
+            <img src="https://jcr08.github.io/pokemon-card/images/normal-energy.png" alt="Normal Energy Symbol" className="w-4" />
+          </div>
+        </div>
+
+        <div className="description border-2 border-gray-400 text-xs italic mx-auto w-5/6 p-1 mt-1.5">
+          <p>
+            Description
+          </p>
+        </div>
+
+        <div className="footer text-xs p-0.5 text-center absolute bottom-0 left-0 w-full">
+          <div>
+            <strong>Illus.MitsuhiroArica</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 export default ProfileCard;

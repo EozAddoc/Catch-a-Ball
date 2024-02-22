@@ -63,7 +63,7 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
       if (!redirectHome) {
         setTimeout(() => {
           navigate('/signup/avatar');
-        }, 500);
+        }, 750);
       } else {
         navigate('/home');
       }

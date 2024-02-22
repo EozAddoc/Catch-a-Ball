@@ -39,8 +39,8 @@ function Arena() {
         console.log("error token" )
       });
   }
-    const res =getUser();
-    setUserData(res)
+    const res = getUser();
+    setUserData(res);
     fetchData();
     fetchPotentialOpponents();
   }, []);
@@ -140,103 +140,73 @@ function Arena() {
     navigate(`/Battle/${item}/${time}`);
   };
   const sendToOngoingBattle = (userId, time) => {
-    navigate(`/Battle/${userId}/${time}`);
+    navigate(`/Battle/${userId}/${time}`);;
+  };
+
+  const InProgressBattle = ({ bgColor, textColor, number }) => {
+    return (
+      <div
+        className={`${bgColor} text-center flex-1 rounded-full flex mt-5 p-3`}
+        onClick={() => sendToOngoingBattle(usersId[number], time[number])}
+      >
+        <p className={`${textColor} flex-1 w-2/3 font-bold text-xl m-3`}>
+          {usersName.length > number ? "You vs " + usersName[number] : "No in-progress battles"}
+        </p>
+      </div>
+    )
   };
 
   return (
-    <div className="min-h-screen bg-blue-700">
-      <div className="min-h-screen min-w-screen bg-townYN bg-cover h-screen flex flex-col items-center justify-center">
-        <div className="search w-1/2 mb-8 fixed top-20">
-          <Searchbar />
-        </div>
-        <div className="flex h-3/4 mt-32 w-full">
-          <div className="flex-1">
-            <div className="bg-pink-200 w-2/3 h-5/6 flex mt-12 ml-24 flex-col">
-              <div className="bg-red-500 h-1/6 flex-1">
-                <h1 className="font-bold text-white text-center m-3">
-                  {" "}
-                  Recommended Opponents
-                </h1>
-              </div>
-              <div className="bg-gray-200 h-5/6">
-                {" "}
-                {items.map((item, index) => (
-                  <div key={index} className="flex w-full">
-                    <div className="rounded-full relative p-2 mt-10 w-full h-14 flex">
-                      <div className="flex-1">
-                        <div className="bg-white ml-4 rounded-full w-12 h-12"></div>
-                      </div>
-                      <div className="flex-1 mt-3">
-                        {" "}
-                        <p className="font-bold ">{item.username}</p>
-                      </div>
-                      <div className="flex-1 font-bold mt-3 w-1/6">
-                        <p>L V L {userData.battleLvl}</p>
-                      </div>
-                    </div>
-
-                    <button
-                      className="bg-yellow-300 text-center font-bold rounded-full ml-3 mr-4 w-25 mt-10"
-                      onClick={() => sendToBattle(item.id, item.time)}
-                    >
-                      {" "}
-                      <p className="mt-3">B A T T L E</p>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 mt-10">
-            <div className="flex flex-col mx-5 px-5 m-10">
-              <h2 className="text-center font-bold text-white mb-10">
-                I N &nbsp; P R O G R E S S :
-              </h2>
-
-              <div
-                className="bg-red-500 flex-1 rounded-full flex mt-5 p-3"
-                onClick={() => sendToOngoingBattle(usersId[0], time[0])}
-              >
-                <p className="text-white flex-1 w-2/3 font-bold text-xl m-3">
-                  {" "}
-                  You vs{" "}
-                  {usersName.length > 0
-                    ? usersName[0]
-                    : "No in-progress battles"}
-                </p>
-              </div>
-              <div
-                className="bg-black flex-1 rounded-full mt-5 p-3"
-                onClick={() => sendToOngoingBattle(usersId[1], time[1])}
-              >
-                <p className="text-red-500 font-bold text-xl m-3">
-                  {" "}
-                  You vs{" "}
-                  {usersName.length > 1
-                    ? usersName[1]
-                    : "No in-progress battles"}
-                </p>
-              </div>
-              <div
-                className="bg-white flex-1 rounded-full mt-5 p-3"
-                onClick={() => {
-                  sendToOngoingBattle(usersId[2], time[2]);
-                }}
-              >
-                <p className="text-black font-bold text-xl m-3">
-                  {" "}
-                  You vs{" "}
-                  {usersName.length > 2
-                    ? usersName[2]
-                    : "No in-progress battles"}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <Sidebar />
+    <div className="h-full w-full lg:h-screen bg-townYN bg-cover flex flex-col items-center justify-center">
+      <div className="search w-1/2 mb-8 fixed top-20 mr-5">
+        <Searchbar />
       </div>
+      <div className="flex justify-center items-center flex-col lg:flex-row h-fit mt-[50%] md:mt-[20%] lg:mt-[5%] w-4/5">
+        <div className="flex-1">
+          <div className="bg-gray-200 w-fit h-fit flex pb-5 flex-col">
+            <div className="bg-red-500 h-full w-fit flex-1">
+              <h1 className="font-bold text-white text-center m-3">
+                R&nbsp;E&nbsp;C&nbsp;O&nbsp;M&nbsp;M&nbsp;E&nbsp;N&nbsp;D&nbsp;E&nbsp;D  O&nbsp;P&nbsp;P&nbsp;O&nbsp;N&nbsp;E&nbsp;N&nbsp;T&nbsp;S
+              </h1>
+            </div>
+            <div className="">
+              {items.map((item, index) => (
+                <div key={index} className="flex w-full">
+                  <div className="rounded-full relative p-2 mt-10 w-full h-14 flex">
+                    <div className="flex-1">
+                      <div className="bg-white ml-4 rounded-full w-12 h-12"></div>
+                    </div>
+                    <div className="flex-1 mt-3 text-center">
+                      <p className="font-bold">{item.username}</p>
+                    </div>
+                    <div className="flex-1 font-bold mt-3 w-1/6 text-center">
+                      <p>L&nbsp;V&nbsp;L  {userData.lvl}</p>
+                    </div>
+                  </div>
+
+                  <button
+                    className="bg-yellow-300 text-center font-bold rounded-full ml-3 mr-4 w-fit mt-10"
+                    onClick={() => sendToBattle(item.id, item.time)}
+                  >
+                    <p className="mt-3 px-2">B&nbsp;A&nbsp;T&nbsp;T&nbsp;L&nbsp;E</p>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1">
+          <div className="flex flex-col mx-5 px-5 m-10">
+            <h2 className="text-center font-bold text-white mb-10">
+              I&nbsp;N &nbsp; P&nbsp;R&nbsp;O&nbsp;G&nbsp;R&nbsp;E&nbsp;S&nbsp;S&nbsp;:
+            </h2>
+            <InProgressBattle bgColor={"bg-red-500"} number={0} textColor={"text-white"} />
+            <InProgressBattle bgColor={"bg-black"} number={1} textColor={"text-red-500"} />
+            <InProgressBattle bgColor={"bg-white"} number={2} textColor={"text-black"} />
+          </div>
+        </div>
+      </div>
+      <Sidebar />
     </div>
   );
 }

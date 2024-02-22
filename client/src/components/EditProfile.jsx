@@ -28,25 +28,25 @@ function ProfilePage(id) {
   const updateUser = () => {
     // Create a copy of the user data with the new values
     const updatedUserData = {};
-updatedUserData.id = userData.id
+    updatedUserData.id = userData.id
     // Check and add fields to be updated
     if (updatedUser.username !== "") {
       updatedUserData.username = updatedUser.username;
     }
-    if (updatedUser.email!== "") {
-      updatedUserData.email= updatedUser.email;
+    if (updatedUser.email !== "") {
+      updatedUserData.email = updatedUser.email;
     }
-  
+
     if (updatedUser.password !== "") {
       updatedUserData.password = updatedUser.password;
     }
 
     // Make an API call to update the user information
     axios
-      .post(process.env.REACT_APP_URL+'/Profile',{
+      .post(process.env.REACT_APP_URL + '/Profile', {
 
         updatedUserData: updatedUserData
-      } )
+      })
       .then((res) => {
         if (res.data === 201) {
           setIsEditMode(!isEditMode);
@@ -64,15 +64,15 @@ updatedUserData.id = userData.id
         setIsEditMode(!isEditMode);
         console.log("error", err);
       });
-      
+
   };
 
   useEffect(() => {
-      getUser()
+    getUser()
       .then((res) => {
         if (res.data.Status === "Success") {
           setUserData(res.data.userData);
-         
+
         } else {
           setMess(res.data.err);
         }
@@ -85,12 +85,12 @@ updatedUserData.id = userData.id
   };
 
   return (
-    <div className={!isEditMode ? "shadow-md w-1/3 h-5/6" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
+    <div className={!isEditMode ? "shadow-md w-2/3 h-4/6 lg:w-1/3 lg:h-5/6" : "rounded-lg flex flex-col sm:flex-row relative mx-auto sm:h-5/6 md:w-11/12 w-full"}>
       {!isEditMode && <ProfileCard id={id.id} />}
 
       {!isEditMode && (
         <button
-          className="bg-gradient-to-t from-yellow-600 via-yellow-200 to-yellow-600 text-center w-full h-7 text-l font-bold m-2 italic rounded-full "
+          className="bg-gradient-to-t from-yellow-600 via-yellow-200 to-yellow-600 text-center w-full h-7 text-l font-bold m-2 italic rounded-full"
           onClick={() => {
             setIsEditMode(!isEditMode);
           }}
@@ -100,17 +100,17 @@ updatedUserData.id = userData.id
       )}
 
       {isEditMode && (
-        <div className={`bg-transparent rounded-lg shadow-md flex flex-col sm:flex-row relative w-full `}>
-          <div className=" w-full h-full md:w-1/3 sm:w-1/5 flex flex-col items-center justify-center">
-            <ProfileCard  id={id.id}/>
+        <div className={`bg-transparent rounded-lg shadow-md flex gap-4 flex-col sm:flex-row relative w-full`}>
+          <div className="order-2 sm:order-1 bg-gray-300 rounded-lg w-full h-full lg:w-1/3 md:w-3/5 flex flex-col items-center justify-center">
+            <ProfileCard id={id.id} />
           </div>
 
-          <div className="bg-gray-300  flex-1 flex flex-col relative">
-            <div className="h-1/5 p-2">
-              <h2 className="mt-8 sm:mt-2 center justify-center">Edit your profile :</h2>
+          <div className="order-1 sm:order-2 bg-gray-300 flex-1 flex flex-col relative mt-[100%] sm:mt-0">
+            <div className="h-1/5 p-2 flex items-center justify-center">
+              <h2 className="mt-8 sm:mt-2">Edit your profile:</h2>
             </div>
 
-            <div className="h-4/5 p-2 sm:p-1">
+            <div className="h-3/5 p-2 sm:p-1">
               <div className="h-1/10 flex justify-end items-start">
                 <img
                   src="edit.png"
@@ -172,12 +172,31 @@ updatedUserData.id = userData.id
                     name="password"
                     value={updatedUser.password}
                     onChange={handleInputChange}
-                    placeholder={userData.password}
                     className="w-full px-2 py-2 text-xl text-gray-700 bg-gray-100 rounded border-2 border-gray-300 focus:outline-none focus:border-red-500"
                   />
                 </div>
               </div>
-              <div className="absolute m-4 bottom-4 right-0 sm:bottom-8 sm:right-0">
+
+              <div className="m-3 h-1/5 flex items-center">
+                <div className="w-full">
+                  <label
+                    htmlFor="password"
+                    className="p-2 block font-medium text-3xl sm:text-lg md:text-2xl text-gray-700"
+                  >
+                    Introduction:
+                  </label>
+                  <input
+                    type="text"
+                    name="introduction"
+                    value={updatedUser.introduction}
+                    onChange={handleInputChange}
+                    placeholder={userData.introduction}
+                    className="w-full px-2 py-2 text-xl text-gray-700 bg-gray-100 rounded border-2 border-gray-300 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 flex justify-center">
                 <button
                   onClick={updateUser}
                   className="bg-blue-500 text-white px-4 py-2 sm:px-4 rounded-full"

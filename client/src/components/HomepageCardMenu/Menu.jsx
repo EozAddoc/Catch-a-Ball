@@ -6,7 +6,7 @@ const Menu = ({ setMenuSelected }) => {
     }
 
   return (
-    <div className="absolute right-1/3 top-2/4">
+    <div className="relative left-[-35%] md:left-[-15%] lg:left-[-5%] mt-10">
       <div className="absolute left-3 z-0 rotate-[-12deg]">
         <Card text={"team"} setMenu={setMenu}/>
       </div>

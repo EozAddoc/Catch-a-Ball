@@ -56,9 +56,11 @@ export const getOtherUsersData = async (id) => {
 };
 
 export const getPotentialOpponents = async (userLevel) => {
+  console.log(userLevel)
+  console.log( `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl`)
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=lvl`
+      `${process.env.REACT_APP_URL}/api/filter?q=${userLevel}&field=battleLvl`
     );
     return response.data || [];
   } catch (error) {

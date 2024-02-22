@@ -1,8 +1,8 @@
 import React from "react";
-import Landing from "./Landing";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-import SignupPokemon from "./SignupPokemon";
+import Landing from "./pages/Landing";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import SignupPokemon from "./pages/SignupPokemon";
 import Home from "Home"
 import { BrowserRouter, Routes , Route} from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
@@ -21,3 +21,4 @@ function App (){
         </>
     )
 }
+export default App;

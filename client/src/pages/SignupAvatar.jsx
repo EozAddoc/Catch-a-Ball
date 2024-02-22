@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 function SignupAvatar() {
     const apiIds = [
         "swsh10-189", // Zisu
-        "swsh10-189",
+        "swsh10-189", 
         "swsh10-189",
         "swsh10-189",
         "swsh10-189",

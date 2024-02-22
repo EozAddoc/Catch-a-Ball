@@ -3,12 +3,13 @@ const { body } = require('express-validator');
 const battleController = require('../controllers/battleController')
 const router = express.Router();
 const db = require('../db');
+const authenticateToken = require('../middleware/authenticateToken');
 
 
-router.post("/Battle", battleController.newBattle)
-router.get('/inProgress', battleController.getInProgress)
-router.patch('/End',battleController.battleEnding)
-router.get('/Battle/filter', (req,res)=>{
+router.post("/Battle",authenticateToken, battleController.newBattle)
+router.get('/inProgress',authenticateToken, battleController.getInProgress)
+router.patch('/End',authenticateToken, battleController.battleEnding)
+router.get('/Battle/filter',authenticateToken, (req,res)=>{
   console.log("Battle/filter" + req.query)
   const initialTime = req.query.time;
   
@@ -30,7 +31,7 @@ router.get('/Battle/filter', (req,res)=>{
   res.json(results);
   });
 })
-router.get(`/inProgress/filter`, (req, res) => {
+router.get(`/inProgress/filter`,authenticateToken, (req, res) => {
     const searchTerm = req.query.q;
   
     console.log(searchTerm)

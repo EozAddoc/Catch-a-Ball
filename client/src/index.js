@@ -22,6 +22,7 @@ import Deck from './pages/Deck';
 import ProfilePage from './pages/ProfilePage';
 import MyCarousel from './pages/MyCarousel';
 import LoadingPage from './LoadingPage';
+import PrivateRoutes from './PrivateRoutes';
 
 const router = createBrowserRouter([
   {
@@ -41,32 +42,32 @@ const router = createBrowserRouter([
   },
   {
     path: "Profile",
-    element: <ProfilePage />,
+    element: <PrivateRoutes element={<ProfilePage />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "Search",
-    element: <Search />,
+    element: <PrivateRoutes element={<Search />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "Shop",
-    element: <Shop />,
+    element: <PrivateRoutes element={<Shop />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "Arena",
-    element: <Arena />,
+    element: <PrivateRoutes element={<Arena />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "Opponent/:userId",
-    element: <Opponent />,
+    element: <PrivateRoutes  element={<Opponent />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "Battle/:userId/:time",
-    element: <Battle />,
+    element: <PrivateRoutes element={<Battle />} />,
     errorElement: <ErrorPage />
   },
   {
@@ -76,12 +77,12 @@ const router = createBrowserRouter([
   },
   {
     path: "Deck",
-    element: <Deck />,
+    element: <PrivateRoutes element={<Deck />} />,
     errorElement: <ErrorPage />
   },
   {
     path: "home",
-    element: <Home/>,
+    element: <PrivateRoutes  element={<Home />} />,
     errorElement: <ErrorPage />
   },
   {

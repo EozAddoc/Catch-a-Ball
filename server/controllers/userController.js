@@ -2,6 +2,8 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const Battle = require('../models/Battle')
 class UserController {
+
+  //REGISTER
   static async newUser(req, res) {
     const email = req.body.email;
     const username = req.body.username;
@@ -31,17 +33,8 @@ class UserController {
       }
     });
   }
-  static async levelingUp(req, res) {
-    const winner = req.body.winner;
 
-    User.levelUp(winner, (err) => {
-      if (err) {
-        res.status(500).json({ message: "Internal server error" });
-      } else {
-        res.status(201).json({ message: "Leveled up successfully" });
-      }
-    });
-  }
+  //FORGOT
   static async filterUsers(req, res){
     const filterData = req.body.filterData
 
@@ -54,6 +47,8 @@ class UserController {
     })
   }
 
+
+  //ADD AVATAR 
   static async updateAvatar(req, res) {
     const userId = req.body.userId;
     const avatar_api = req.body.avatar_api;
@@ -67,6 +62,8 @@ class UserController {
     });
   }
 
+
+  //UPDATE
   static async updateUser(req, res) {
     const userId = req.body.updatedUserData.id;
     const updatedUserData = req.body.updatedUserData
@@ -80,6 +77,8 @@ class UserController {
       }
     });
   }
+
+//WON BATTLE OR MISSIONS
   static async levelUpUser(req, res) {
     console.log("in levelUpUser")
     const userId = req.body.userId;
@@ -93,6 +92,8 @@ console.log("winner" + userId)
       }
     });
   }
+
+  //NOTIFICATIONS
   static async updateNotifications(req, res) {
     const userId = req.body.newNotificationData.id;
     const newNotification = req.body.newNotificationData.notifications
@@ -108,6 +109,7 @@ console.log("winner" + userId)
 
   }
 
+  //LOGIN
   static async loginUser(req, res) {
     const username = req.body.username;
     const password = req.body.password;

@@ -9,8 +9,7 @@ import {
   getPotentialOpponents,
 } from "../api/user";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import jsCookie from "js-cookie";
+
 
 function Arena() {
   const navigate = useNavigate();
@@ -20,63 +19,85 @@ function Arena() {
   const [items, setItems] = useState([]);
   const [usersId, setUsersId] = useState([]);
   const [time, setTime] = useState([]);
-
   useEffect(() => {
-    const token = jsCookie.get("token");
-
-    const fetchData = async () => {
-      try {
-        const userResponse = await getUser();
-
-        if (userResponse.data.Status === "Success") {
-          setUserData(userResponse.data.userData);
-
-          const inProgressResponse = await getInProgressData(
-            userResponse.data.userData.id
-          );
-          const myId = userResponse.data.userData.id;
-          if (inProgressResponse.data) {
-            setInProgress(inProgressResponse.data);
-            if (inProgressResponse.data.length > 0) {
-              for (
-                let i = 0;
-                i < Math.min(inProgressResponse.data.length, 3);
-                i++
-              ) {
-                console.log(inProgressResponse.data.length);
-                if (myId !== inProgressResponse.data[i].userIdS) {
-                  fetchNames(inProgressResponse.data[i].userIdS);
-                } else {
-                  fetchNames(inProgressResponse.data[i].userIdF);
-                }
-
-                setTime((prevUsers) => [
-                  ...prevUsers,
-                  inProgressResponse.data[0].time,
-                ]);
-              }
-            }
-          } else {
-            console.error("err");
-          }
-
-          fetchPotentialOpponents();
-        } else {
-          // handle error if needed
-        }
-      } catch (err) {
-        console.log("error", err);
+    const storedToken = localStorage.getItem('token');
+    const setAuthToken = (token) => {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      } else {
+        delete axios.defaults.headers.common['Authorization'];
       }
     };
+  if (storedToken) {
+    // Set the token in headers
+    setAuthToken(storedToken);
 
+    // Verify the token on the server (optional)
+    axios.get('/verify-token')
+      .then(response => {
+        console.log("verified")
+        // Token is valid, user is authenticated
+        // Set user state or perform other actions
+      })
+      .catch(error => {
+        console.log("error token" )
+        // Token is invalid or expired
+        // Redirect to login or perform other actions
+      });
+  }
+    const res = getUser();
+    setUserData(res);
     fetchData();
+    fetchPotentialOpponents();
   }, []);
+  const fetchData = async () => {
+    try {
+      const userResponse = await getUser();
+
+      if (userResponse.data.Status === "Success") {
+        setUserData(userResponse.data.userData);
+
+        const inProgressResponse = await getInProgressData(
+          userResponse.data.userData.id
+        );
+        const myId = userResponse.data.userData.id;
+        if (inProgressResponse.data) {
+          setInProgress(inProgressResponse.data);
+          if (inProgressResponse.data.length > 0) {
+            for (
+              let i = 0;
+              i < Math.min(inProgressResponse.data.length, 3);
+              i++
+            ) {
+              if (myId !== inProgressResponse.data[i].userIdS) {
+                fetchNames(inProgressResponse.data[i].userIdS);
+              } else {
+                fetchNames(inProgressResponse.data[i].userIdF);
+              }
+
+              setTime((prevUsers) => [
+                ...prevUsers,
+                inProgressResponse.data[0].time,
+              ]);
+            }
+          }
+        } else {
+          console.error("err");
+        }
+
+      } else {
+        // handle error if needed
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
 
   const fetchNames = (id) => {
     getOtherUsersData(id)
       .then((res) => {
         if (res.data) {
-          console.log(res.data[0]);
           setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);
           setUsersId((prevUsers) => [...prevUsers, res.data[0].id]);
         }
@@ -84,10 +105,19 @@ function Arena() {
       .catch((err) => console.log("error", err));
   };
 
-  const fetchPotentialOpponents = () => {
-    getPotentialOpponents(userData.lvl)
+
+  const fetchPotentialOpponents =  async () => {
+    const userResponse = await getUser();
+
+    if (userResponse.data.Status === "Success") {
+      const lvl = userResponse.data.userData.battleLvl
+    
+    console.log("user lvl" + userData.battleLvl)
+    await getPotentialOpponents(lvl)
       .then((res) => {
+        console.log(res)
         if (res) {
+          console.log(res)
           const opponentData = res.slice(0, 5).map((user) => {
             return {
               id: user.id,
@@ -100,6 +130,7 @@ function Arena() {
         }
       })
       .catch((err) => console.log("error", err));
+    }
   };
 
   const sendToBattle = (item) => {
@@ -112,7 +143,7 @@ function Arena() {
     navigate(`/Battle/${item}/${time}`);
   };
   const sendToOngoingBattle = (userId, time) => {
-    navigate(`/Battle/${userId}/${time}`);
+    navigate(`/Battle/${userId}/${time}`);;
   };
 
   const InProgressBattle = ({ bgColor, textColor, number }) => {
@@ -126,7 +157,7 @@ function Arena() {
         </p>
       </div>
     )
-  }
+  };
 
   return (
     <div className="h-full w-full lg:h-screen bg-townYN bg-cover flex flex-col items-center justify-center">

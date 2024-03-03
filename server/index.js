@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(express.static('../client/public'));
 app.get("/favicon.ico", (req, res) => {
-  res.sendFile(front + "/favicon.ico")
+  res.sendFile("./favicon.ico")
 })
 
 // app.use(function (req, res, next) {

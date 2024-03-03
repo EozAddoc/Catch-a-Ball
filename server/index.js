@@ -4,7 +4,6 @@ const db = require('./db');
 const userRoute = require('./routes/userRoute');
 const deckRoute =require('./routes/deckRoute');
 const battleRoute =require('./routes/battleRoute');
-
 const cookieParser = require('cookie-parser')
 const app = express();
 require('dotenv').config();
@@ -18,8 +17,13 @@ app.use(cors({
     methods:["POST","GET","PUT", "PATCH"],
   credentials: true
 }));
-app.use(cookieParser());
 
+app.use((req, res, next) => {
+  res.set("Content-Security-Policy", "default-src 'self'");
+  next()
+})
+
+app.use(cookieParser());
 
 app.use(userRoute)
 app.use(deckRoute)

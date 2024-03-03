@@ -10,10 +10,10 @@ require('dotenv').config();
 
 app.use(express.json());
 
-app.use(express.static('../client/public'));
-app.get("/favicon.ico", (req, res) => {
-  res.sendFile("./favicon.ico")
-})
+// app.use(express.static('../client/public'));
+// app.get("/favicon.ico", (req, res) => {
+//   res.sendFile("./favicon.ico")
+// })
 
 // app.use(function (req, res, next) {
 //   res.setHeader(
@@ -25,11 +25,11 @@ app.get("/favicon.ico", (req, res) => {
 const front ="http://"+process.env.URL+":3000"
 const externalApi = "https://api.pokemontcg.io/v2/cards/*"
 
-app.use(cors({
-  origin: [front, externalApi],
-    methods:["POST","GET","PUT", "PATCH"],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: [front, externalApi],
+//     methods:["POST","GET","PUT", "PATCH"],
+//   credentials: true
+// }));
 
 app.use(cookieParser());
 

@@ -28,17 +28,6 @@ services:
     ports:
       - '3000:3000'
 
-  nginx:
-    depends_on:
-      - api
-      - client
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-      - "3050:80"
-
   api:
     build:
       dockerfile: Dockerfile

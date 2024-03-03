@@ -10,12 +10,12 @@ require('dotenv').config();
 
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
   res.setHeader(
-    "Content-Security-Policy", "default-src 'self'; img-src *; font-src *"
+    'Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'"
   );
-  return next();
-})
+  next();
+});
 
 const front ="http://"+process.env.URL+":3000"
 const externalApi = "https://api.pokemontcg.io/v2/cards/*"

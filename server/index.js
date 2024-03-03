@@ -19,7 +19,7 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-  res.set("Content-Security-Policy", "default-src 'none'; img-src 'self'");
+  res.set("Content-Security-Policy", "default-src 'none'; img-src 'self' data:");
   next()
 })
 

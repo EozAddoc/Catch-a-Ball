@@ -16,20 +16,21 @@ app.use(express.json());
 // })
 
 // app.use(function (req, res, next) {
-//   res.setHeader(
+//   res.header(
 //     'Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'"
 //   );
 //   next();
 // });
 
-const front ="http://"+process.env.URL+":3000"
-const externalApi = "https://api.pokemontcg.io/v2/cards/*"
+const front = "http://"+process.env.URL+":3000";
+const test = "http://188.165.238.74:1117/";
+const externalApi = "https://api.pokemontcg.io/v2/cards/*";
 
-// app.use(cors({
-//   origin: [front, externalApi],
-//     methods:["POST","GET","PUT", "PATCH"],
-//   credentials: true
-// }));
+app.use(cors({
+  origin: [front, externalApi, test],
+    methods:["POST","GET","PUT", "PATCH"],
+  credentials: true
+}));
 
 app.use(cookieParser());
 

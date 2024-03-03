@@ -9,6 +9,13 @@ const app = express();
 require('dotenv').config();
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.set({
+    "Content-Security-Policy": "default-src 'self'; img-src *"
+  });
+})
+
 const front ="http://"+process.env.URL+":3000"
 const externalApi = "https://api.pokemontcg.io/v2/cards/*"
 
@@ -17,11 +24,6 @@ app.use(cors({
     methods:["POST","GET","PUT", "PATCH"],
   credentials: true
 }));
-
-app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'self'; img-src *");
-  next()
-})
 
 app.use(cookieParser());
 

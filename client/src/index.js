@@ -13,7 +13,6 @@ import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
 import Home from './pages/Home'
 import Search from './pages/Search';
-import Shop from './pages/Shop';
 import Arena from './pages/Arena'
 import Opponent from './pages/Opponent';
 import Battle from './pages/Battle';
@@ -48,11 +47,6 @@ const router = createBrowserRouter([
   {
     path: "Search",
     element: <PrivateRoutes element={<Search />} />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "Shop",
-    element: <PrivateRoutes element={<Shop />} />,
     errorElement: <ErrorPage />
   },
   {

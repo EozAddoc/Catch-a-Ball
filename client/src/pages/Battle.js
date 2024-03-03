@@ -97,7 +97,7 @@ function Battle() {
     const diff = Math.floor((currentDate - targetDate) / 1000);
     const remainingTime = 3600 - diff;
     if (remainingTime <= 0) {
-      finishBattle()
+      //finishBattle()
     }
     setTime(remainingTime > 0 ? remainingTime : 0);
   };
@@ -130,19 +130,6 @@ function Battle() {
     } catch (error) {
       console.error("Error determining winner/loser:", error);
     }
-    const winOrLose = (winner) => {
-      console.log("in win or lose")
-      try {
-        if (myId === winner) {
-          //  setNotification(`You won the battle against ${userId}`);
-        } else {
-          // setNotification(`You lost the battle against ${userId}`);
-        }
-        navigate("/home");
-      } catch (error) {
-        console.error("Error determining winner/loser:", error);
-      }
-    };
   }
   useEffect(() => {
 

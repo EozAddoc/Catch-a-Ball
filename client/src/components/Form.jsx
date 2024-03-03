@@ -8,6 +8,9 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [verifiedPassword, setVerifiedPassword] = useState("")
+  const [validEmail, setValidEmail] = useState(true)
 
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -17,7 +20,11 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
       loginF(event);
     } else if (text === "Sign Up") {
       if(validatePassword()){
-        registerF(event);
+        if(verifyPassword()){
+          if(isValidEmail()){
+            registerF(event);
+          }
+        }
       }else{
         setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
       }
@@ -70,6 +77,31 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
     return regex.test(password);
   };
+
+  const verifyPassword=()=>{
+    console.log("verifying pw")
+    if(verifiedPassword != password){
+      setPasswordMatch(false)
+setErrorMessage("Passwords do not match")
+    }else{
+      console.log("verifying pw true")
+      setPasswordMatch(true)
+        }
+       return verifiedPassword === password 
+  }
+
+  const isValidEmail= () =>{
+    console.log(email)
+    const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:gmail\.com|yahoo\.fr|hotmail\.com|wanadoo\.fr|outlook\.com)$/;  
+    if(!(emailRegex.test(email))){
+      setValidEmail(false)
+setErrorMessage("Provide a valid email")
+    }else{
+      setValidEmail(true)
+    }
+    console.log(emailRegex.test(email))
+    return emailRegex.test(email)
+  }
   return (
     <div>
       <div className="min-h-screen md:flex">
@@ -119,7 +151,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       data-te-input-wrapper-init
                     >
                       <input
-                        type="text"
+                        type="email"
                         className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                         id="exampleFormControlInput1"
                         placeholder="Email address"
@@ -146,7 +178,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       type="password"
                       className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                       id="exampleFormControlInput3"
-                      placeholder="Email address"
+                      placeholder="password"
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
@@ -157,6 +189,28 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                         className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                       >
                         Password
+                      </label>
+                    )}
+                  </div>
+                  <div
+                    className="relative mb-6 border-white border "
+                    data-te-input-wrapper-init
+                  >
+                    <input
+                      type="password"
+                      className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                      id="exampleFormControlInput3"
+                      placeholder="verification password"
+                      onChange={(e) => {
+                        setVerifiedPassword(e.target.value);
+                      }}
+                    />
+                    {password === "" && (
+                      <label
+                        htmlFor="exampleFormControlInput3"
+                        className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                      >
+                        Verify Password
                       </label>
                     )}
                   </div>

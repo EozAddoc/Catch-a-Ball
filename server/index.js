@@ -11,10 +11,10 @@ require('dotenv').config();
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.set({
-    "Content-Security-Policy": "default-src 'self'; img-src *"
-  });
-  next();
+  res.setHeader(
+    "Content-Security-Policy", "default-src 'self'; img-src *; font-src *"
+  );
+  return next();
 })
 
 const front ="http://"+process.env.URL+":3000"

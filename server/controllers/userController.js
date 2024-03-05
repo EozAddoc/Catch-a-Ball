@@ -98,10 +98,9 @@ console.log("winner" + userId)
 
   //NOTIFICATIONS
   static async updateNotifications(req, res) {
-    const userId = req.body.newNotificationData.myId;
-    const newNotification = req.body.newNotificationData.notifications
-    console.log("notifdata", newNotification)
-
+    const userId = req.body.newNotificationData.id;
+    let newNotification = req.body.newNotificationData.notifications
+    console.log('us id notif:' ,userId)
     User.updateNotificationArray(userId, newNotification, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' +err});

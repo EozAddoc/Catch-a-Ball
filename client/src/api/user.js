@@ -13,7 +13,7 @@ export const updateUser = (userData) => {
   return axios.post(`${BASE_URL}/Profile`, { updatedUserData: userData });
 };
 export const updateNotifications = (newNotifications) => {
-  console.log('nw not ! ' + JSON.stringify(newNotifications))
+  console.log('nw not ! ' + JSON.stringify(newNotifications), typeof newNotifications.notifications)
   return axios.post(`${BASE_URL}/Notifications`, {newNotificationData: newNotifications });
 };
 export const levelUp =  async (userId) => {

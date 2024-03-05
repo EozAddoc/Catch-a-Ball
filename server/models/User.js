@@ -161,20 +161,23 @@ class User {
     });
   }
   static async updateNotificationArray(userId, newNotificationsArray) {
-    // Update the database with the new array of notifications
-    const updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
-    const updateValues = [JSON.stringify(newNotificationsArray), userId];
-  
+    let updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
+    console.log(newNotificationsArray, JSON.stringify(newNotificationsArray), JSON.stringify("[]"), typeof newNotificationsArray)
+    let updateValues = [JSON.stringify(newNotificationsArray), userId];
+  if(newNotificationsArray.length ===0){
+updateQuery='UPDATE users SET notifications = JSON_ARRAY() WHERE id = ?'
+updateValues=[userId]
+  }
+  console.log(updateQuery,updateValues)
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while updating notifications:', updateErr);
       } else {
-        console.log('Notifications replaced successfully');
+        console.log('Notifications replaced successfully', updateResult);
       }
     });
   }
    static async levelUp(userId) {
-    // Update the database with the new array of notifications
     const updateQuery = 'UPDATE users SET battleLvl= battleLvl +1 WHERE id = ?';
     const updateValues = [userId];
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {

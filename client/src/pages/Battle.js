@@ -13,12 +13,20 @@ function Battle() {
   const { userId, time: initialTime } = useParams();
   const [time, setTime] = useState(0);
   const [myId, setMyId] = useState("");
+  const [winner, setWinner]= useState(1)
+  const [loser, setLoser]= useState(2)
+  const [heartsList, setHeartsList] = useState([]);
+  const [heartsListUser1, setHeartsListUser1] = useState([]);
+  const [heartsListUser2, setHeartsListUser2] = useState([]);
   const [battleData, setBattleData] = useState({});
   const navigate = useNavigate();
   const [userName, setUserName] = useState("")
 
   // check if window is resized
   useEffect(() => {
+    setHeartsList(intitHearts)
+    setHeartsListUser1(intitHearts)
+    setHeartsListUser2(intitHearts)
     window.addEventListener("resize", () => {
       const tempIsMobile = window.innerWidth < 1200;
       if (tempIsMobile !== isMobile) setIsMobile(tempIsMobile);
@@ -30,8 +38,11 @@ function Battle() {
     const newTime = formatSQLTime(initialTime)
     try {
       const res = await getBattle(newTime);
+      console.log('re',res)
+
       if (res) {
         setBattleData(res);
+        console.log('re',res.winner)
         return res;
       }
     } catch (error) {
@@ -39,18 +50,30 @@ function Battle() {
     }
   };
   useEffect(() => {
+   
     const fetchData = async () => {
       try {
         const res = await getOtherUsersData(userId);
+        const test = await getBattleInfo(initialTime);
+        if (test) {
+          console.log('in ger' , test.winner)
+          setWinner(test.winner)
+
+          if(userId === test.winner){
+setLoser(myId)
+          }else{
+            setLoser(userId)
+          }
+          console.log(winner,loser)
+        }
         if (res && res.data) {
-          console.log("Other user data:", res.data[0]);
           const name = res.data[0].username;
-          console.log(name)
           setUserName(name)
         }
       } catch (error) {
         console.error("Error fetching other user data:", error);
       }
+
     };
 
     fetchData();
@@ -97,7 +120,7 @@ function Battle() {
     const diff = Math.floor((currentDate - targetDate) / 1000);
     const remainingTime = 3600 - diff;
     if (remainingTime <= 0) {
-      //finishBattle()
+      finishBattle()
     }
     setTime(remainingTime > 0 ? remainingTime : 0);
   };
@@ -120,10 +143,10 @@ function Battle() {
   const winOrLose = (winner) => {
     try {
       if (myId === winner) {
-        updateNotifications({ myId, notifications: `You won the battle against ${userName}` });
+        updateNotifications({ id: myId, notifications: `You won the battle against ${userName}` });
 
       } else {
-        updateNotifications({ myId, notifications: `You lost the battle against ${userName}` });
+        updateNotifications({ id: myId, notifications: `You lost the battle against ${userName}` });
 
       }
       navigate("/home");
@@ -132,35 +155,45 @@ function Battle() {
     }
   }
   useEffect(() => {
-
-    // Calculate the time difference and update the time state
-
     calculateDiff(initialTime);
 
-    // Update the time every second
     const intervalId = setInterval(() => {
       setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, [initialTime]);
+ 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Remove a red heart and add a grey heart
+      const updatedHeartsList = heartsList.map((heart, index) => {
+        if (index === 0) {
+          return process.env.PUBLIC_URL + "/heartG.png";
+        } else if (index === 4) {
+          return process.env.PUBLIC_URL + "/Rheart.png";
+        } else {
+          return heartsList[index - 1];
+        }
+      });
+      if(loser){
+console.log('L', loser)
+      }
+      setHeartsList(updatedHeartsList);
+    }, 10000); // 600000 milliseconds = 10 minutes
 
-  const Hearts = ({ numberOfHearts, grayHearts }) => {
-    let heartsList = [];
-    let heartColor;
-    grayHearts ? heartColor = "/heartG.png" : heartColor = "/Rheart.png";
-    for (let i = 0; i < numberOfHearts; i++) {
-      heartsList.push(
-        <img
-          src={process.env.PUBLIC_URL + heartColor}
-          alt={grayHearts ? "gray heart" : "red heart"}
-          className="h-10"
-        />
-      );
-    };
-    return heartsList;
-  }
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [heartsList,loser]);
+
+  const hearts = [
+    ...Array(4).fill(process.env.PUBLIC_URL + "/Rheart.png"), // Four red hearts
+    process.env.PUBLIC_URL + "/heartG.png" // One grey heart
+  ];
+  const intitHearts = [
+    ...Array(5).fill(process.env.PUBLIC_URL + "/Rheart.png") // One grey heart
+  ];
+
 
   return (
       <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
@@ -182,30 +215,14 @@ function Battle() {
               <ProfileCard id={myId} />
             </div>
             <div className="hidden lg:flex heart w-1/3 h-1/5 absolute bottom-16 left-1/2  ">
-              <img
-                src={process.env.PUBLIC_URL + "/heartG.png"}
-                className="h-1/2 m-3"
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/heartG.png"}
-                alt="greyheart"
-                className="h-1/2 m-3 "
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/heartG.png"}
-                alt="greyheart"
-                className="h-1/2 m-3"
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/Rheart.png"}
-                alt="greyheart"
-                className="h-1/2 m-3"
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/Rheart.png"}
-                alt="greyheart"
-                className="h-1/2 m-3"
-              ></img>
+            {intitHearts.map((heart, index) => (
+        <img
+          key={`heart_${index}`}
+          src={heart}
+          alt={index === 4 ? "greyheart" : "redheart"} // Set alt text accordingly
+          className="h-1/2 m-3"
+        />
+      ))}
             </div>
             <div
               className="hidden lg:flex  absolute bottom-10   left-20 bg-blue-500"
@@ -217,31 +234,14 @@ function Battle() {
               <ProfileCard id={userId} />
             </div>
             <div className="hidden lg:flex   heart  w-1/3 h-1/6 absolute bottom-80 right-96   ">
-              <img
-                src={process.env.PUBLIC_URL + "/heartG.png"}
-                alt="greyheart1"
-                className="h-1/3 m-3"
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/heartG.png"}
-                alt="greyheart2"
-                className="h-1/3 m-3 "
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/Rheart.png"}
-                alt="greyheart3"
-                className="h-1/3 m-3 "
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/Rheart.png"}
-                alt="redHeart"
-                className="h-1/3 m-3"
-              ></img>
-              <img
-                src={process.env.PUBLIC_URL + "/Rheart.png"}
-                alt="redHeart"
-                className="h-1/3 m-3"
-              ></img>
+            {heartsList.map((heart, index) => (
+        <img
+          key={`heart_${index}`}
+          src={heart}
+          alt={index === 4 ? "greyheart" : "redheart"} // Set alt text accordingly
+          className="h-1/3 m-3"
+        />
+      ))}
             </div>
             <div
               className="hidden lg:flex absolute bottom-72 right-36 bg-blue-500"

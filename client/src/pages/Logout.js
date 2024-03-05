@@ -27,6 +27,7 @@ const setAuthToken = (token) => {
             .then(res => {
                 if (res.data.Status === "Success") {
                   clearAuthToken()
+                  localStorage.clear();
                     navigate('/');
                 } else {
                     alert("error logging out")

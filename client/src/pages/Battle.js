@@ -24,9 +24,9 @@ function Battle() {
 
   // check if window is resized
   useEffect(() => {
-    setHeartsList(intitHearts)
-    setHeartsListUser1(intitHearts)
-    setHeartsListUser2(intitHearts)
+    setHeartsList(initHearts)
+    setHeartsListUser1(initHearts)
+    setHeartsListUser2(initHearts)
     window.addEventListener("resize", () => {
       const tempIsMobile = window.innerWidth < 1200;
       if (tempIsMobile !== isMobile) setIsMobile(tempIsMobile);
@@ -38,11 +38,8 @@ function Battle() {
     const newTime = formatSQLTime(initialTime)
     try {
       const res = await getBattle(newTime);
-      console.log('re',res)
-
       if (res) {
         setBattleData(res);
-        console.log('re',res.winner)
         return res;
       }
     } catch (error) {
@@ -53,21 +50,14 @@ function Battle() {
    
     const fetchData = async () => {
       try {
-        const res = await getOtherUsersData(userId);
+        const res = await getOtherUsersData("id", userId);
         const test = await getBattleInfo(initialTime);
         if (test) {
-          console.log('in ger' , test.winner)
           setWinner(test.winner)
-
-          if(userId === test.winner){
-setLoser(myId)
-          }else{
-            setLoser(userId)
-          }
-          console.log(winner,loser)
         }
         if (res && res.data) {
           const name = res.data[0].username;
+          console.log(name)
           setUserName(name)
         }
       } catch (error) {
@@ -141,6 +131,7 @@ setLoser(myId)
   };
 
   const winOrLose = (winner) => {
+    console.log(userName)
     try {
       if (myId === winner) {
         updateNotifications({ id: myId, notifications: `You won the battle against ${userName}` });
@@ -176,9 +167,7 @@ setLoser(myId)
           return heartsList[index - 1];
         }
       });
-      if(loser){
-console.log('L', loser)
-      }
+    
       setHeartsList(updatedHeartsList);
     }, 10000); // 600000 milliseconds = 10 minutes
 
@@ -190,7 +179,7 @@ console.log('L', loser)
     ...Array(4).fill(process.env.PUBLIC_URL + "/Rheart.png"), // Four red hearts
     process.env.PUBLIC_URL + "/heartG.png" // One grey heart
   ];
-  const intitHearts = [
+  const initHearts = [
     ...Array(5).fill(process.env.PUBLIC_URL + "/Rheart.png") // One grey heart
   ];
 
@@ -215,7 +204,7 @@ console.log('L', loser)
               <ProfileCard id={myId} />
             </div>
             <div className="hidden lg:flex heart w-1/3 h-1/5 absolute bottom-16 left-1/2  ">
-            {intitHearts.map((heart, index) => (
+            {heartsList.map((heart, index) => (
         <img
           key={`heart_${index}`}
           src={heart}
@@ -234,7 +223,7 @@ console.log('L', loser)
               <ProfileCard id={userId} />
             </div>
             <div className="hidden lg:flex   heart  w-1/3 h-1/6 absolute bottom-80 right-96   ">
-            {heartsList.map((heart, index) => (
+            {initHearts.map((heart, index) => (
         <img
           key={`heart_${index}`}
           src={heart}

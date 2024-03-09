@@ -29,7 +29,7 @@ router.get('/suggestedPlayers',authenticateToken, userController.filterUsers)
 
 //UPDATE
 router.post('/Notifications',authenticateToken, userController.updateNotifications )
-router.post("/Profile", userController.updateUser)
+router.post("/Profile", userController.updateUserData)
 router.patch('/LevelUp',  userController.levelUpUser)
 
 
@@ -52,18 +52,17 @@ router.get('/user', authenticateToken,async ( req,res)=>{
   }
 
 })
-router.get(`/user/filter`,authenticateToken, (req, res) => {
-  const searchTerm = req.query.q;
 
-  if (!searchTerm ) {
+router.get(`/user/filters`, authenticateToken, (req, res) => {
+  const { field, value } = req.query;
+  if (!field || !value) {
     return res.status(400).json({ error: 'Missing required parameters' });
   }
 
-  // Use parameterized query to prevent SQL injection
-  const query = 'SELECT * FROM users WHERE id = ? ';
-  
-  // Use an array to pass values securely to the query
-  db.query(query, [searchTerm,searchTerm], (error, results) => {
+
+  const query = `SELECT * FROM users WHERE ${field} = ?`;
+
+  db.query(query, [value], (error, results) => {
     if (error) {
       console.error('Error executing query:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -73,6 +72,22 @@ router.get(`/user/filter`,authenticateToken, (req, res) => {
     res.json(results);
   });
 });
+router.get(`/api/search`, (req, res) => {
 
+  const searchTerm = req.query.q;
+
+  const query = `SELECT * FROM users WHERE username LIKE '%${searchTerm}%'`;
+
+
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error('Error executing query:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+  res.json(results);
+  });
+});
 
 module.exports = router;

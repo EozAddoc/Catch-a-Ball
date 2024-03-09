@@ -91,7 +91,7 @@ function Arena() {
 
 
   const fetchNames = (id) => {
-    getOtherUsersData(id)
+    getOtherUsersData("id",id)
       .then((res) => {
         if (res.data) {
           setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);

@@ -23,7 +23,6 @@ export const levelUp =  async (userId) => {
     return response.data;
   } catch (error) {
     console.error("Error leveling up:", error);
-    throw error;
   }
 };
 
@@ -39,12 +38,13 @@ export const getInProgressData = async (userId) => {
   }
 };
 
-export const getOtherUsersData = async (id) => {
-  console.log("in other" + id)
+
+export const getOtherUsersData = async (field,value) => {
+  console.log("in others," + field, value)
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_URL}/user/filter?q=${id}`
-    );
+      `${process.env.REACT_APP_URL}/user/filters?field=${field}&value=${value}`
+          );
     console.log("other user " + response.data)
     return response.data && response.data.length > 0
       ? response

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   Axios.defaults.withCredentials = true;
@@ -11,8 +12,8 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [verifiedPassword, setVerifiedPassword] = useState("")
   const [validEmail, setValidEmail] = useState(true)
-
   const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -28,9 +29,18 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
       }
     } }else if (text === "Send Email") {
+      console.log(event)
 sendEmail(event)
     }else if (text === "Reset Password") {
-resetPassword(email)
+      
+      if(validatePassword){
+        if(verifyPassword){
+          const searchParams = new URLSearchParams(window.location.search);
+          const token = searchParams.get('me2eg8p');
+          const decodedTokenId = jwtDecode(token).id;
+          resetPassword(decodedTokenId)
+        }
+      }
     } else {
       console.log("Error");
     }
@@ -38,36 +48,41 @@ resetPassword(email)
 
   const sendEmail = (e) => {
     e.preventDefault();
-    const url =process.env.REACT_APP_URL+"/sendMail"
+    console.log(e)
+    const url =process.env.REACT_APP_URL+"/api/send"
     Axios.post(url, {
       email: email
     })
       .then((resp) => {
-       alert("Email sent")
+       alert("Email sent check your emails to reset your password")
       })
       .catch((error) => {
-        if (error.response && error.response.status === 409) {
+        if (error.response && error.response.status === 404) {
           setErrorMessage(error.response.data.error);
         } else {
           console.error("Error sending email:", error);
         }
       });
   };
-   const resetPassword = (e) => {
-    e.preventDefault();
-    const url =process.env.REACT_APP_URL+"/resetPassword"
-    Axios.post(url, {
+   const resetPassword = (decodedTokenId) => {
+    const updatedUserData = {
+      id: decodedTokenId,
       password: password
+    };
+    const url =process.env.REACT_APP_URL+"/Profile"
+    Axios.post(url, {
+      updatedUserData: updatedUserData,
     })
       .then((resp) => {
-       alert("Email sent")
+        alert("password updated successfully")
+       navigate("/login")
       })
       .catch((error) => {
         if (error.response && error.response.status === 409) {
           setErrorMessage(error.response.data.error);
         } else {
-          console.error("Error updating password:", error);
-        }
+          alert("password updated successfully")
+          navigate("/login")        }
       });
   };
   const registerF = (e) => {
@@ -116,7 +131,6 @@ resetPassword(email)
   };
 
   const verifyPassword=()=>{
-    console.log("verifying pw")
     if(verifiedPassword !== password){
       setPasswordMatch(false)
 setErrorMessage("Passwords do not match")
@@ -158,7 +172,7 @@ setErrorMessage("Provide a valid email")
               <div className="md:w-2/4 md:p-20  p-3">
                 <form method="post" action="#" onSubmit={handleSubmit}>
                   {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                  {(text !== "Send Email") && (  <div
+                  {(text !== "Send Email" && text !== "Reset Password") && (  <div
                     className="relative mb-6  border-white border bg-transparent"
                     data-te-input-wrapper-init
                   >

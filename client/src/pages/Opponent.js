@@ -40,7 +40,7 @@ function Opponent() {
   }
 
 
-  getOtherUsersData(userId)
+  getOtherUsersData("id",userId)
     .then((res) => {
       if (res.data) {
         setOpponentName(res.data[0].username);

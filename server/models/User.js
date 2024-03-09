@@ -177,14 +177,14 @@ updateValues=[userId]
       }
     });
   }
-   static async levelUp(userId) {
+   static async levelUp(userId,callback) {
     const updateQuery = 'UPDATE users SET battleLvl= battleLvl +1 WHERE id = ?';
     const updateValues = [userId];
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while leveling:', updateErr);
       } else {
-        console.log('Leveled successfully');
+        console.log(callback,'Leveled successfully');
       }
     });
   }
@@ -194,37 +194,31 @@ updateValues=[userId]
   
 
   static async updateUser(userId, updatedUserData, callback) {
-    const updatePromises = Object.keys(updatedUserData).map((key) => {
-      return new Promise((resolve, reject) => {
-        const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
-        const values = [updatedUserData[key], userId];
+    try {
+      const updatePromises = Object.keys(updatedUserData).map((key) => {
+        return new Promise((resolve, reject) => {
+          const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
+          const values = [updatedUserData[key], userId];
   
-        db.query(query, values, (err, result) => {
-          if (err) {
-            console.error(`Error while updating user ${key}:`, err);
-            reject(err);
-          } else {
-            resolve(result);
-          }
+          db.query(query, values, (err, result) => {
+            if (err) {
+              console.error(`Error while updating user ${key}:`, err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
         });
       });
-    });
-  
-    try {
       const results = await Promise.all(updatePromises);
       if (callback) {
-        callback(results);
+        callback(results, 'results bitch');
       }
     } catch (error) {
-      // Handle errors here
       console.error("Error updating user:", error);
+      throw error; 
     }
   }
-    
-
-
-    }
-
-
+}  
 module.exports = User;
 

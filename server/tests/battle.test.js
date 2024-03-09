@@ -55,7 +55,6 @@ describe('Battle Class Tests', () => {
 
     expect(db.query).toHaveBeenCalledWith(expect.any(String), expect.any(Array));
     expect(result).toBeDefined();
-    // Add more assertions based on your requirements
   });
 
   // Test for determineWinner
@@ -71,8 +70,6 @@ describe('Battle Class Tests', () => {
 
     expect(db.query).toHaveBeenCalledWith(expect.any(String), expect.any(Array));
     expect(winner).toBeDefined();
-    // Add more assertions based on your requirements
   });
 
-  // Add more tests for other methods in the Battle class
 });

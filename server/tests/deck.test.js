@@ -45,7 +45,5 @@ describe('Deck Class Tests', () => {
 
     expect(db.query).toHaveBeenCalledWith(expect.any(String), expect.any(Array));
     expect(callback).toHaveBeenCalledWith(null, 'Updated successfully');
-    // Add more assertions based on your requirements
   });
-  // Add more tests for other methods in the Deck class
 });

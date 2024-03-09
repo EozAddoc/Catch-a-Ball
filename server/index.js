@@ -23,7 +23,7 @@ app.use(express.json());
 // CORS configuration
 app.use(cors({
   origin: [front, externalApi, test],
-  methods: ["POST", "GET", "PUT", "PATCH"],
+  methods: ["POST", "GET", "PUT", "PATCH","DELETE"],
   credentials: true
 }));
 

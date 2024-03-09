@@ -32,6 +32,7 @@ router.post('/Notifications',authenticateToken, userController.updateNotificatio
 router.post("/Profile", userController.updateUserData)
 router.patch('/LevelUp',  userController.levelUpUser)
 
+router.delete('/Delete',authenticateToken, userController.deleteUser )
 
 //User info 
 router.get('/user', authenticateToken,async ( req,res)=>{

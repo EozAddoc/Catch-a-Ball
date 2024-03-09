@@ -100,6 +100,20 @@ console.log(updatedUserData)
     });
   }
 
+  static async deleteUser(req, res) {
+    console.log("in deketeUser")
+    const id = req.body.id;
+    console.log(id)
+    User.delete(id,  (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error'});
+      } else {
+        console.log("success in deleting up")
+        res.status(200).json({ message: 'Success in deleting' });
+      }
+    });
+  }
+
   //NOTIFICATIONS
   static async updateNotifications(req, res) {
     const userId = req.body.newNotificationData.id;

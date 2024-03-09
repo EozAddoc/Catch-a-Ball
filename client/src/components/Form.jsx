@@ -82,7 +82,8 @@ sendEmail(event)
           setErrorMessage(error.response.data.error);
         } else {
           alert("password updated successfully")
-          navigate("/login")        }
+          navigate("/login")
+        }
       });
   };
   const registerF = (e) => {

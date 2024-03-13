@@ -91,7 +91,7 @@ function Arena() {
 
 
   const fetchNames = (id) => {
-    getOtherUsersData(id)
+    getOtherUsersData("id",id)
       .then((res) => {
         if (res.data) {
           setUsersName((prevUsers) => [...prevUsers, res.data[0].username]);
@@ -110,9 +110,7 @@ function Arena() {
     const id=userResponse.data.userData.id
     await getPotentialOpponents(lvl,id)
       .then((res) => {
-        console.log(res)
         if (res) {
-          console.log(res)
           const opponentData = res.slice(0, 5).map((user) => {
             return {
               id: user.id,
@@ -129,17 +127,24 @@ function Arena() {
   };
 
   const sendToBattle = (item) => {
-    if (item === userData.id) {
-      alert("You cannot battle yourself!");
-      return; 
+    console.log(inProgress)
+    if(inProgress.length <= 3){
+      if (item === userData.id) {
+        alert("You cannot battle yourself!");
+        return; 
+      }
+      const time = new Date().toISOString();
+      axios.post(process.env.REACT_APP_URL + `/Battle`, {
+        userF: userData.id,
+        userS: item,
+      });
+  
+      navigate(`/Battle/${item}/${time}`);
+    }else{
+      alert("Too many battles in progress!");
+        return; 
     }
-    const time = new Date().toISOString();
-    axios.post(process.env.REACT_APP_URL + `/Battle`, {
-      userF: userData.id,
-      userS: item,
-    });
-
-    navigate(`/Battle/${item}/${time}`);
+   
   };
   const sendToOngoingBattle = (userId, time) => {
     navigate(`/Battle/${userId}/${time}`);;

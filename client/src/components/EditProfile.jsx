@@ -83,6 +83,27 @@ updatedUserData.id = userData.id
   const handleEditModeChange = (newEditMode) => {
     setIsEditMode(newEditMode);
   };
+  const customConfirm = (message) => {
+    return window.confirm(message);
+  };
+  const handleDeleteConfirmation = () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("Are you sure you want to delete?")) {
+      axios
+      .delete(process.env.REACT_APP_URL+'/Delete',{
+        id: userData.id
+      } )
+      .then((res) => {
+      navigate("/")
+      })
+      .catch((err) => {
+        alert("unsuccesfull deletion")
+      });
+      
+    } else {
+      console.log("Deletion cancelled");
+    }
+  };
 
   return (
     <div className={!isEditMode ? "shadow-md w-1/2 h-3/5 sm:w-1/3 sm:h-5/6" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
@@ -183,6 +204,12 @@ updatedUserData.id = userData.id
                   className="bg-blue-500 text-white px-4 py-2 sm:px-4 rounded-full"
                 >
                   Save Changes
+                </button>
+                <button
+                  onClick={handleDeleteConfirmation}
+                  className="bg-red-500 text-white px-4 p-5 py-2 sm:px-4 rounded-full"
+                >
+                 Delete Account
                 </button>
               </div>
             </div>

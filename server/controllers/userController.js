@@ -39,7 +39,7 @@ class UserController {
 
   //FORGOT
   static async filterUsers(req, res){
-    const level= req.body.lvl
+    const lvl= req.body.lvl
 
     User.filterUsers(lvl, (err, result) => {
       if (err) {
@@ -67,14 +67,19 @@ class UserController {
 
 
   //UPDATE
-  static async updateUser(req, res) {
+  static async updateUserData(req, res) {
     const userId = req.body.updatedUserData.id;
-    const updatedUserData = req.body.updatedUserData
-    console.log("userdata", updatedUserData)
-
+    let updatedUserData = req.body.updatedUserData
+    delete updatedUserData.id;
+if (updatedUserData.password){
+  const salt = bcrypt.genSaltSync(10)
+  const hashedPassword = await bcrypt.hash(updatedUserData.password,salt)
+  updatedUserData.password=hashedPassword
+}
+console.log(updatedUserData)
     User.updateUser(userId, updatedUserData, (err, result) => {
       if (err) {
-        res.status(500).json({ message: 'Internal server error' +err});
+        res.status(500).json({ message: 'Internal server error '});
       } else {
         res.status(201).json({ message: 'Success'});
       }
@@ -85,7 +90,6 @@ class UserController {
   static async levelUpUser(req, res) {
     console.log("in levelUpUser")
     const userId = req.body.userId;
-console.log("winner" + userId)
     User.levelUp(userId,  (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error'+err });
@@ -96,12 +100,24 @@ console.log("winner" + userId)
     });
   }
 
+  static async deleteUser(req, res) {
+    console.log("in deketeUser")
+    const id = req.body.id;
+    console.log(id)
+    User.delete(id,  (err, result) => {
+      if (err) {
+        res.status(500).json({ message: 'Internal server error'});
+      } else {
+        console.log("success in deleting up")
+        res.status(200).json({ message: 'Success in deleting' });
+      }
+    });
+  }
+
   //NOTIFICATIONS
   static async updateNotifications(req, res) {
-    const userId = req.body.newNotificationData.myId;
-    const newNotification = req.body.newNotificationData.notifications
-    console.log("notifdata", newNotification)
-
+    const userId = req.body.newNotificationData.id;
+    let newNotification = req.body.newNotificationData.notifications
     User.updateNotificationArray(userId, newNotification, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' +err});

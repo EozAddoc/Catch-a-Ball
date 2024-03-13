@@ -25,12 +25,8 @@ function Opponent() {
     }
   }, []);
 
-// Now 'decoded' contains the decoded JWT payload
-
 
   const Battle = (userId) => {
-    console.log(typeof myId, typeof userId); // Log the types of myId and userId
-    console.log(myId, userId)
     if (myId === parseInt(userId)) {
       alert("You cannot battle yourself!");
       return;
@@ -44,7 +40,7 @@ function Opponent() {
   }
 
 
-  getOtherUsersData(userId)
+  getOtherUsersData("id",userId)
     .then((res) => {
       if (res.data) {
         setOpponentName(res.data[0].username);

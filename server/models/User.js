@@ -161,67 +161,102 @@ class User {
     });
   }
   static async updateNotificationArray(userId, newNotificationsArray) {
-    // Update the database with the new array of notifications
-    const updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
-    const updateValues = [JSON.stringify(newNotificationsArray), userId];
-  
+    let updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
+    console.log(newNotificationsArray, JSON.stringify(newNotificationsArray), JSON.stringify("[]"), typeof newNotificationsArray)
+    let updateValues = [JSON.stringify(newNotificationsArray), userId];
+  if(newNotificationsArray.length ===0){
+updateQuery='UPDATE users SET notifications = JSON_ARRAY() WHERE id = ?'
+updateValues=[userId]
+  }
+  console.log(updateQuery,updateValues)
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while updating notifications:', updateErr);
       } else {
-        console.log('Notifications replaced successfully');
+        console.log('Notifications replaced successfully', updateResult);
       }
     });
   }
-   static async levelUp(userId) {
-    // Update the database with the new array of notifications
+   static async levelUp(userId,callback) {
     const updateQuery = 'UPDATE users SET battleLvl= battleLvl +1 WHERE id = ?';
     const updateValues = [userId];
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while leveling:', updateErr);
       } else {
-        console.log('Leveled successfully');
+        console.log(callback,'Leveled successfully');
       }
     });
   }
 
+  static async delete(id, callback) {
+    const deleteDeckQuery = 'DELETE FROM deck WHERE user_id = ?';
+    db.query(deleteDeckQuery, [id], (deckErr, deckResult) => {
+      if (deckErr) {
+        console.error('Error while deleting from deck:', deckErr);
+        if (callback) {
+          callback(deckErr);
+        }
+      } else {
+        console.log('Deleted from deck successfully');
+        const deleteUserQuery = 'DELETE FROM users WHERE id = ?';
+        db.query(deleteUserQuery, [id], (userErr, userResult) => {
+          if (userErr) {
+            console.error('Error while deleting from users:', userErr);
+            if (callback) {
+              callback(userErr);
+            }
+          } else {
+            console.log('Deleted from users successfully');
+            const deleteBattleQuery = 'DELETE FROM battle WHERE userIdF = ? OR userIdS = ?';
+            db.query(deleteBattleQuery, [id, id], (battleErr, battleResult) => {
+              if (battleErr) {
+                console.error('Error while deleting from battle:', battleErr);
+                if (callback) {
+                  callback(battleErr);
+                }
+              } else {
+                console.log('Deleted from battle successfully');
+                if (callback) {
+                  callback();
+                }
+              }
+            });
+          }
+        });
+      }
+    });
+  }
   
   
   
 
   static async updateUser(userId, updatedUserData, callback) {
-    const updatePromises = Object.keys(updatedUserData).map((key) => {
-      return new Promise((resolve, reject) => {
-        const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
-        const values = [updatedUserData[key], userId];
+    try {
+      const updatePromises = Object.keys(updatedUserData).map((key) => {
+        return new Promise((resolve, reject) => {
+          const query = `UPDATE users SET ${key} = ? WHERE id = ?`;
+          const values = [updatedUserData[key], userId];
   
-        db.query(query, values, (err, result) => {
-          if (err) {
-            console.error(`Error while updating user ${key}:`, err);
-            reject(err);
-          } else {
-            resolve(result);
-          }
+          db.query(query, values, (err, result) => {
+            if (err) {
+              console.error(`Error while updating user ${key}:`, err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
         });
       });
-    });
-  
-    try {
       const results = await Promise.all(updatePromises);
       if (callback) {
-        callback(results);
+        callback(results, 'results bitch');
       }
     } catch (error) {
-      // Handle errors here
       console.error("Error updating user:", error);
+      throw error; 
     }
   }
-    
-
-
-    }
-
-
+}  
 module.exports = User;
 

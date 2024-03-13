@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   Axios.defaults.withCredentials = true;
@@ -8,8 +9,11 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [verifiedPassword, setVerifiedPassword] = useState("")
+  const [validEmail, setValidEmail] = useState(true)
   const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -17,15 +21,71 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
       loginF(event);
     } else if (text === "Sign Up") {
       if(validatePassword()){
-        registerF(event);
-      }else{
+        if(verifyPassword()){
+          if(isValidEmail()){
+            registerF(event);
+          }
+        }else{
         setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
+      }
+    } }else if (text === "Send Email") {
+      console.log(event)
+sendEmail(event)
+    }else if (text === "Reset Password") {
+      
+      if(validatePassword){
+        if(verifyPassword){
+          const searchParams = new URLSearchParams(window.location.search);
+          const token = searchParams.get('me2eg8p');
+          const decodedTokenId = jwtDecode(token).id;
+          resetPassword(decodedTokenId)
+        }
       }
     } else {
       console.log("Error");
     }
   };
 
+  const sendEmail = (e) => {
+    e.preventDefault();
+    console.log(e)
+    const url =process.env.REACT_APP_URL+"/api/send"
+    Axios.post(url, {
+      email: email
+    })
+      .then((resp) => {
+       alert("Email sent check your emails to reset your password")
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          setErrorMessage(error.response.data.error);
+        } else {
+          console.error("Error sending email:", error);
+        }
+      });
+  };
+   const resetPassword = (decodedTokenId) => {
+    const updatedUserData = {
+      id: decodedTokenId,
+      password: password
+    };
+    const url =process.env.REACT_APP_URL+"/Profile"
+    Axios.post(url, {
+      updatedUserData: updatedUserData,
+    })
+      .then((resp) => {
+        alert("password updated successfully")
+       navigate("/login")
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          setErrorMessage(error.response.data.error);
+        } else {
+          alert("password updated successfully")
+          navigate("/login")
+        }
+      });
+  };
   const registerF = (e) => {
     e.preventDefault();
     const url =process.env.REACT_APP_URL+"/signup"
@@ -70,6 +130,28 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
     return regex.test(password);
   };
+
+  const verifyPassword=()=>{
+    if(verifiedPassword !== password){
+      setPasswordMatch(false)
+setErrorMessage("Passwords do not match")
+    }else{
+      setPasswordMatch(true)
+        }
+       return verifiedPassword === password 
+  }
+
+  const isValidEmail= () =>{
+    console.log(email)
+    const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:gmail\.com|yahoo\.fr|hotmail\.com|wanadoo\.fr|outlook\.com)$/;  
+    if(!(emailRegex.test(email))){
+      setValidEmail(false)
+setErrorMessage("Provide a valid email")
+    }else{
+      setValidEmail(true)
+    }
+    return emailRegex.test(email)
+  }
   return (
     <div>
       <div className="min-h-screen md:flex">
@@ -91,7 +173,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
               <div className="md:w-2/4 md:p-20  p-3">
                 <form method="post" action="#" onSubmit={handleSubmit}>
                   {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                  <div
+                  {(text !== "Send Email" && text !== "Reset Password") && (  <div
                     className="relative mb-6  border-white border bg-transparent"
                     data-te-input-wrapper-init
                   >
@@ -113,13 +195,14 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       </label>
                     )}
                   </div>
-                  {text === "Sign Up" && (
+                  )}
+                  {(text === "Sign Up"|| text === "Send Email") && (
                     <div
                       className="relative mb-6  border-white border"
                       data-te-input-wrapper-init
                     >
                       <input
-                        type="text"
+                        type="email"
                         className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                         id="exampleFormControlInput2"
                         placeholder="Email address"
@@ -137,7 +220,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       )}
                     </div>
                   )}
-
+  { text !== "Send Email" && (
                   <div
                     className="relative mb-6 border-white border "
                     data-te-input-wrapper-init
@@ -146,7 +229,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                       type="password"
                       className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                       id="exampleFormControlInput3"
-                      placeholder="Email address"
+                      placeholder="password"
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
@@ -156,26 +239,37 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                         htmlFor="exampleFormControlInput3"
                         className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                       >
-                        Password
+                         {text === "Sign Up" || text === "Reset Password" ? "New Password" : "Password"}
                       </label>
                     )}
                   </div>
-                  <div className="mb-6 flex items-center justify-between">
-                    <div className="m-2 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
-                      <input
-                        className="relative text-white float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                        type="checkbox"
-                        value=""
-                        id="exampleCheck3"
-                       defaultChecked
-                      />
+  )}
+    { (text !== "Send Email" && text !=="Login") && (
+                  <div
+                    className="relative mb-6 border-white border "
+                    data-te-input-wrapper-init
+                  >
+                    <input
+                      type="password"
+                      className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                      id="exampleFormControlInput3"
+                      placeholder="verification password"
+                      onChange={(e) => {
+                        setVerifiedPassword(e.target.value);
+                      }}
+                    />
+                    {password === "" && (
                       <label
-                        className="text-white inline-block pl-[0.15rem] hover:cursor-pointer"
-                       htmlFor="exampleCheck3"
+                        htmlFor="exampleFormControlInput3"
+                        className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                       >
-                        Remember me
+                        Confirm Password
                       </label>
-                    </div>
+                    )}
+                  </div>
+    )}
+                  <div className="mb-6 flex items-center justify-between">
+                   
 
 
                     {text === "Sign Up" && (
@@ -190,7 +284,7 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
                     {text === "Login" && (
                       <a
                         href="#!"
-                        onClick={() => navigate("/login")} // Navigate to "/login" when clicked
+                        onClick={() => navigate("/SendEmail")} // Navigate to "/login" when clicked
                         className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
                       >
                         Forgot password

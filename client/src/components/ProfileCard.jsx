@@ -23,12 +23,15 @@ async function ApiCall(id) {
 
 async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,setAvatar) {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_URL}/user/filter?q=${id}`);
+    const res =await axios.get(`${process.env.REACT_APP_URL}/user/filters?field=id&value=${id}`);
     if (res.data && res.data.length > 0) {
       const otherUser = res.data[0];
       setOtherUser(otherUser);
       setAvatar(await ApiCall(otherUser.avatar_api));
       setTypeEn(otherUser.energyChoice);
+      if(otherUser.energyChoice === "energy/En.png"){
+        otherUser.energyChoice = "energy/waterEn.png"
+      }
       let bgType = otherUser.energyChoice.replace(/\/energy\/|\.png|En/g, '');
       bgType = (["bug", "fire", "poison", "dark", "psychic"].includes(bgType))
         ? `${bgType}.png`
@@ -36,8 +39,7 @@ async function fetchUserData(id, setOtherUser, setTypeEn, setBagType, setMess,se
       setBagType(bgType);
     }
   } catch (err) {
-    console.log("error", err);
-    setMess(err.message); // Assuming this is an error message
+    setMess(err.message); 
   }
 }
 
@@ -82,6 +84,14 @@ function ProfileCard({ id }) {
       fetchData();
     }
   }, [id]);
+  useEffect(() => {
+ if(bagType === ".jpg"){
+  setBagType("water.jpg")
+ }
+ if(bagType === ".png"){
+  setBagType("water.png")
+ }
+  }, [bagType]);
 
   const openModal = () => {
     setIsModalOpen(true);

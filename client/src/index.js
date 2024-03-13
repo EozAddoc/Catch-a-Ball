@@ -13,8 +13,9 @@ import SignupPokemon from './pages/SignupPokemon';
 import SignupAvatar from './pages/SignupAvatar';
 import Home from './pages/Home'
 import Search from './pages/Search';
-import Shop from './pages/Shop';
 import Arena from './pages/Arena'
+import SendEmail from './pages/SendEmail'
+import ResetPassword from './pages/ResetPassword'
 import Opponent from './pages/Opponent';
 import Battle from './pages/Battle';
 import Logout from './pages/Logout';
@@ -23,7 +24,24 @@ import ProfilePage from './pages/ProfilePage';
 import MyCarousel from './pages/MyCarousel';
 import LoadingPage from './LoadingPage';
 import PrivateRoutes from './PrivateRoutes';
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
+// Function to set the token in headers
+const setAuthToken = (token) => {
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+};
+window.addEventListener("beforeunload", function(event) {
+  localStorage.removeItem('token');
+
+  setAuthToken(null);
+
+ localStorage.clear();
+});
 const router = createBrowserRouter([
   {
     path: "",
@@ -41,6 +59,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
+    path: "SendEmail",
+    element: <SendEmail />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "ResetPassword",
+    element: <ResetPassword />,
+    errorElement: <ErrorPage />
+  },
+  {
     path: "Profile",
     element: <PrivateRoutes element={<ProfilePage />} />,
     errorElement: <ErrorPage />
@@ -48,11 +76,6 @@ const router = createBrowserRouter([
   {
     path: "Search",
     element: <PrivateRoutes element={<Search />} />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "Shop",
-    element: <PrivateRoutes element={<Shop />} />,
     errorElement: <ErrorPage />
   },
   {

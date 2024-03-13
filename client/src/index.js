@@ -96,11 +96,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   }
   ,
-  {
-    path: "myCarousel",
-    element: <MyCarousel />,
-    errorElement: <ErrorPage />
-  } ,
+  // {
+  //   path: "myCarousel",
+  //   element: <MyCarousel />,
+  //   errorElement: <ErrorPage />
+  // } ,
   {
     path: "Loading",
     element: <LoadingPage />,

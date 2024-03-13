@@ -81,7 +81,7 @@ function Deck() {
             <h1> Current Battle level : {battleLvl} </h1>
           </div>
           <div className="px-5 pt-5">
-            <div className="grid grid-cols-2 md:grid-cols-3 place-items-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 place-items-center" data-cy="deck">
               {deckInfo.length > 0 &&
                 deckInfo.map((card, index) => (
                   <div key={index} className="relative">

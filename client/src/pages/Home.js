@@ -106,7 +106,7 @@ function Home() {
                   </div>
                   <div className="text-center px-5 py-5">
                     <div className="flex md:gap-20 flex-col items-center">
-                      <div className="grid grid-cols-2 md:grid-cols-3 place-items-center">
+                      <div className="grid grid-cols-2 md:grid-cols-3 place-items-center" data-cy="deck">
                         {deckInfo.length > 0 &&
                           deckInfo.map((card) => {
                             return (

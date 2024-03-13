@@ -23,11 +23,10 @@ app.use(express.json());
 // });
 
 const front = "http://"+process.env.URL+":3000";
-const test = "http://188.165.238.74:1117/";
 const externalApi = "https://api.pokemontcg.io/v2/cards/*";
 
 app.use(cors({
-  origin: [front, externalApi, test],
+  origin: [front, externalApi],
     methods:["POST","GET","PUT", "PATCH"],
   credentials: true
 }));

@@ -33,7 +33,7 @@ const setAuthToken = (token) => {
                     alert("error logging out")
                 }
             }).catch(err => {
-                console.log(err);
+                console.error(err);
             })
     }, [navigate]);
 }

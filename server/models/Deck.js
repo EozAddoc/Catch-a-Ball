@@ -15,7 +15,7 @@ class Deck {
           
         `  
         try {
-          await db.query(query);
+           db.query(query);
           console.log('Deck table created or already exists.');
         } catch (err) {
           console.error('Error while creating user table:', err);

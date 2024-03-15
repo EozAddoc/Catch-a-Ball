@@ -28,14 +28,10 @@ class Battle {
   static async createBattle(userF, userS) {
     
     try {
-      let winner = await this.determineWinner(userF, userS);
-      console.log("winner : " + winner);
-      const query = 'INSERT INTO battle (userIdF, userIdS, winner, status, time) VALUES (?, ?, ?, "InProgress", NOW())';
-      const values = [userF, userS, winner];
-
-      const result = await db.query(query, values);
+      const query = "INSERT INTO battle (userIdF, userIdS, winner, status, time) SELECT ? AS userIdF, ? AS userIdS, (SELECT id FROM users WHERE id = ? OR id = ? ORDER BY battleLvl DESC LIMIT 1) AS winner, 'InProgress' AS status, NOW() AS time";
+      const values = [userF, userS,userF,userS];
+      const result = db.query(query, values);
       const userId = result.insertId;
-      console.log('Battle created with ID:', userF);
       return userId;
     } catch (err) {
       console.error('Error while inserting users into battle:', err);
@@ -60,7 +56,6 @@ class Battle {
     //update status to ended 
     const query = 'UPDATE battle SET status = ? WHERE id = ?';
   const values = ['ended', id];
-  console.log("endBattle", id )
   
     try {
       const result =  db.query(query, values);
@@ -71,31 +66,6 @@ class Battle {
     }
   }
 
-  static async determineWinner(userIdF, userIdS) {
-    try {
-      const user1 = await db.query('SELECT battleLvl FROM users WHERE id = ?', [userIdF]);
-      const user2 = await db.query('SELECT battleLvl FROM users WHERE id = ?', [userIdS]);
-
-      const battleLevel1 = user1;
-      const battleLevel2 = user2;
-      let winner;
-
-      if (battleLevel1 === battleLevel2) {
-         winner = Math.random() < 0.5 ? userIdF : userIdS;
-      } else if (battleLevel1 > battleLevel2) {
-         winner = userIdF;
-      } else {
-         winner = userIdS;
-      }
-
-      console.log(`Final Winner: ${winner}`);
-      return winner;
-    } catch (err) {
-      console.error('Error while determining winner:', err);
-      throw err;
-    }
-  }
-  
 }
 
 module.exports = Battle;

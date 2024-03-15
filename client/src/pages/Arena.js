@@ -33,10 +33,9 @@ function Arena() {
 
     axios.get('/verify-token')
       .then(response => {
-        console.log("verified")
       })
       .catch(error => {
-        console.log("error token" )
+        console.error("error token" )
 
         throw error;
       });
@@ -85,7 +84,7 @@ function Arena() {
         // handle error if needed
       }
     } catch (err) {
-      console.log("error", err);
+      console.error("error", err);
     }
   };
 
@@ -98,7 +97,7 @@ function Arena() {
           setUsersId((prevUsers) => [...prevUsers, res.data[0].id]);
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
   };
 
 
@@ -122,12 +121,11 @@ function Arena() {
           console.error("err");
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
     }
   };
 
   const sendToBattle = (item) => {
-    console.log(inProgress)
     if(inProgress.length <= 3){
       if (item === userData.id) {
         alert("You cannot battle yourself!");

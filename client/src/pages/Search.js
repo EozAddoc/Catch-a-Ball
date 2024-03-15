@@ -37,8 +37,6 @@ function Search() {
   }
 
   const Battle = (userId) => {
-    console.log(typeof myId, typeof userId); // Log the types of myId and userId
-    console.log(myId, userId)
     if(myId === parseInt(userId)){
       alert("You cannot battle yourself!");
       return; 

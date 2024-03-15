@@ -29,6 +29,7 @@ class UserController {
             } else {
               const token = jwt.sign({ username,userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
               res.cookie('token', token);
+         
               res.status(201).json({ message: 'Account created successfully' });
             }
           });
@@ -76,7 +77,6 @@ if (updatedUserData.password){
   const hashedPassword = await bcrypt.hash(updatedUserData.password,salt)
   updatedUserData.password=hashedPassword
 }
-console.log(updatedUserData)
     User.updateUser(userId, updatedUserData, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error '});
@@ -101,9 +101,7 @@ console.log(updatedUserData)
   }
 
   static async deleteUser(req, res) {
-    console.log("in deketeUser")
     const id = req.body.id;
-    console.log(id)
     User.delete(id,  (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error'});
@@ -132,21 +130,18 @@ console.log(updatedUserData)
   static async loginUser(req, res) {
     const username = req.body.username;
     const password = req.body.password;
-console.log("logging in " + username )
     User.getUserByUsername(username, async (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error' });
       } else {
         if (result.length > 0) {
           const hashedPassword = result[0].password;
-          console.log(hashedPassword)
         const passwordMatch = await bcrypt.compare(password, hashedPassword);
-        console.log("password match: " + passwordMatch)
         if(passwordMatch){
           const username = result[0].username;
           const userId = result[0].id
           const token = jwt.sign({ username, userId }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
-          res.cookie('token', token);
+          res.cookie('token', token)
           res.status(200).json({ message: 'Successful login' });
         }else{
           res.status(401).json({ error: 'Wrong username or password' });

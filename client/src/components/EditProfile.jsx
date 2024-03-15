@@ -62,7 +62,7 @@ updatedUserData.id = userData.id
       })
       .catch((err) => {
         setIsEditMode(!isEditMode);
-        console.log("error", err);
+        console.error("error", err);
       });
       
   };
@@ -77,7 +77,7 @@ updatedUserData.id = userData.id
           setMess(res.data.err);
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
   }, []);
 
   const handleEditModeChange = (newEditMode) => {
@@ -100,8 +100,6 @@ updatedUserData.id = userData.id
         alert("unsuccesfull deletion")
       });
       
-    } else {
-      console.log("Deletion cancelled");
     }
   };
 

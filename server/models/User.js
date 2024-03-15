@@ -58,12 +58,11 @@ class User {
           console.error('Error while retrieving user:', err);
           callback(err);
         } else {
-          console.log("userPage", result)
           callback(null,result);
         }
       });
     }catch{
-      console.log("err retrieving user ")
+      console.error("err retrieving user ")
     }
  
  
@@ -112,7 +111,6 @@ class User {
   //FILTER
   
   static async filterUsers( level,userId, callback) {
-    console.log("data", level, userId);
     const updatePromises = Object.keys(filterData).map((key) => {
       return new Promise((resolve, reject) => {
         const query = `SELECT * FROM users WHERE battleLvl = ? and id != ?`;
@@ -162,13 +160,11 @@ class User {
   }
   static async updateNotificationArray(userId, newNotificationsArray) {
     let updateQuery = 'UPDATE users SET notifications = JSON_ARRAY(?) WHERE id = ?';
-    console.log(newNotificationsArray, JSON.stringify(newNotificationsArray), JSON.stringify("[]"), typeof newNotificationsArray)
     let updateValues = [JSON.stringify(newNotificationsArray), userId];
   if(newNotificationsArray.length ===0){
 updateQuery='UPDATE users SET notifications = JSON_ARRAY() WHERE id = ?'
 updateValues=[userId]
   }
-  console.log(updateQuery,updateValues)
     db.query(updateQuery, updateValues, (updateErr, updateResult) => {
       if (updateErr) {
         console.error('Error while updating notifications:', updateErr);
@@ -198,7 +194,6 @@ updateValues=[userId]
           callback(deckErr);
         }
       } else {
-        console.log('Deleted from deck successfully');
         const deleteUserQuery = 'DELETE FROM users WHERE id = ?';
         db.query(deleteUserQuery, [id], (userErr, userResult) => {
           if (userErr) {
@@ -207,7 +202,6 @@ updateValues=[userId]
               callback(userErr);
             }
           } else {
-            console.log('Deleted from users successfully');
             const deleteBattleQuery = 'DELETE FROM battle WHERE userIdF = ? OR userIdS = ?';
             db.query(deleteBattleQuery, [id, id], (battleErr, battleResult) => {
               if (battleErr) {

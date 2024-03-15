@@ -21,10 +21,9 @@ const SearchBar = () => {
         if (response) {
 
           const data = response; // Use response.data directly
-console.log('data' + JSON.stringify(data)+ data.data)
           navigate("/Search", { state: { searchResults: data } });
         } else {
-          console.log("Search failed:", response.data.err);
+          console.error("Search failed:", response.data.err);
         }
       } catch (error) {
         console.error("Axios Error:", error);

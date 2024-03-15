@@ -34,7 +34,7 @@ const Sidebar = ({notification}) => {
           setNotifications(notificationsMap)
 
         }} catch (err) {
-          console.log("error", err);
+          console.error("error", err);
         }}
     
     fetchData()
@@ -42,7 +42,6 @@ const Sidebar = ({notification}) => {
  
   useEffect(() => {
     if (notification) {
-      console.log("notifications :", notification)
      const updatedNotifications = setNotifications((prevNotifications) => [...prevNotifications, notification]);
      const newNotificationsData = {}
      newNotificationsData.id = id;

@@ -15,11 +15,9 @@ function ProfilePage() {
         if (res.data.Status === "Success") {
           setUserData(res.data.userData);
          
-        } else {
-          console.log("oh no")
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
   }, []);
 
   return (

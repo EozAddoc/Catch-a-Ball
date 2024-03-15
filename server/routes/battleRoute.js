@@ -31,9 +31,7 @@ router.get('/Battle/filter',authenticateToken, (req,res)=>{
 })
 router.get(`/inProgress/filter`,authenticateToken, (req, res) => {
     const searchTerm = req.query.q;
-  
-    console.log(searchTerm)
-  
+    
     if (!searchTerm ) {
       return res.status(400).json({ error: 'Missing required parameters' });
     }

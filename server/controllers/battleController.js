@@ -17,7 +17,6 @@ class battleController {
  
   static async battleEnding(req, res) {
     const battleId = req.body.battleId;
-    console.log("end battle id :", battleId);
 
     Battle.endBattle(battleId)
       .then(() => {
@@ -30,7 +29,6 @@ class battleController {
   }
   static async getInProgress(req, res) {
     const userId = req.body.userId;
-    console.log(userId);
 
     Battle.getInProgress(userId, (err) => {
       if (err) {

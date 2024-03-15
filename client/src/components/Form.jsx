@@ -29,7 +29,6 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
         setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
       }
     } }else if (text === "Send Email") {
-      console.log(event)
 sendEmail(event)
     }else if (text === "Reset Password") {
       
@@ -42,13 +41,12 @@ sendEmail(event)
         }
       }
     } else {
-      console.log("Error");
+      console.error("Error");
     }
   };
 
   const sendEmail = (e) => {
     e.preventDefault();
-    console.log(e)
     const url =process.env.REACT_APP_URL+"/api/send"
     Axios.post(url, {
       email: email
@@ -142,7 +140,6 @@ setErrorMessage("Passwords do not match")
   }
 
   const isValidEmail= () =>{
-    console.log(email)
     const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:gmail\.com|yahoo\.fr|hotmail\.com|wanadoo\.fr|outlook\.com)$/;  
     if(!(emailRegex.test(email))){
       setValidEmail(false)
@@ -239,7 +236,7 @@ setErrorMessage("Provide a valid email")
                         htmlFor="exampleFormControlInput3"
                         className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
                       >
-                         {text === "Sign Up" || text === "Reset Password" ? "New Password" : "Password"}
+                         {text === "Reset Password" ? "New Password" : "Password"}
                       </label>
                     )}
                   </div>

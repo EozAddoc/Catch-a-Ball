@@ -25,10 +25,10 @@ function SignupAvatar() {
         if (res.data.Status === "Success") {
           setUserId(res.data.userData.id)
         } else {
-          console.log(res.data.err)
+          console.error(res.data.err)
         }
       })
-      .catch(err => console.log("error", err))
+      .catch(err => console.error("error", err))
   }, [])
 
 

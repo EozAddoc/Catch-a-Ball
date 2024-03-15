@@ -110,12 +110,12 @@ const router = createBrowserRouter([
   },
   {
     path: "signup/pokemon",
-    element: <SignupPokemon />,
+    element: <PrivateRoutes element={<SignupPokemon />}></PrivateRoutes>,
     errorElement: <ErrorPage />
   },
   {
     path: "signup/avatar",
-    element: <SignupAvatar />,
+    element:<PrivateRoutes element={<SignupAvatar />}></PrivateRoutes> ,
     errorElement: <ErrorPage />
   }
   ,

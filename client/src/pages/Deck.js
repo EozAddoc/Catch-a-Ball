@@ -40,7 +40,7 @@ function Deck() {
           setAuth(false);
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
   }, []);
 
   useEffect(() => {
@@ -50,10 +50,10 @@ function Deck() {
         if (res.data.Status === "Success") {
           setDeckData(res.data.deckData);
         } else {
-          console.log("err");
+          console.error("err");
         }
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.error("error", err));
   }, []);
 
   useEffect(() => {

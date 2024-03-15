@@ -46,7 +46,6 @@ transporter.verify(function (error, success) {
 
 app.post("/api/send", (req, res) => {     
   const query = `SELECT * FROM users WHERE email = ?`;
-console.log(req.body.email)
 const mail = req.body.email
   db.query(query, [mail], (error, results) => {
     if (error) {
@@ -57,7 +56,6 @@ const mail = req.body.email
     if (results.length === 0) {
       return res.status(404).json({ error: 'Email not found' });
     }
-    console.log(results[0].id)
     const id =results[0].id
     const token = jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: '15m' });
     const resetLink = `${resetPassword}?me2eg8p=${token}`;

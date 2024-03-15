@@ -47,9 +47,7 @@ router.get('/deck', authenticateToken,async ( req,res)=>{
 
 router.get(`/api/filter`,authenticateToken, (req, res) => {
   const searchTerm = req.query.q;
-  console.log(searchTerm)
   const id = parseInt(req.query.userId)
-  console.log(id, typeof id)
   const filterField = req.query.field;
   if (!searchTerm || !filterField) {
     return res.status(400).json({ error: 'Missing required parameters' });

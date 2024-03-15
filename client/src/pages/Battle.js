@@ -57,7 +57,6 @@ function Battle() {
         }
         if (res && res.data) {
           const name = res.data[0].username;
-          console.log(name)
           setUserName(name)
         }
       } catch (error) {
@@ -121,6 +120,7 @@ function Battle() {
       const test = await getBattleInfo(initialTime);
       if (test) {
         await endBattle(test.id);
+        console.log(test.winner)
         winOrLose(test.winner);
         await levelUp(test.winner);
       }
@@ -131,7 +131,6 @@ function Battle() {
   };
 
   const winOrLose = (winner) => {
-    console.log(userName)
     try {
       if (myId === winner) {
         updateNotifications({ id: myId, notifications: `You won the battle against ${userName}` });

@@ -46,7 +46,7 @@ function Opponent() {
         setOpponentName(res.data[0].username);
       }
     })
-    .catch((err) => console.log("error", err));
+    .catch((err) => console.error("error", err));
 
   return (
       <div className="bg-townN bg-cover h-screen flex flex-col items-center justify-center">

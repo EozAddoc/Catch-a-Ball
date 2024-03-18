@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef }from 'react';
 import List from './Menu/List';
+import notificationIcon from './notificationIcon.png'
 import NotificationDropdown from './NotificationDropdown';
 import { getUser, getOtherUsersData, updateNotifications} from "../api/user";
 import { jwtDecode } from "jwt-decode";
@@ -61,6 +62,7 @@ const Sidebar = ({notification}) => {
     setNotifications(updatedNotifications)
   };
   const toggleNotifications = () => {
+    console.log(notificationIcon)
     setShowNotifications(!showNotifications);
   };
 
@@ -110,7 +112,7 @@ const Sidebar = ({notification}) => {
           }`}
       >
         <div className={`absolute ${notifications.length > 0  ? 'animate-bounce' : ''} top-2 right-2 p-2`}>        <img
-          src="notification2.png"
+          src={notificationIcon}
           alt="Notification icon"
           className="h-8 cursor-pointer"
           onClick={toggleNotifications}

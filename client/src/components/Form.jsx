@@ -20,14 +20,14 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
     if (text === "Login") {
       loginF(event);
     } else if (text === "Sign Up") {
-      if(validatePassword()){
+      if(isValidEmail()){
         if(verifyPassword()){
-          if(isValidEmail()){
+          if(validatePassword()){
             registerF(event);
+          }else{
+            setErrorMessage('password must be at least 7 characters with a number and a special character')
           }
-        }else{
-        setErrorMessage("Password must be at least 7 characters and contain at least one number and one special character.");
-      }
+        }
     } }else if (text === "Send Email") {
 sendEmail(event)
     }else if (text === "Reset Password") {
@@ -126,16 +126,19 @@ sendEmail(event)
   };
   const validatePassword = () => {
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
+    console.log(regex.test(password))
+    if(verifiedPassword !== password ){
+      setErrorMessage("Passwords do not match")
+          }
     return regex.test(password);
   };
 
   const verifyPassword=()=>{
-    if(verifiedPassword !== password){
-      setPasswordMatch(false)
+  
+    console.log(verifiedPassword,password,verifiedPassword === password )
+    if(verifiedPassword !== password ){
 setErrorMessage("Passwords do not match")
-    }else{
-      setPasswordMatch(true)
-        }
+    }
        return verifiedPassword === password 
   }
 

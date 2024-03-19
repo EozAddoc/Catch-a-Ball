@@ -52,7 +52,7 @@ function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHom
             avatar_api: avatar_api,
           });
         } catch (error) {
-          console.error('Error sending avatar:', error);
+return null;
         }
       } else {
         try {

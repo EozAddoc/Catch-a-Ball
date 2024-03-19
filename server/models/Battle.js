@@ -13,8 +13,8 @@ class Battle {
       winner INT,
       status VARCHAR(255) NOT NULL,
       time DATETIME,
-      FOREIGN KEY (userIdF) REFERENCES users(id),
-      FOREIGN KEY (userIdS) REFERENCES users(id)
+      FOREIGN KEY (userIdF) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (userIdS) REFERENCES users(id) ON DELETE CASCADE
     )`;
 
     try {

@@ -20,7 +20,7 @@ export const levelUp =  async (userId) => {
     const response =  await axios.patch(`${BASE_URL}/LevelUp`, { userId: userId });
     return response.data;
   } catch (error) {
-    console.error("Error leveling up:", error);
+return null;
   }
 };
 

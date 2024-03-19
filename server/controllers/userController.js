@@ -101,7 +101,8 @@ if (updatedUserData.password){
   }
 
   static async deleteUser(req, res) {
-    const id = req.body.id;
+    const id = req.userId;
+    console.log("del id ", id)
     User.delete(id,  (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal server error'});

@@ -10,7 +10,7 @@ class Deck {
           card_api VARCHAR(255) NOT NULL,
           Experience INT NOT NULL,
           Chosen_For_Battle BOOLEAN,
-          FOREIGN KEY (user_id) REFERENCES users(id)
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
           )
           
         `  

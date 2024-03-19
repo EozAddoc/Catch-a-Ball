@@ -125,8 +125,7 @@ function Battle() {
         await levelUp(test.winner);
       }
     } catch (error) {
-      console.error('Error finishing battle:', error);
-      // Handle the error (e.g., show an error message to the user)
+return null;
     }
   };
 

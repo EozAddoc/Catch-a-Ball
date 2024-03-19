@@ -87,17 +87,19 @@ updatedUserData.id = userData.id
     return window.confirm(message);
   };
   const handleDeleteConfirmation = () => {
+ 
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Are you sure you want to delete?")) {
+      console.log("useId del" , userData.id)
       axios
       .delete(process.env.REACT_APP_URL+'/Delete',{
-        id: userData.id
+        userId: userData.id
       } )
       .then((res) => {
       navigate("/")
       })
       .catch((err) => {
-        alert("unsuccesfull deletion")
+        alert("unsuccesfull deletion" , userData.id)
       });
       
     }

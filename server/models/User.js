@@ -186,41 +186,23 @@ updateValues=[userId]
   }
 
   static async delete(id, callback) {
-    const deleteDeckQuery = 'DELETE FROM deck WHERE user_id = ?';
-    db.query(deleteDeckQuery, [id], (deckErr, deckResult) => {
-      if (deckErr) {
-        console.error('Error while deleting from deck:', deckErr);
-        if (callback) {
-          callback(deckErr);
-        }
-      } else {
-        const deleteUserQuery = 'DELETE FROM users WHERE id = ?';
-        db.query(deleteUserQuery, [id], (userErr, userResult) => {
-          if (userErr) {
+    const deleteUserQuery = 'DELETE FROM users WHERE id = ?';
+    console.log(id, 'id in delete ')
+    db.query(deleteUserQuery, [id], (userErr, userResult) => {
+        if (userErr) {
             console.error('Error while deleting from users:', userErr);
             if (callback) {
-              callback(userErr);
+                callback(userErr);
             }
-          } else {
-            const deleteBattleQuery = 'DELETE FROM battle WHERE userIdF = ? OR userIdS = ?';
-            db.query(deleteBattleQuery, [id, id], (battleErr, battleResult) => {
-              if (battleErr) {
-                console.error('Error while deleting from battle:', battleErr);
-                if (callback) {
-                  callback(battleErr);
-                }
-              } else {
-                console.log('Deleted from battle successfully');
-                if (callback) {
-                  callback();
-                }
-              }
-            });
-          }
-        });
-      }
+        } else {
+            console.log('Deleted from users successfully');
+            if (callback) {
+                callback(null, userResult); // Return success
+            }
+        }
     });
-  }
+}
+
   
   
   

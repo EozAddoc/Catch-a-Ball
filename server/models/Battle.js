@@ -52,19 +52,33 @@ class Battle {
       throw err;
     }
   }
-  static async endBattle(id){
-    //update status to ended 
-    const query = 'UPDATE battle SET status = ? WHERE id = ?';
-  const values = ['ended', id];
-  
+  static async endBattle(id, card, userId) {
     try {
-      const result =  db.query(query, values);
-      return result;
+      // Start a transaction
+      db.beginTransaction();
+  
+      const updateBattleQuery = 'UPDATE battle SET status = ? WHERE id = ?';
+      const battleValues = ['ended', id];
+      db.query(updateBattleQuery, battleValues);
+  
+      const insertDeckQuery = 'INSERT INTO deck (user_id, card_api, Experience, Chosen_For_Battle) VALUES (?, ?, 0, FALSE)';
+      const deckValues = [userId, card];
+      db.query(insertDeckQuery, deckValues);
+  
+      const updateUsersQuery = 'UPDATE users SET battleLvl = battleLvl + 1 WHERE id = ?';
+      const userValues = [userId];
+      db.query(updateUsersQuery, userValues);
+  
+      db.commit();
+  
+      return true; 
     } catch (err) {
+      await db.rollback();
       console.error('Error while ending battles in progress:', err);
       throw err;
     }
   }
+  
 
 }
 

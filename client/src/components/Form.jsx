@@ -2,8 +2,9 @@ import React, { useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import withDarkMode from "./withDarkMode";
 
-const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc }) {
+const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc ,darkMode,toggleTheme}) {
   Axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -154,33 +155,36 @@ setErrorMessage("Provide a valid email")
   }
   return (
     <div>
+      <div className={`layout ${darkMode ? "dark" : ""}`}>
+
       <div className="min-h-screen md:flex">
-        <div className="md:w-1/2 relative bg-custom-pokeB hidden md:block">
+        <div className="md:w-1/2 relative dark:bg-custom-pokeB  bg-yellow-400 hidden md:block">
           <img
             src={imgSrc}
             alt={imgAlt}
             className="opacity-50 w-full h-full object-cover"
           />
         </div>
-        <div className="min-h-screen md:w-1/2 bg-custom-pokeB flex flex-col">
+        <div className="min-h-screen md:w-1/2 dark:bg-custom-pokeB bg-yellow-400 flex flex-col">
           <div className="md:h-1/2">
             <div className="m-20 flex items-center justify-center">
               <img src={logoSrc} alt={logoAlt} />
             </div>
           </div>
-          <div className="md:h-3/4 bg-custom-pokeB">
+          <div className="md:h-3/4 dark:bg-custom-pokeB bg-yellow-400 ">
             <div className="container max-w-md mx-auto xl:max-w-4xl flex rounded-lg overflow-hidden m-30 flex-grow justify-center">
               <div className="md:w-2/4 md:p-20  p-3">
                 <form method="post" action="#" onSubmit={handleSubmit}>
                   {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                   {(text !== "Send Email" && text !== "Reset Password") && (  <div
-                    className="relative mb-6  border-white border bg-transparent"
+                    className={`${darkMode ? "border-white" : "border-black"} relative mb-6  border bg-transparent`}
                     data-te-input-wrapper-init
                   >
                     <input
                       type="text"
-                      className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                      id="exampleFormControlInput1"
+                      className={`${darkMode ? "text-white" : "text-black"} font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0`}
+                      id="username"
+                      alt="username"
                       placeholder="Username"
                       onChange={(e) => {
                         setUsername(e.target.value);
@@ -189,7 +193,7 @@ setErrorMessage("Provide a valid email")
                     {username === "" && (
                       <label
                         htmlFor="exampleFormControlInput1"
-                        className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+                        className={`${darkMode ? "text-white" : "text-black"} absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none`}
                       >
                         Username
                       </label>
@@ -198,13 +202,14 @@ setErrorMessage("Provide a valid email")
                   )}
                   {(text === "Sign Up"|| text === "Send Email") && (
                     <div
-                      className="relative mb-6  border-white border"
+                      className={`${darkMode ? "border-white" : "border-black"} relative mb-6   border`}
                       data-te-input-wrapper-init
                     >
                       <input
                         type="email"
-                        className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                        className={`${darkMode ? "text-white" : "text-black"}  font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0`}
                         id="exampleFormControlInput2"
+                        alt="username"
                         placeholder="Email address"
                         onChange={(e) => {
                           setEmail(e.target.value);
@@ -212,8 +217,9 @@ setErrorMessage("Provide a valid email")
                       />
                       {email === "" && (
                         <label
-                          htmlFor="exampleFormControlInput2"
-                          className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                          htmlFor="email"
+                          alt="email"
+                          className={`${darkMode ? "text-white" : "text-black"} absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15]  transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                           >
                           Email
                         </label>
@@ -222,13 +228,14 @@ setErrorMessage("Provide a valid email")
                   )}
   { text !== "Send Email" && (
                   <div
-                    className="relative mb-6 border-white border "
+                    className={`${darkMode ? "border-white" : "border-black"} relative mb-6 border `}
                     data-te-input-wrapper-init
                   >
                     <input
                       type="password"
-                      className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                      id="exampleFormControlInput3"
+                      className={`${darkMode ? "text-white" : "text-black"}  font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0`}
+                      id="password"
+                      alt="enter password"
                       placeholder="password"
                       onChange={(e) => {
                         setPassword(e.target.value);
@@ -237,7 +244,7 @@ setErrorMessage("Provide a valid email")
                     {password === "" && (
                       <label
                         htmlFor="exampleFormControlInput3"
-                        className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className={`${darkMode ? "text-white" : "text-black"} absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15]  transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                       >
                          {text === "Reset Password" ? "New Password" : "Password"}
                       </label>
@@ -246,13 +253,14 @@ setErrorMessage("Provide a valid email")
   )}
     { (text !== "Send Email" && text !=="Login") && (
                   <div
-                    className="relative mb-6 border-white border "
+                    className={`${darkMode ? "border-white" : "border-black"} relative mb-6  border `}
                     data-te-input-wrapper-init
                   >
                     <input
                       type="password"
-                      className="text-white font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                      id="exampleFormControlInput3"
+                      className={`${darkMode ? "text-white" : "text-black"}   font-bold bg-blue-800 peer block min-h-[auto] w-full rounded bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0`}
+                      id="verifyPassword"
+                      alt="verify Password"
                       placeholder="verification password"
                       onChange={(e) => {
                         setVerifiedPassword(e.target.value);
@@ -261,7 +269,7 @@ setErrorMessage("Provide a valid email")
                     {password === "" && (
                       <label
                         htmlFor="exampleFormControlInput3"
-                        className="absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-white transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                        className={`${darkMode ? "text-white" : "text-black"} absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                       >
                         Confirm Password
                       </label>
@@ -295,7 +303,7 @@ setErrorMessage("Provide a valid email")
 
                   <button
                     type="submit"
-                    className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                    className="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal dark:text-white text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                     onClick={handleSubmit}
@@ -337,8 +345,9 @@ setErrorMessage("Provide a valid email")
           </div>
         </div>
       </div>
+      </div>
     </div>
   );
 };
 
-export default Form;
+export default withDarkMode(Form);

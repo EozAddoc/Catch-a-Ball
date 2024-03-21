@@ -6,8 +6,9 @@ import { useNavigate,  useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
 import axios from "axios";
+import withDarkMode from "../components/withDarkMode";
 
-function Opponent() {
+function Opponent({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const { userId } = useParams();
   const [myId, setMyId] = useState('');
@@ -49,7 +50,16 @@ function Opponent() {
     .catch((err) => console.error("error", err));
 
   return (
-      <div className="bg-townN bg-cover h-screen flex flex-col items-center justify-center">
+      <div className="dark:bg-townN  bg-town bg-cover h-screen flex flex-col items-center justify-center">
+         <div className="absolute top-0 right-0">
+            <button
+              className="toggle-button ml-2 p-4 h-20"
+              onClick={toggleTheme}
+              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
       <h1 className='text-yellow-500 italic font-light uppercase m-6'> Face {opponentName.length > 0 && opponentName}</h1>
         <div className='h-5/6 w-full flex'>
           <div className=' flex-1   flex justify-center items-center sm:ml-10 ml-0'>
@@ -73,4 +83,4 @@ function Opponent() {
   );
 }
 
-export default Opponent;
+export default withDarkMode(Opponent);

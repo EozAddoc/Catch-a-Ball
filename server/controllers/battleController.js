@@ -17,8 +17,11 @@ class battleController {
  
   static async battleEnding(req, res) {
     const battleId = req.body.battleId;
+    const pokeCard = req.body.pokeCard
+    const userId = req.body.winnerId
+    console.log(pokeCard)
 
-    Battle.endBattle(battleId)
+    Battle.endBattle(battleId, pokeCard,userId)
       .then(() => {
         res.status(200).json({ message: "Battle ended successfully" });
       })

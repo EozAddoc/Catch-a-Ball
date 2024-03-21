@@ -12,8 +12,14 @@ export const getUser = () => {
 export const updateUser = (userData) => {
   return axios.post(`${BASE_URL}/Profile`, { updatedUserData: userData });
 };
-export const updateNotifications = (newNotifications) => {
-  return axios.post(`${BASE_URL}/Notifications`, {newNotificationData: newNotifications });
+export const updateNotifications = async(newNotifications) => {
+  try {
+    const response =  await axios.post(`${BASE_URL}/Notifications`, {newNotificationData: newNotifications });
+    return response.data;
+    console.log("offb")
+  } catch (error) {
+return null;
+  }
 };
 export const levelUp =  async (userId) => {
   try {

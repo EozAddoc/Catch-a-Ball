@@ -7,7 +7,7 @@ const authenticateToken = require('../middleware/authenticateToken');
 const request = require('supertest');
 const db = require('../db');
 
-//SIGNUP USER 
+//CREATE
 router.post("/signup", [
   body('email').notEmpty(),
   body('username').notEmpty(),
@@ -15,7 +15,7 @@ router.post("/signup", [
 ], userController.newUser);
 
 
-// ADD AVATAR API
+// UPDATE
 router.post("/signup/avatar",authenticateToken, userController.updateAvatar);
 
 
@@ -23,18 +23,17 @@ router.post("/signup/avatar",authenticateToken, userController.updateAvatar);
 router.post("/login", userController.loginUser);
 
 
-//Profile user info CREATE
+//READ
 router.get('/suggestedPlayers',authenticateToken, userController.filterUsers)
 
 
 //UPDATE
 router.post('/Notifications',authenticateToken, userController.updateNotifications )
 router.post("/Profile",authenticateToken, userController.updateUserData)
-router.patch('/LevelUp',authenticateToken,  userController.levelUpUser)
 
 router.delete('/Delete',authenticateToken, userController.deleteUser )
 
-//User info 
+//READ 
 router.get('/user', authenticateToken,async ( req,res)=>{
   try {
   const userId = req.userId;
@@ -54,6 +53,7 @@ router.get('/user', authenticateToken,async ( req,res)=>{
 
 })
 
+//READ
 router.get(`/user/filters`, authenticateToken, (req, res) => {
   const { field, value } = req.query;
   if (!field || !value) {
@@ -73,6 +73,8 @@ router.get(`/user/filters`, authenticateToken, (req, res) => {
     res.json(results);
   });
 });
+
+//READ
 router.get(`/api/search`, (req, res) => {
 
   const searchTerm = req.query.q;

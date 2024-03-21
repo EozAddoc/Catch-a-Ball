@@ -1,7 +1,8 @@
 import Form from "../components/Form";
 import React from "react";
+import withDarkMode from "../components/withDarkMode";
 
-function ResetPassword() {
+function ResetPassword({ darkMode, toggleTheme }) {
  
   return (
     < >

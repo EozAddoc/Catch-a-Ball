@@ -24,6 +24,7 @@ import ProfilePage from './pages/ProfilePage';
 import MyCarousel from './pages/MyCarousel';
 import LoadingPage from './LoadingPage';
 import PrivateRoutes from './PrivateRoutes';
+import ToggleMode from './components/ToggleButton'
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
@@ -139,7 +140,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-    <RouterProvider router={router} />
+
+   <RouterProvider router={router} /> 
+ 
   // </React.StrictMode>
 );
 

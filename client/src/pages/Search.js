@@ -4,8 +4,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
+import withDarkMode from "../components/withDarkMode";
 
-function Search() {
+function Search({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const location = useLocation();
   const searchResults = location.state ? location.state.searchResults : [];
@@ -47,7 +48,16 @@ function Search() {
 
   return (
     <div className="bg-blue-950">
-      <div className="bg-townNN bg-cover h-screen flex flex-col items-center justify-center">
+      <div className="dark:bg-townNN bg-townDN bg-cover h-screen flex flex-col items-center justify-center">
+      <div className="absolute top-0 right-0">
+            <button
+              className="toggle-button ml-2 p-4 h-20"
+              onClick={toggleTheme}
+              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
         <div className="search w-1/2 mb-8 fixed top-20 mr-5">
           <Searchbar searchResults={searchResults} />
         </div>
@@ -120,4 +130,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default withDarkMode(Search);

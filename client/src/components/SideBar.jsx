@@ -5,8 +5,9 @@ import NotificationDropdown from './NotificationDropdown';
 import { getUser, getOtherUsersData, updateNotifications} from "../api/user";
 import { jwtDecode } from "jwt-decode";
 import jsCookie from "js-cookie"
+import withDarkMode from './withDarkMode';
 
-const Sidebar = ({notification}) => {
+const Sidebar = ({notification,darkMode,toggleTheme}) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -128,4 +129,4 @@ const Sidebar = ({notification}) => {
   );
 };
 
-export default Sidebar;
+export default withDarkMode(Sidebar);

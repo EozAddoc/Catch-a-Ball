@@ -14,10 +14,10 @@ export const getBattle = async (initialTime) => {
     return null;
   }
 }
-  export const endBattle = async (battleId) => {
-
+  export const endBattle = async (battleId,newCard,winnerId) => {
+console.log(battleId,newCard,winnerId)
     try {
-      const response = await axios.patch(`${BASE_URL}/End`, { battleId: battleId });
+      const response = await axios.patch(`${BASE_URL}/End`, { battleId: battleId ,pokeCard:newCard, winnerId:winnerId});
       return response.data;
     } catch (error) {
       console.error("Error ending battle:", error);

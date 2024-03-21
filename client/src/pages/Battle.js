@@ -7,8 +7,9 @@ import jsCookie from "js-cookie";
 import { getBattle, endBattle } from "../api/battle";
 import { levelUp } from "../api/user";
 import { getOtherUsersData, updateNotifications } from "../api/user";
+import withDarkMode from "../components/withDarkMode";
 
-function Battle() {
+function Battle({ darkMode, toggleTheme }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const { userId, time: initialTime } = useParams();
   const [time, setTime] = useState(0);
@@ -113,16 +114,33 @@ function Battle() {
     }
     setTime(remainingTime > 0 ? remainingTime : 0);
   };
-
+  const getRandomCardId = async (battleId) => {
+    const pageSize = 1; // Fetch only one card
+    const page = Math.ceil(Math.random() * 100); // Random page number (assuming 100 pages exist)
+    
+    // Construct the URL with query parameters
+    const url = `https://api.pokemontcg.io/v2/cards?page=${page}&pageSize=${pageSize}`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.data && data.data.length > 0) {
+        endBattle(battleId, data.data[0].id,winner);
+      } else {
+        throw new Error('No cards found.');
+      }
+    } catch (error) {
+      console.error('Error fetching random card:', error);
+      return null;
+    }
+  };
 
   const finishBattle = async () => {
     try {
       const test = await getBattleInfo(initialTime);
       if (test) {
-        await endBattle(test.id);
-        console.log(test.winner)
+       await getRandomCardId(test.id)
         winOrLose(test.winner);
-        await levelUp(test.winner);
       }
     } catch (error) {
 return null;
@@ -183,7 +201,7 @@ return null;
 
 
   return (
-      <div className="bg-routeN bg-cover h-screen flex flex-col items-center justify-center">
+      <div className="dark:bg-arenaN bg-arena bg-cover h-screen flex flex-col items-center justify-center">
         <div>
           <div className=" ">
             <div>
@@ -241,5 +259,5 @@ return null;
   );
 }
 
-export default Battle;
+export default withDarkMode(Battle);
 

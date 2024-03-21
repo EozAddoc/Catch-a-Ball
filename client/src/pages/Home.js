@@ -7,8 +7,8 @@ import SearchBar from "../components/SearchBar";
 import Sidebar from "../components/SideBar";
 import Menu from "../components/HomepageCardMenu/Menu";
 import MissionsHomepage from "../components/MissionsHomepage";
-
-function Home() {
+import withDarkMode from "../components/withDarkMode";
+function Home({darkMode,toggleTheme}) {
   const navigate = useNavigate();
 
   const [auth, setAuth] = useState(false);
@@ -79,12 +79,17 @@ function Home() {
 
   useEffect(() => {
     if (!loadingApiCall) {
-      deckData.forEach(async (deckItem) => {
-        const data = await ApiCall(deckItem.card_api);
-        setDeckInfo((value) => [...value, data]);
-        const avatar = setAvatar(await ApiCall(userData.avatar_api));
-      });
+      const fetchData = async () => {
+        for (let i = 0; i < 3 && i < deckData.length; i++) {
+          const data = await ApiCall(deckData[i].card_api);
+          setDeckInfo((value) => [...value, data]);
+        }
+        const avatar = await ApiCall(userData.avatar_api);
+        setAvatar(avatar);
+      }
+      fetchData()
     }
+
   }, [deckData, userData, loadingApiCall]);
   
 
@@ -92,13 +97,21 @@ function Home() {
     case "team":
       return (
         <div>
-          {auth ? (
-            <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+            <div className="h-full md:h-screen w-full overflow-x-hidden dark:bg-homeN bg-home bg-cover pb-[300px]">
               {loadingApiCall ? (
                 <LoadingPage />
               ) : (
                 <>
                   <div className="search top-24 p-5 flex justify-center items-center">
+                  <div className="absolute top-0 right-0">
+            <button
+              className="toggle-button ml-2 p-4 h-20"
+              onClick={toggleTheme}
+              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
                     <div className="w-3/5">
                       <SearchBar />
                     </div>
@@ -125,17 +138,16 @@ function Home() {
                 </>
               )}
             </div>
-          ) : (
-            navigate("/")
-          )}
+          ) 
+          )
         </div>
       );
 
     case "trainer":
       return (
         <div>
-          {auth ? (
-            <div className="h-screen md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+        
+            <div className="h-screen md:h-screen w-full overflow-x-hidden dark:bg-homeN bg-home bg-cover pb-[300px]">
               <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   <SearchBar />
@@ -154,17 +166,15 @@ function Home() {
                 <Sidebar />
               </div>
             </div>
-          ) : (
-            navigate("/")
-          )}
+          ) 
         </div>
       );
 
     case "missions":
       return (
         <div>
-          {auth ? (
-            <div className="h-screen md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
+        
+            <div className="h-screen md:h-screen w-full overflow-x-hidden dark:bg-homeN bg-home bg-cover pb-[300px]">
               <div className="search top-24 p-5 flex justify-center items-center">
                 <div className="w-3/5">
                   <SearchBar />
@@ -180,16 +190,14 @@ function Home() {
                 <Sidebar />
               </div>
             </div>
-          ) : (
-            navigate("/")
-          )}
+          ) 
         </div>
       );
 
     default:
       return (
         <div>
-          {auth ? (
+        
             <div className="h-full md:h-screen w-full overflow-x-hidden bg-homeN bg-cover pb-[300px]">
               {loadingApiCall ? (
                 <LoadingPage />
@@ -222,12 +230,10 @@ function Home() {
                 </>
               )}
             </div>
-          ) : (
-            navigate("/")
-          )}
+          ) 
         </div>
       );
   }
 }
 
-export default Home;
+export default withDarkMode(Home);

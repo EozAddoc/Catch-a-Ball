@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import pokemon from "pokemontcgsdk";
 import Sidebar from "../components/SideBar";
+import withDarkMode from "../components/withDarkMode";
 
 async function ApiCall(id) {
   try {
@@ -18,7 +19,7 @@ async function ApiCall(id) {
   }
 }
 
-function Deck() {
+function Deck({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(false);
   const [avatar, setAvatar] = useState("");
@@ -54,7 +55,8 @@ function Deck() {
         }
       })
       .catch((err) => console.error("error", err));
-  }, []);
+  }
+  , []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,8 +77,17 @@ function Deck() {
 
   return (
     <div>
-      {auth ? (
-        <div class="h-screen bg-homeN bg-cover opacity-100">
+     
+        <div class="min-h-screen dark:bg-homeN  bg-home bg-cover opacity-100">
+           <div className="absolute top-0 right-0">
+            <button
+              className="toggle-button ml-2 p-4 h-20"
+              onClick={toggleTheme}
+              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
           <div className="text-center w-full text-yellow-500 p-5">
             <h1> Current Battle level : {battleLvl} </h1>
           </div>
@@ -103,11 +114,9 @@ function Deck() {
             <Sidebar />
           </div>
         </div>
-      ) : (
-        navigate("/")
-      )}
+      ) 
     </div>
   );
 }
 
-export default Deck;
+export default withDarkMode(Deck);

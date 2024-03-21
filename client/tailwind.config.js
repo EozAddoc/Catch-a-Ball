@@ -3,6 +3,7 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
   content: ["./src/**/*.{html,js,jsx}"],
+  darkMode:'class',
   theme: {
     extend: {
       fontFamily: {
@@ -22,16 +23,25 @@ module.exports = withMT({
         menu: "menu 0.5s ease-in-out"
       },
       backgroundImage: {
-        'night': "url('/public/dark/night.jpeg')",
+        'landing': "url('/public/dark/night.jpeg')",
+        'day':"url('/public/light/day2.webp')",
         'castleN': "url('/public/dark/tot.webp')",
         'waterN': "url('/public/dark/wat.jpg')",
         'shopN': "url('/public/dark/shop.jpg')",
-        'routeN': "url('/public/dark/route.jpg')",
+        'arenaN': "url('/public/dark/route.jpg')",
+        'arena': "url('/public/light/ArenaD.jpg')",
         'homeN': "url('/public/dark/try.jpg')",
+        'home': "url('/public/light/roadD1.jpg')",
         'townYN': "url('/public/dark/townY.jpg')",
+        'townY': "url('/public/light/fullCastle.webp')",
         'townNN': "url('/public/dark/jh.jpeg')",
+        'townDN': "url('/public/light/castleLandscape.webp')",
         'townN': "url('/public/dark/tt.jpg')",
-        'profileN': "url('/public/dark/r2.jpg')",
+        'town': "url('/public/light/castle.jpg')",
+        'homeTownN': "url('/public/dark/homeTownN.jpg')",
+        'homeTown': "url('/public/light/town.jpg')",
+        'profileN': "url('/public/dark/cave .jpg')",
+        'profile': "url('/public/light/caveD.jpg')",
         'deckN': "url('/public/dark/deckR.jpg')",
         'search': "url('/public/dark/search2.png')"
       },

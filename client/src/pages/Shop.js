@@ -1,7 +1,8 @@
 import React from 'react';
 import Sidebar from '../components/SideBar'
+import withDarkMode from "../components/withDarkMode";
 
-function Shop() {
+function Shop({ darkMode, toggleTheme }) {
   return (
     <div className='bg-blue-700'>
     <div className="bg-shopN bg-cover h-screen flex flex-col items-center justify-center">

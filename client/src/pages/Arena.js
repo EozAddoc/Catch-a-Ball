@@ -1,6 +1,7 @@
 import Sidebar from "../components/SideBar";
 import Searchbar from "../components/SearchBar";
 import React, { useState, useEffect } from "react";
+import withDarkMode from "../components/withDarkMode";
 import { useNavigate } from "react-router-dom";
 import {
   getUser,
@@ -11,7 +12,7 @@ import {
 import axios from "axios";
 
 
-function Arena() {
+function Arena({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const [userData, setUserData] = useState("");
   const [inProgress, setInProgress] = useState([]);
@@ -162,7 +163,16 @@ function Arena() {
   };
 
   return (
-    <div className="h-full w-full lg:h-screen bg-townYN bg-cover flex flex-col items-center justify-center">
+    <div className="h-full w-full lg:h-screen dark:bg-townYN bg-townY bg-cover flex flex-col items-center justify-center">
+       <div className="absolute top-0 right-0">
+            <button
+              className="toggle-button ml-2 p-4 h-20"
+              onClick={toggleTheme}
+              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? "🌞" : "🌙"}
+            </button>
+          </div>
       <div className="search w-1/2 mb-8 fixed top-20 mr-5">
         <Searchbar />
       </div>
@@ -216,4 +226,4 @@ function Arena() {
   );
 }
 
-export default Arena;
+export default withDarkMode(Arena);

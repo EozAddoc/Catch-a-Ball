@@ -46,7 +46,7 @@ const SearchBar = () => {
 
   return (
     <form onSubmit={handleSearch}>
-      <label htmlFor="default-search" className="mb-2 text-sm font-medium text-white sr-only dark:text-white">
+      <label htmlFor="default-search" className="mb-2 text-sm font-medium dark:text-white  text-black sr-only dark:text-white">
         Search
       </label>
 

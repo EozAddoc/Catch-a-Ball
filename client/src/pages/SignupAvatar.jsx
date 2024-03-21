@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 
 const queryClient = new QueryClient();
 
-function SignupAvatar() {
+function SignupAvatar({ darkMode, toggleTheme }) {
   const apiIds = [
     "swsh10-189", // Zisu
     "swsh7-202", // Raihan

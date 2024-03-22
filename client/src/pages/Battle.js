@@ -229,7 +229,7 @@ function Battle({ darkMode, toggleTheme }) {
               <img
                 key={`heart_${index}`}
                 src={heart}
-                alt={index === 4 ? "greyheart" : "redheart"} // Set alt text accordingly
+                alt={index === 4 ? "grey heart" : "red heart"} // Set alt text accordingly
                 className="h-1/2 m-3"
               />
             ))}
@@ -248,7 +248,7 @@ function Battle({ darkMode, toggleTheme }) {
               <img
                 key={`heart_${index}`}
                 src={heart}
-                alt={index === 4 ? "greyheart" : "redheart"} // Set alt text accordingly
+                alt={index === 4 ? "grey heart" : "red heart"} // Set alt text accordingly
                 className="h-1/3 m-3"
               />
             ))}

@@ -63,11 +63,12 @@ const SearchBar = () => {
 
         <button
           type="submit"
+          alt="submit"
           className="text-white absolute ml-6 opacity-100"
         >
           <img
             src="se.png"
-            alt="search_btn"
+            alt="search button"
             className="ml-6 w-full h-auto"
           />
           Search 

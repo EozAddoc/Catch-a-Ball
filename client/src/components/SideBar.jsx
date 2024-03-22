@@ -94,6 +94,7 @@ const Sidebar = ({notification,darkMode,toggleTheme}) => {
           onClick={() => setShowSidebar(!showSidebar)}
           className="fixed z-30 flex items-center cursor-pointer left-10 top-6"
           fill="#FFFFFF"
+          alt="open sidebar"
           key="menu-icon"
           viewBox="0 0 100 80"
           width="40"

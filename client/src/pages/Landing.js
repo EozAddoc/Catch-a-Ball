@@ -29,7 +29,7 @@ function Landing({ darkMode, toggleTheme }) {
             <img
               src="pok3.png"
               className="w-full lg:w-128 lg:mt-[-100px] md:mt-[-100px] sm:mt-[-100px] "
-              alt="three pokemons"
+              alt="three Pokémons"
             />
             <div className="flex flex-col md:flex-row items-center justify-center gap-x-96 gap-y-6 mt-10">
               <Link to="/login">
@@ -37,7 +37,7 @@ function Landing({ darkMode, toggleTheme }) {
                   <img
                     src="lo.png"
                     className="h-20 md:transform md:rotate-12 md:transform-origin-0"
-                    alt="left button"
+                    alt="login button"
                   />
                 </button>
               </Link>
@@ -48,7 +48,7 @@ function Landing({ darkMode, toggleTheme }) {
                   <img
                     src="reg.png"
                     className="h-20 md:transform md:-rotate-12 md:transform-origin-0"
-                    alt="right button"
+                    alt="register button"
                   />
                 </button>
               </Link>

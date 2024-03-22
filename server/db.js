@@ -4,9 +4,9 @@ require('dotenv').config();
 
 
 const db = mysql.createConnection({
-  user:'root',
-  password:"rootpw",
-  database:"CatchABall",
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   host:"db",
   port: '3306',
   multipleStatements: true

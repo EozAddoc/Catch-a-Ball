@@ -25,18 +25,18 @@ function Landing({ darkMode, toggleTheme }) {
             alt="Catch a Ball"
           />
      
-          <div className="relative flex flex-col justify-end">
+          <div className="flex flex-col justify-end">
             <img
               src="pok3.png"
               className="w-full lg:w-128 lg:mt-[-100px] md:mt-[-100px] sm:mt-[-100px] "
               alt="three pokemons"
             />
-            <div className="mt-0">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-x-96 gap-y-6 mt-10">
               <Link to="/login">
-                <button className="bg-pokeB text-white font-bold py-2 lg:px-4 md:px-2 sm:px-2 rounded ">
+                <button className="bg-pokeB text-white font-bold py-2 lg:px-4 md:px-2 sm:px-2">
                   <img
                     src="lo.png"
-                    className="w-auto h-5 lg:h-20  md:h-10  absolute right-0 lg:right-[-102.67px] top-[403px] transform rotate-12 transform-origin-0 border-1  border-none rounded-full"
+                    className="h-20 md:transform md:rotate-12 md:transform-origin-0"
                     alt="left button"
                   />
                 </button>
@@ -44,10 +44,10 @@ function Landing({ darkMode, toggleTheme }) {
             
             
               <Link to="/signup">
-                <button className="bg-pokeB text-white font-bold py-2 lg:px-4 md:px-2 sm:px-2 rounded mt-4">
+                <button className="bg-pokeB text-white font-bold py-2 lg:px-4 md:px-2 sm:px-2">
                   <img
                     src="reg.png"
-                    className="w-auto h-5 lg:h-20  sm:h-10 absolute left-0 lg:left-[-102.67px] top-[403px] transform -rotate-12 transform-origin-0 border-1 border-none rounded-full"
+                    className="h-20 md:transform md:-rotate-12 md:transform-origin-0"
                     alt="right button"
                   />
                 </button>

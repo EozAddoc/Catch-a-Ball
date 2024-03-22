@@ -12,7 +12,7 @@ async function ApiCall(id) {
     return card;
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return null; 
+      return null;
     } else {
       throw error;
     }
@@ -55,8 +55,7 @@ function Deck({ darkMode, toggleTheme }) {
         }
       })
       .catch((err) => console.error("error", err));
-  }
-  , []);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,44 +76,50 @@ function Deck({ darkMode, toggleTheme }) {
 
   return (
     <div>
-     
-        <div class="min-h-screen dark:bg-homeN  bg-home bg-cover opacity-100">
-           <div className="absolute top-0 right-0">
-            <button
-              className="toggle-button ml-2 p-4 h-20"
-              onClick={toggleTheme}
-              aria-label={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            >
-              {darkMode ? "🌞" : "🌙"}
-            </button>
-          </div>
-          <div className="text-center w-full text-yellow-500 p-5">
-            <h1> Current Battle level : {battleLvl} </h1>
-          </div>
-          <div className="px-5 pt-5">
-            <div className="grid grid-cols-2 md:grid-cols-3 place-items-center" data-cy="deck">
-              {deckInfo.length > 0 &&
-                deckInfo.map((card, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      className="hover:scale-150 transition w-30 p-2 md:w-64"
-                      src={card.images?.large}
-                      alt={card.name}
-                    />
-                    {deckData[index].Chosen_For_Battle && (
-                      <img
-                        src="success.png"
-                        className="absolute bottom-0 right-0 h-1/6"
-                        alt="chosen for battle"
-                      />
-                    )}
-                  </div>
-                ))}
-            </div>
-            <Sidebar />
-          </div>
+      <div class="min-h-screen dark:bg-homeN bg-home bg-cover opacity-100">
+        <div className="absolute top-0 right-0">
+          <button
+            className="toggle-button ml-2 p-4 h-20"
+            onClick={toggleTheme}
+            aria-label={
+              darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"
+            }
+          >
+            {darkMode ? "🌞" : "🌙"}
+          </button>
         </div>
-      ) 
+        <div className="text-center w-full text-yellow-500 p-5">
+          <h1> Current Battle level : {battleLvl} </h1>
+        </div>
+        <div className="px-5 pt-5">
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 place-items-center"
+            data-cy="deck"
+          >
+            {deckInfo.length &&
+              deckInfo.map((card, index) => (
+                <div key={index} className="relative">
+                  <img
+                    className="hover:scale-150 transition w-30 p-2 md:w-64"
+                    src={card.images?.large}
+                    alt={card.name}
+                  />
+
+                  {deckData[index].Chosen_For_Battle ? (
+                    <img
+                      src="success.png"
+                      className="absolute bottom-0 right-0 h-1/6"
+                      alt="chosen for battle"
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              ))}
+          </div>
+          <Sidebar />
+        </div>
+      </div>
     </div>
   );
 }

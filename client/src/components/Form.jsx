@@ -127,7 +127,6 @@ sendEmail(event)
   };
   const validatePassword = () => {
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,}$/;
-    console.log(regex.test(password))
     if(verifiedPassword !== password ){
       setErrorMessage("Passwords do not match")
           }
@@ -136,7 +135,6 @@ sendEmail(event)
 
   const verifyPassword=()=>{
   
-    console.log(verifiedPassword,password,verifiedPassword === password )
     if(verifiedPassword !== password ){
 setErrorMessage("Passwords do not match")
     }

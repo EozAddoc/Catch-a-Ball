@@ -138,8 +138,6 @@ function Home({darkMode,toggleTheme}) {
                 </>
               )}
             </div>
-          ) 
-          )
         </div>
       );
 
@@ -166,7 +164,6 @@ function Home({darkMode,toggleTheme}) {
                 <Sidebar />
               </div>
             </div>
-          ) 
         </div>
       );
 
@@ -190,7 +187,6 @@ function Home({darkMode,toggleTheme}) {
                 <Sidebar />
               </div>
             </div>
-          ) 
         </div>
       );
 
@@ -230,7 +226,6 @@ function Home({darkMode,toggleTheme}) {
                 </>
               )}
             </div>
-          ) 
         </div>
       );
   }

@@ -50,7 +50,7 @@ function Opponent({ darkMode, toggleTheme }) {
     .catch((err) => console.error("error", err));
 
   return (
-      <div className="dark:bg-townN  bg-town bg-cover h-screen flex flex-col items-center justify-center">
+      <div className="dark:bg-townN bg-town bg-cover md:h-screen h-full flex flex-col items-center justify-center">
          <div className="absolute top-0 right-0">
             <button
               className="toggle-button ml-2 p-4 h-20"
@@ -61,18 +61,18 @@ function Opponent({ darkMode, toggleTheme }) {
             </button>
           </div>
       <h1 className='text-yellow-500 italic font-light uppercase m-6'> Face {opponentName.length > 0 && opponentName}</h1>
-        <div className='h-5/6 w-full flex'>
-          <div className=' flex-1   flex justify-center items-center sm:ml-10 ml-0'>
-            <div className=' h-1/3 w-3/5 sm:h-2/3 sm:w-2/5   sm:ml-10 ml-0'>
+        <div className='h-3/6 md:h-full w-full flex-col md:flex-row flex'>
+          <div className='flex justify-center items-center sm:ml-10 ml-0'>
+            <div className='h-2/4 w-4/5 md:h-2/4 lg:h-3/4 lg:w-2/4 sm:ml-10 ml-0'>
               <ProfileCard id={myId}/>
-              <div className='bg-red-500 sm:p-3 sm:m-10  p-1 m-2 rounded-full sm:h-1/6 h-1/4 text-center font-bold '><button onClick={() => Battle(userId)}><h2>Battle</h2></button></div>
+              <div className='bg-red-500 sm:p-3 sm:m-10 p-1 m-2 rounded-full sm:h-1/6 h-1/4 text-center font-bold'><button onClick={() => Battle(userId)}><h1>Battle</h1></button></div>
 
             </div>
           </div>
-          <div className=' flex-1 flex justify-center items-center sm:mr-10 mr-0 '>
-            <div className='h-1/3 w-4/5 sm:h-2/3 sm:w-2/5 sm:mr-10 mr-0'>
+          <div className='flex justify-center items-center sm:mr-10 mr-0 '>
+            <div className='h-2/4 w-4/5 md:h-2/4 lg:h-3/4 lg:w-2/4 sm:mr-10 mr-0'>
               <ProfileCard id={userId} />
-              <div className='bg-yellow-500 sm:p-3 sm:m-10  p-1 m-2 rounded-full sm:h-1/6 h-1/4 text-center font-bold'><h1>Chat</h1></div>
+              <div className='bg-yellow-500 sm:p-3 sm:m-10 p-1 m-2 rounded-full sm:h-1/6 h-1/4 text-center font-bold'><h1>Chat</h1></div>
             </div>
           </div>
 

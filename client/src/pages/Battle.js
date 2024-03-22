@@ -216,7 +216,7 @@ return null;
                 Time remaining :{formatTime(time)}
               </h1>
             </div>
-            <div className="absolute bottom-28 left-5 sm:left-52 sm:bottom-28  w-1/2 h-1/3 sm:h-2/3 sm:w-1/4 ">
+            <div className="absolute bottom-28 left-5 sm:left-42 sm:bottom-28 w-3/4 h-1/3 sm:h-2/3 sm:w-2/4 lg:w-1/4">
               <ProfileCard id={myId} />
             </div>
             <div className="hidden lg:flex heart w-1/3 h-1/5 absolute bottom-16 left-1/2  ">
@@ -235,7 +235,7 @@ return null;
             ></div>
           </div>
           <div>
-            <div className="absolute top-20 right-10 sm:right-48 sm:bottom-80 h-1/3 w-1/2 sm:h-1/2 sm:w-1/5  ">/
+            <div className="absolute top-20 right-10 sm:right-58 sm:bottom-80 h-1/3 w-3/4 sm:h-1/2 sm:w-2/5 lg:w-1/4">
               <ProfileCard id={userId} />
             </div>
             <div className="hidden lg:flex   heart  w-1/3 h-1/6 absolute bottom-80 right-96   ">

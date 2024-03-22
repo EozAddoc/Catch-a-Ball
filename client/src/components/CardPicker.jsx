@@ -22,7 +22,7 @@ function CardPicker({ cardImg, nameAlt, api_Id, onClick, hidden }) {
     };
 
     return (
-        <img alt={name} className="max-w-3 p-2 xl:max-w-xs" src={card} onClick={hidden? handleClickHidden : handleClickRevealed} />
+        <img alt={name} className="p-2 xl:max-w-xs" src={card} onClick={hidden? handleClickHidden : handleClickRevealed} />
     );
 };
 

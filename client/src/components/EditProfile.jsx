@@ -106,7 +106,7 @@ updatedUserData.id = userData.id
   };
 
   return (
-    <div className={!isEditMode ? "shadow-md w-1/2 h-3/5 sm:w-1/3 sm:h-5/6" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
+    <div className={!isEditMode ? "shadow-md w-3/4 h-4/5 sm:w-2/3 sm:h-5/6 lg:w-1/3" : `bg-gray-300 rounded-lg  flex flex-col sm:flex-row relative mx-auto sm:h-5/6 w-11/12 sm:w-8/12 `}>
       {!isEditMode && <ProfileCard id={id.id} />}
 
       {!isEditMode && (
@@ -198,7 +198,7 @@ updatedUserData.id = userData.id
                   />
                 </div>
               </div>
-              <div className="absolute m-4 bottom-4 right-0 sm:bottom-8 sm:right-0">
+              <div className="m-4">
                 <button
                   onClick={updateUser}
                   className="bg-blue-500 text-white px-4 py-2 sm:px-4 rounded-full"

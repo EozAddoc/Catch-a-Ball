@@ -105,7 +105,7 @@ function Deck({ darkMode, toggleTheme }) {
                     alt={card.name}
                   />
 
-                  {deckData[index].Chosen_For_Battle ? (
+                  {/* {deckData[index].Chosen_For_Battle ? (
                     <img
                       src="success.png"
                       className="absolute bottom-0 right-0 h-1/6"
@@ -113,7 +113,7 @@ function Deck({ darkMode, toggleTheme }) {
                     />
                   ) : (
                     <div></div>
-                  )}
+                  )} */}
                 </div>
               ))}
           </div>

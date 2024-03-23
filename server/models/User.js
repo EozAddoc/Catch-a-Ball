@@ -208,6 +208,7 @@ updateValues=[userId]
   
 
   static async updateUser(userId, updatedUserData, callback) {
+    console.log(userId, updatedUserData)
     try {
       const updatePromises = Object.keys(updatedUserData).map((key) => {
         return new Promise((resolve, reject) => {

@@ -33,12 +33,14 @@ const Form = function ({ text, imgSrc, imgAlt, logoAlt, logoSrc ,darkMode,toggle
 sendEmail(event)
     }else if (text === "Reset Password") {
       
-      if(validatePassword){
-        if(verifyPassword){
+      if(verifyPassword()){
+        if(validatePassword()){
           const searchParams = new URLSearchParams(window.location.search);
           const token = searchParams.get('me2eg8p');
           const decodedTokenId = jwtDecode(token).id;
           resetPassword(decodedTokenId)
+        }else{
+          setErrorMessage('password must be at least 7 characters with a number and a special character')
         }
       }
     } else {
@@ -69,11 +71,12 @@ sendEmail(event)
       password: password
     };
     const url =process.env.REACT_APP_URL+"/Profile"
+    console.log(updatedUserData,url)
     Axios.post(url, {
       updatedUserData: updatedUserData,
     })
       .then((resp) => {
-        alert("password updated successfully")
+        alert("password updated successfully",resp)
        navigate("/login")
       })
       .catch((error) => {

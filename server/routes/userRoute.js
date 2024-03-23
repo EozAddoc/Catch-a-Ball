@@ -29,7 +29,7 @@ router.get('/suggestedPlayers',authenticateToken, userController.filterUsers)
 
 //UPDATE
 router.post('/Notifications',authenticateToken, userController.updateNotifications )
-router.post("/Profile",authenticateToken, userController.updateUserData)
+router.post("/Profile", userController.updateUserData)
 
 router.delete('/Delete',authenticateToken, userController.deleteUser )
 

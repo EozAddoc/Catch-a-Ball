@@ -69,9 +69,12 @@ class UserController {
 
   //UPDATE
   static async updateUserData(req, res) {
+    console.log("called updateUser")
     const userId = req.body.updatedUserData.id;
+    console.log(userId)
     let updatedUserData = req.body.updatedUserData
-    delete updatedUserData.id;
+    console.log(updatedUserData)
+    console.log("updatedUserData,userId", updatedUserData,userId)
 if (updatedUserData.password){
   const salt = bcrypt.genSaltSync(10)
   const hashedPassword = await bcrypt.hash(updatedUserData.password,salt)

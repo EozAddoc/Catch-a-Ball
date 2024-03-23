@@ -22,6 +22,7 @@ function Home({darkMode,toggleTheme}) {
   axios.defaults.withCredentials = true;
 
   async function ApiCall(id) {
+    console.log("trung")
       try {
         pokemon.configure({ apiKey: process.env.REACT_APP_API_KEY });
         const card = await pokemon.card.find(id);
@@ -112,7 +113,7 @@ function Home({darkMode,toggleTheme}) {
               {darkMode ? "🌞" : "🌙"}
             </button>
           </div>
-                    <div className="w-3/5">
+                    <div className="w-3/5 mt-2">
                       <SearchBar />
                     </div>
                   </div>

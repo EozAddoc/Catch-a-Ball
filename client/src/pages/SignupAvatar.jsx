@@ -3,7 +3,7 @@ import ChooseACard from '../components/ChooseACard';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-
+import withDarkMode from '../components/withDarkMode';
 const queryClient = new QueryClient();
 
 function SignupAvatar({ darkMode, toggleTheme }) {
@@ -34,7 +34,7 @@ function SignupAvatar({ darkMode, toggleTheme }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-blue-900 min-h-screen">
+      <div className="dark:bg-blue-900 bg-yellow-400 min-h-screen">
         <ChooseACard apiIds={apiIds}
           text={"Choose your trainer!"}
           maxCardsChosen={1} //choose one trainer
@@ -48,4 +48,4 @@ function SignupAvatar({ darkMode, toggleTheme }) {
 
 }
 
-export default SignupAvatar;
+export default withDarkMode(SignupAvatar);

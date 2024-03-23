@@ -3,9 +3,8 @@ import ChooseACard from '../components/ChooseACard';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { getUser, updateUser, getOtherUsersData } from "../api/user";
-
-
+import { getUser } from "../api/user";
+import withDarkMode from '../components/withDarkMode';
 const queryClient = new QueryClient();
 
 function shuffle(array) {
@@ -26,7 +25,7 @@ function shuffle(array) {
   return array;
 };
 
-function SignupPokemon() {
+function SignupPokemon({ darkMode, toggleTheme }) {
   const apiIds = [
     "sm75-1", // Charmander
     "ex6-55", // Bulbasaur
@@ -59,7 +58,7 @@ function SignupPokemon() {
   shuffle(apiIds);
 
   return (
-    <div className="bg-blue-900 min-h-screen">
+    <div className="dark:bg-blue-900 bg-yellow-400 min-h-screen">
       <QueryClientProvider client={queryClient}>
         <ChooseACard
           apiIds={apiIds}
@@ -74,4 +73,4 @@ function SignupPokemon() {
   );
 }
 
-export default SignupPokemon;
+export default withDarkMode(SignupPokemon);

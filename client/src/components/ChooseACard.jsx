@@ -4,8 +4,8 @@ import pokemon from 'pokemontcgsdk';
 import Axios from 'axios';
 import CardPicker from './CardPicker';
 import { useQuery, useQueryClient } from 'react-query';
-
-function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHome }) {
+import withDarkMode from './withDarkMode';
+function ChooseACard({ apiIds, userId, text, maxCardsChosen, hidden, redirectHome ,darkMode,toggleTheme}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [selectedCardApis, setSelectedCardApis] = useState([]);
@@ -109,7 +109,7 @@ return null;
   return (
     <>
       <div className="text-center flex justify-center pt-3">
-        <h1 className="text-yellow-400 text-l font-bold">{text}</h1>
+        <h1 className="dark:text-yellow-400  text-blue-900 text-l font-bold">{text}</h1>
       </div>
       <div className="grid grid-cols-2 justify-items-center lg:grid-cols-4">
         {isLoading ? <div>Loading...</div> : cardImgs}
@@ -118,4 +118,4 @@ return null;
   );
 }
 
-export default ChooseACard;
+export default withDarkMode(ChooseACard);

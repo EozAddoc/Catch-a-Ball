@@ -7,8 +7,8 @@ const withDarkMode = (WrappedComponent) => {
     useEffect(() => {
       let savedMode = localStorage.getItem("displayMode");
       if (!savedMode) {
-        const newMode = "dark";
-        setDarkMode(true);
+        const newMode = "light";
+        setDarkMode(false);
         localStorage.setItem("displayMode", newMode);
       }
       setDarkMode(savedMode === "dark");

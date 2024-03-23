@@ -102,6 +102,8 @@ function ProfileCard({ id }) {
   };
 
   const updateUserBg = (energyChoice) => {
+    console.log(energyChoice)
+
     const updatedUserData = {
       id: otherUser.id,
       energyChoice: energyChoice,
@@ -111,16 +113,23 @@ function ProfileCard({ id }) {
       updatedUserData: updatedUserData
     })
       .then((res) => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
+        if (res.data === 201) {
+          console.log("201", energyChoice)
+          setBagType(energyChoice.replace("/energy/", "."));
+          setTypeEn(energyChoice);
+          setIsModalOpen(false); // Close the modal after successful update
+        } else {
+          console.error("Error updating user background:", res.data.err);
+          setMess(res.data.err); // Assuming this is an error message
+        }
+        // setTimeout(() => {
+        //   console.log(energyChoice)
+        //   window.location.reload();
+        // }, 100);
       })
       .catch((err) => {
         console.error("Error updating user background:", err);
         setMess(err.message); // Assuming this is an error message
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
       });
   };
 

@@ -96,7 +96,7 @@ updatedUserData.id = userData.id
         userId: userData.id
       } )
       .then((res) => {
-      navigate("/")
+      navigate("/logout")
       })
       .catch((err) => {
         alert("unsuccesfull deletion" , userData.id)
